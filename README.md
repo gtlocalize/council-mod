@@ -1,283 +1,334 @@
-# Content-Checker (by OpenModerator)
+# Content-Checker
 
-![Release Content Checker](https://github.com/utilityfueled/content-checker/actions/workflows/release-package.yml/badge.svg)
-[![npm](https://img.shields.io/npm/v/content-checker.svg)](https://www.npmjs.com/package/content-checker)
+A modern, tiered content moderation system with LLM council escalation for edge cases.
 
-`content-checker` is designed to be a modern, open-source library for programmatic and AI content moderation. Currently content-checker supports image and text moderation.
-Thanks to LLMs in addition to detecting specific profane words, we can detect malicious **intent** in text.
-So, a user who tries to circumvent the AI profanity filter by using a variation of a profane word, or even just a malicious phrase
-without a specific word in the profanity list, will still be flagged. Image moderation is also supported, using the Inception V3 model of the NSFW JS library.
+**Original Author:** Jacob Habib ([@jahabeebs](https://github.com/jahabeebs)), OpenModerator  
+**Fork Enhancements:** Context-aware moderation, multi-provider support, LLM council, tiered fast-path optimization
 
-Future features will include moderation tools (auto-ban, bots), more powerful models, and multimedia support for video and audio moderation.
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-## How It Works
+---
 
-`content-checker` builds on the popular [bad-words](https://www.npmjs.com/package/bad-words) package,
-but updated to use TypeScript and ES6, and merging in [badwords-list](https://www.npmjs.com/package/badwords-list), which it used as a dependency.
+## Features
 
-The AI moderation is powered by a database of profane words, multiple LLMs for text analysis, and the NSFW JS library for image analysis.
-The models will likely be changed in the future as more powerful models become available.
-The importance of AI moderation for text is we need to be able to detect malicious intent, not just specific words.
+### 🚀 Tiered Fast-Path Architecture
 
-The API will return whether text is profane or not, but note that different types of profanity can be detected, and the
-exact types returned will depend on the model used. Currently, the hosted model uses around a 60% confidence threshold for a profanity detection when using Google's Perspective API or Google's Natural Language API.
-
-Unsafe text:
-
-```json
-{
-  "profane": true,
-  "type": ["TOXICITY", "SEVERE_TOXICITY"]
-}
+```
+Input → TIER 1: Local (~3ms)     → Obvious cases handled instantly
+            ↓
+        TIER 2: API (~800ms)     → Nuanced detection for uncertain cases
+            ↓
+        TIER 3: Council (~2-3s)  → Multi-model consensus for edge cases
+            ↓
+        TIER 4: Human Queue      → True edge cases flagged for review
 ```
 
-Safe text:
+- **80% of traffic handled in ~3ms** (clean text + obvious slurs)
+- **API only called for uncertain cases**
+- **Council escalation** for mid-confidence results (30-70%)
 
-```json
-{
-  "profane": false,
-  "type": []
-}
-```
+### 🛡️ Advanced Detection
 
-The API returns responses in the following format for image moderation (the possible image types for now include "Porn" and "Hentai"). If the highest probability category is a NSFW category like the ones mentioned then the image will be flagged as NSFW:
+- **Text Normalization** — Catches obfuscation (leetspeak, homoglyphs, zero-width chars)
+  - `f4gg0t` → `faggot`
+  - `n1gg3r` → `nigger`
+  - Cyrillic/Greek lookalikes → ASCII
+- **Context Evaluation** — Understands intent, not just keywords
+  - Reclamation ("As a gay man, I reclaim...")
+  - Educational ("The word X was historically...")
+  - Quoted speech ("He called me a...")
 
-Unsafe image:
+### 🏛️ LLM Council
 
-```json
-{
-  "nsfw": true,
-  "type": ["Porn"]
-}
-```
+For edge cases where primary model confidence is 30-70%:
+- Multiple models vote (Claude, Gemini, etc.)
+- Hybrid aggregation (unanimous = auto-decide, split = human review)
+- Audit trail for compliance
 
-Safe image:
+### 📊 Categories
 
-```json
-{
-  "nsfw": false,
-  "type": []
-}
-```
+| Category | Description |
+|----------|-------------|
+| `hate_speech` | Attacks based on protected characteristics |
+| `harassment` | Bullying, intimidation |
+| `sexual_harassment` | Unwanted sexual content |
+| `violence` | Graphic violence, gore |
+| `threats` | Direct threats to harm |
+| `self_harm` | Content promoting self-harm/suicide |
+| `drugs_illegal` | Illegal drug promotion |
+| `profanity` | Strong profane language |
+| `child_safety` | Content endangering minors |
+| `personal_info` | Doxxing, private info |
+| `spam_scam` | Spam, scams, phishing |
 
-Note that type is an array, so it can contain multiple types of profanity or none at all (if it hits the fine-tuned model).
-The API is rate limited to 10 requests from the same IP address per 10 seconds. If you need more, please contact me.
+---
 
 ## Installation
-
-Use npm to install `content-checker`.
 
 ```bash
 npm install content-checker
 ```
 
-## Table of Contents
+## Quick Start
 
-1. [Standard Text Moderation](#Standard-Text-Moderation)
-2. [AI Text Moderation](#AI-Text-Moderation)
-3. [AI Image Moderation](#AI-Image-Moderation)
+```typescript
+import { Moderator } from 'content-checker';
 
-## Usage
+const moderator = new Moderator({
+  openaiApiKey: process.env.OPENAI_API_KEY,  // Optional, falls back to local
+});
 
-## Standard Text Moderation
+const result = await moderator.moderate("Your text here");
 
-### Initialize a filter
-
-```js
-import { Filter } from "content-checker";
-// Or for CommonJS: const { Filter } = require('content-checker');
-const filter = new Filter();
-
-console.log(filter.clean("Don't be an ash0le")); //Don't be an ******
+console.log(result.flagged);           // true/false
+console.log(result.severity);          // 0.0 - 1.0
+console.log(result.suggestedAction);   // 'allow' | 'warn' | 'review' | 'block'
+console.log(result.tierInfo.tier);     // 'local' | 'api' | 'council' | 'human'
 ```
 
-### Placeholder Overrides
+## CLI Testing
 
-```js
-import { Filter } from "content-checker";
-const customFilter = new Filter({ placeHolder: "x" });
+```bash
+# Set API key (optional)
+export OPENAI_API_KEY="sk-..."
 
-customFilter.clean("Don't be an ash0le");
+# Test a phrase
+npx tsx src/cli.ts "Your text here"
+
+# Interactive mode
+npx tsx src/cli.ts --interactive
 ```
 
-### Regex Overrides
+---
 
-```js
-const filter = new Filter({ regex: /\*|\.|$/gi });
+## Configuration
 
-const filter = new Filter({ replaceRegex: /[A-Za-z0-9가-힣_]/g });
-```
+### Full Configuration
 
-### Add words to the blacklist
-
-```js
-const filter = new Filter();
-
-filter.addWords("some", "bad", "word");
-
-filter.clean("some bad word!");
-
-// or use an array using the spread operator
-
-const newBadWords = ["some", "bad", "word"];
-
-filter.addWords(...newBadWords);
-
-filter.clean("some bad word!"); //**** *** ****!
-
-// or
-
-const filter = new Filter({ list: ["some", "bad", "word"] });
-
-filter.clean("some bad word!"); // **** *** ****!
-```
-
-### Instantiate with an empty list
-
-```js
-const filter = new Filter({ emptyList: true });
-
-filter.clean("hell this wont clean anything"); // hell this wont clean anything
-```
-
-### Remove words from the blacklist
-
-```js
-const filter = new Filter();
-
-filter.removeWords("hells", "sadist");
-
-filter.clean("some hells word!"); // some hells word!
-
-// or use an array using the spread operator
-
-let removeWords = ["hells", "sadist"];
-
-filter.removeWords(...removeWords);
-
-filter.clean("some sadist hells word!");
-```
-
-## AI Text Moderation
-
-To use AI text moderation, ensure you have the OPEN_MODERATOR_API_KEY set in your environment variables (one can be generated for free at www.openmoderator.com) or passed as a parameter during the initialization of the Filter class.
-
-### Initialize a filter
-
-```js
-import { Filter } from "content-checker";
-
-const filter = new Filter({ openModeratorAPIKey: "your_api_key_here" });
-```
-
-### Check a string for profanity
-
-The isProfaneAI method checks if a string contains profane language using AI. It returns a promise that resolves to an object containing a profane boolean and a type array which lists the categories of profanity detected (e.g., "harassment").
-
-```js
-const config = {
-  // checkManualProfanityList is optional and defaults to false; it checks for the words in lang.ts (if under 50 words) before hitting the AI model. Note that this affects performance.
-  checkManualProfanityList: false,
-  // provider defaults to "google-perspective-api" (Google's Perspective API); it can also be "openai" (OpenAI Moderation API) or "google-natural-language-api" (Google's Natural Language API)
-  provider: "google-perspective-api",
-};
-
-filter.isProfaneAI("your string here", config).then((response) => {
-  if (response.profane) {
-    console.log("Profanity found. Types: ", response.type.join(", "));
-  } else {
-    console.log("No profanity found");
-  }
+```typescript
+const moderator = new Moderator({
+  // Provider selection
+  provider: 'openai',  // 'openai' | 'perspective' | 'local-only'
+  openaiApiKey: process.env.OPENAI_API_KEY,
+  
+  // Fast-path optimization
+  fastPath: {
+    enabled: true,
+    localBlockThreshold: 0.85,    // Skip API, instant block
+    localAllowThreshold: 0.10,    // Skip API, instant allow
+    minLocalConfidence: 0.70,     // Required confidence for fast-path
+    alwaysCheckCategories: ['self_harm', 'child_safety', 'threats'],
+  },
+  
+  // Council configuration
+  council: {
+    enabled: true,
+    members: ['anthropic', 'gemini'],  // Council voters
+    escalateMin: 0.30,                  // Escalate if confidence >= 30%
+    escalateMax: 0.70,                  // Escalate if confidence <= 70%
+    sendSplitsToHuman: true,            // Split votes → human queue
+    sendLowConfidenceToHuman: true,     // Low confidence majority → human queue
+  },
+  
+  // Thresholds
+  severityThreshold: 0.3,   // >= this = flagged
+  reviewThreshold: 0.7,     // >= this = review
+  blockThreshold: 0.9,      // >= this = block
+  
+  // Behavior
+  normalizeText: true,      // Apply obfuscation detection
+  analyzeContext: true,     // Evaluate intent/reclamation
 });
 ```
 
-## AI Image Moderation
+### Environment Variables
 
-To use AI image moderation, ensure you have the OPEN_MODERATOR_API_KEY set in your environment variables (one can be generated for free at www.openmoderator.com) or passed as a parameter during the initialization of the Filter class.
-For now the NSFW JS library is used for image moderation, but this will be replaced with a more powerful model in the future.
-Ensure you're uploading either a PNG or JPEG image.
-
-### Check an image for NSFW content
-
-Raw JS example:
-
-```js
-const imageInput = document.getElementById("imageInput");
-
-imageInput.addEventListener("change", async (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    try {
-      const response = await filter.isImageNSFW(file);
-      if (response.nsfw) {
-        console.log("NSFW content detected. Types:", response.type.join(", "));
-      } else {
-        console.log("Image is safe.");
-      }
-    } catch (error) {
-      console.error("Error checking image:", error);
-    }
-  }
-});
+```bash
+OPENAI_API_KEY=sk-...           # OpenAI Moderation API (free)
+ANTHROPIC_API_KEY=sk-ant-...    # Claude (council member)
+GOOGLE_API_KEY=...              # Gemini (council member)
+PERSPECTIVE_API_KEY=...         # Google Perspective API
 ```
 
-React example:
+---
 
-```jsx
-import React, { useState } from "react";
-import { Filter } from "content-checker";
+## API Reference
 
-const ImageModeration = () => {
-  const [image, setImage] = useState(null);
-  const [moderationResult, setModerationResult] = useState("");
+### `moderate(text: string): Promise<ExtendedModerationResult>`
 
-  const filter = new Filter({ openModeratorAPIKey: "your_api_key_here" });
+Main moderation method.
 
-  const handleImageChange = (event) => {
-    setImage(event.target.files[0]);
-  };
+```typescript
+interface ExtendedModerationResult {
+  flagged: boolean;                    // Should this be flagged?
+  severity: number;                    // 0.0 - 1.0
+  categories: CategoryScores;          // Per-category scores
+  contextFactors: ContextFactors;      // Intent, target, reclamation, etc.
+  suggestedAction: SuggestedAction;    // 'allow' | 'warn' | 'review' | 'block'
+  confidence: number;                  // Model confidence
+  flaggedSpans: FlaggedSpan[];         // Specific flagged terms
+  normalized: string;                  // Text after normalization
+  original: string;                    // Original input
+  processingTimeMs: number;            // Latency
+  tierInfo: TierInfo;                  // Which tier handled this
+}
 
-  const checkImage = async () => {
-    if (image) {
-      try {
-        const response = await filter.isImageNSFW(image);
-        if (response.nsfw) {
-          setModerationResult(
-            `NSFW content detected. Types: ${response.type.join(", ")}`,
-          );
-        } else {
-          setModerationResult("Image is safe.");
-        }
-      } catch (error) {
-        console.error("Error checking image:", error);
-        setModerationResult("Error occurred while checking the image.");
-      }
-    }
-  };
-
-  return (
-    <div>
-      <input
-        type="file"
-        onChange={handleImageChange}
-        accept="image/png, image/jpeg"
-      />
-      <button onClick={checkImage}>Check Image</button>
-      {moderationResult && <p>{moderationResult}</p>}
-    </div>
-  );
-};
-
-export default ImageModeration;
+interface TierInfo {
+  tier: 'local' | 'api' | 'council' | 'human';
+  reason: string;
+  localLatencyMs: number;
+  apiLatencyMs?: number;
+  councilLatencyMs?: number;
+  skippedApi: boolean;
+  skippedCouncil: boolean;
+}
 ```
 
-## Contributing
+### `quickCheck(text: string): Promise<{ flagged, severity, latencyMs }>`
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+Fast local-only check (~3ms). No API calls.
 
-Please make sure to update tests as appropriate.
+### `getHumanReviewQueue(): HumanReviewItem[]`
 
-## Authors
+Get items queued for human review.
 
-- Jacob Habib (@jahabeebs), founder of OpenModerator
+### `submitHumanDecision(itemId, decision): boolean`
+
+Submit a human decision for a queued item.
+
+### `getAuditLog(limit?): AuditLogEntry[]`
+
+Get audit log entries for compliance.
+
+### `getStats()`
+
+Get statistics on decisions, escalations, etc.
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    MODERATION PIPELINE                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Input Text                                                     │
+│       ↓                                                         │
+│  ┌─────────────────────────────────────┐                       │
+│  │ NORMALIZER                          │                       │
+│  │ • Homoglyphs (Cyrillic→Latin)       │                       │
+│  │ • Leetspeak (1→i, 3→e, 0→o)         │                       │
+│  │ • Zero-width char removal           │                       │
+│  │ • Spacing collapse (f.u.c.k→fuck)   │                       │
+│  └─────────────────┬───────────────────┘                       │
+│                    ↓                                            │
+│  ┌─────────────────────────────────────┐                       │
+│  │ TIER 1: LOCAL FAST-PATH (~3ms)      │                       │
+│  │ • Pattern matching                   │                       │
+│  │ • Severe slur detection             │                       │
+│  │ • Clean text indicators             │                       │
+│  └─────────────────┬───────────────────┘                       │
+│                    ↓                                            │
+│         ┌──────────┴──────────┐                                │
+│         │ Can fast-path?      │                                │
+│         └──────────┬──────────┘                                │
+│                    │                                            │
+│      YES ←─────────┴─────────→ NO                              │
+│       │                         │                              │
+│       ↓                         ↓                              │
+│  Return result         ┌────────────────────┐                  │
+│  (skip API)            │ TIER 2: API CHECK  │                  │
+│                        │ (~800ms)           │                  │
+│                        └─────────┬──────────┘                  │
+│                                  ↓                              │
+│                       ┌──────────┴──────────┐                  │
+│                       │ Confidence 30-70%?  │                  │
+│                       └──────────┬──────────┘                  │
+│                                  │                              │
+│                    YES ←─────────┴─────────→ NO                │
+│                     │                         │                │
+│                     ↓                         ↓                │
+│           ┌──────────────────┐         Return result          │
+│           │ TIER 3: COUNCIL  │                                │
+│           │ (~2-3s)          │                                │
+│           │                  │                                │
+│           │ Claude + Gemini  │                                │
+│           │ vote + aggregate │                                │
+│           └─────────┬────────┘                                │
+│                     ↓                                          │
+│           ┌──────────────────┐                                │
+│           │ Unanimous?       │                                │
+│           │ Majority + conf? │                                │
+│           └─────────┬────────┘                                │
+│                     │                                          │
+│      AUTO ←─────────┴─────────→ SPLIT                         │
+│       │                         │                              │
+│       ↓                         ↓                              │
+│  Return result         ┌──────────────────┐                   │
+│                        │ TIER 4: HUMAN    │                   │
+│                        │ REVIEW QUEUE     │                   │
+│                        └──────────────────┘                   │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Context Evaluation
+
+The system understands that context matters:
+
+| Context | Example | Harm Reduction |
+|---------|---------|----------------|
+| **Attack** | "You're a [slur]" | None (full severity) |
+| **Discussion** | "The word [slur] is offensive" | Moderate |
+| **Quote** | "He called me a [slur]" | Moderate |
+| **Educational** | "Historically, [slur] was used to..." | Significant |
+| **Reclamation** | "As a [identity], I reclaim [slur]" | Maximum |
+
+---
+
+## Files
+
+```
+src/
+├── moderator.ts      # Main orchestrator with tiered fast-path
+├── normalizer.ts     # Text normalization (homoglyphs, leetspeak)
+├── context.ts        # Context evaluation (intent, reclamation)
+├── council.ts        # LLM council with hybrid aggregation
+├── providers/
+│   ├── openai.ts     # OpenAI Moderation API (free)
+│   ├── anthropic.ts  # Claude (council)
+│   ├── google.ts     # Perspective + Gemini
+│   ├── local.ts      # Pattern-based local detection
+│   └── types.ts      # Provider interfaces
+├── types.ts          # Core types and config
+├── cli.ts            # Test CLI
+└── index.ts          # Exports
+```
+
+---
+
+## Legacy API
+
+The original `Filter` class is still available for backwards compatibility:
+
+```typescript
+import { Filter } from 'content-checker';
+
+const filter = new Filter();
+filter.isProfane("some text");  // boolean
+filter.clean("some text");      // censored string
+```
+
+---
+
+## License
+
+Apache 2.0 - See [LICENSE](LICENSE)
+
+## Credits
+
+- Original `content-checker` by [Jacob Habib](https://github.com/jahabeebs) / [OpenModerator](https://www.openmoderator.com)
+- Fork enhancements: Context-aware moderation, tiered architecture, LLM council
