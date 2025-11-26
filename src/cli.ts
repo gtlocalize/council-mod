@@ -41,10 +41,19 @@ function severityColor(severity: number): string {
 
 function actionColor(action: string): keyof typeof colors {
   switch (action) {
-    case 'block': return 'red';
-    case 'review': return 'yellow';
-    case 'warn': return 'cyan';
-    default: return 'green';
+    case 'deny': return 'red';
+    case 'escalate': return 'yellow';
+    case 'allow': return 'green';
+    default: return 'white';
+  }
+}
+
+function actionEmoji(action: string): string {
+  switch (action) {
+    case 'deny': return '⛔';
+    case 'escalate': return '⚠️';
+    case 'allow': return '✅';
+    default: return '❓';
   }
 }
 
@@ -101,9 +110,10 @@ async function analyzeText(text: string, moderator: Moderator) {
   const sevColor = severityColor(result.severity);
   console.log(`   Severity: ${colorize((result.severity * 100).toFixed(1) + '%', sevColor as keyof typeof colors)}`);
   
-  // Suggested action
-  const actColor = actionColor(result.suggestedAction);
-  console.log(`   Suggested Action: ${colorize(result.suggestedAction.toUpperCase(), actColor)}`);
+  // Final action (allow / deny / escalate)
+  const action = result.action || 'allow';
+  const actColor = actionColor(action);
+  console.log(`   Action: ${actionEmoji(action)} ${colorize(action.toUpperCase(), actColor)}`);
   
   // Confidence
   console.log(`   Confidence: ${(result.confidence * 100).toFixed(1)}%`);
@@ -150,6 +160,9 @@ async function analyzeText(text: string, moderator: Moderator) {
     console.log(colorize('\n🏗️  DECISION TIER:', 'bright'));
     console.log(`   ${tierEmoji(ti.tier)} Tier: ${colorize(ti.tier.toUpperCase(), tierColor(ti.tier))}`);
     console.log(`   ${colorize('Reason:', 'dim')} ${ti.reason}`);
+    if (ti.language && ti.language.script !== 'latin') {
+      console.log(`   ${colorize('Script:', 'dim')} ${ti.language.script} (non-Latin → API required)`);
+    }
     
     // Latency breakdown
     console.log(colorize('\n⏱️  LATENCY BREAKDOWN:', 'dim'));

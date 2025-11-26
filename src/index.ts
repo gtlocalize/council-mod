@@ -12,6 +12,8 @@ export {
 } from "./moderator";
 export { TextNormalizer, normalizer } from "./normalizer";
 export { ContextEvaluator, contextEvaluator } from "./context";
+export { detectScript, analyzeLanguage, isLatinScript, hasNonLatinContent } from "./language";
+export type { ScriptType, LanguageAnalysis } from "./language";
 export { Council, CouncilConfig, DEFAULT_COUNCIL_CONFIG } from "./council";
 
 // Providers
@@ -45,11 +47,14 @@ export type {
   ModeratorConfig,
   CategoryScores,
   ModerationCategory,
+  FinalAction,
   SuggestedAction,
   ContextFactors,
   FlaggedSpan,
   Intent,
   Target,
+  ModerateOptions,
+  ContextMessage,
 } from "./types";
 
 export { MODERATION_CATEGORIES, DEFAULT_CONFIG, DEFAULT_FAST_PATH_CONFIG } from "./types";

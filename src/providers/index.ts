@@ -8,6 +8,7 @@ export * from './types';
 export { OpenAIProvider } from './openai';
 export { AnthropicProvider } from './anthropic';
 export { PerspectiveProvider, GeminiProvider } from './google';
+export { DeepSeekProvider } from './deepseek';
 export { LocalProvider } from './local';
 export type { LocalProviderResult } from './local';
 
@@ -15,19 +16,21 @@ import { ModerationProvider, ProviderConfig } from './types';
 import { OpenAIProvider } from './openai';
 import { AnthropicProvider } from './anthropic';
 import { PerspectiveProvider, GeminiProvider } from './google';
+import { DeepSeekProvider } from './deepseek';
 import { LocalProvider } from './local';
 
 // =============================================================================
 // PROVIDER REGISTRY
 // =============================================================================
 
-export type ProviderName = 'openai' | 'anthropic' | 'perspective' | 'gemini' | 'local';
+export type ProviderName = 'openai' | 'anthropic' | 'perspective' | 'gemini' | 'deepseek' | 'local';
 
 const PROVIDER_CONSTRUCTORS: Record<ProviderName, new (config?: ProviderConfig) => ModerationProvider> = {
   openai: OpenAIProvider,
   anthropic: AnthropicProvider,
   perspective: PerspectiveProvider,
   gemini: GeminiProvider,
+  deepseek: DeepSeekProvider,
   local: LocalProvider,
 };
 

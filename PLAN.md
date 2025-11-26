@@ -1,4 +1,22 @@
-# Content-Checker Enhancement Plan
+# council-mod Development Plan
+
+## Decision Model
+
+**Three final outcomes only:**
+
+| Action | Meaning | When |
+|--------|---------|------|
+| **ALLOW** | Content is acceptable | Severity < 30% AND confidence ≥ 70% |
+| **DENY** | Content should be blocked | Severity ≥ 70% AND confidence ≥ 70% |
+| **ESCALATE** | Needs higher-tier review | Severity 30-70% OR confidence < 70% |
+
+**Escalation Chain:**
+```
+Local → not confident? → Escalate to API
+API → not confident? → Escalate to Council
+Council → split/uncertain? → Escalate to Human
+Human → FINAL (Allow or Deny)
+```
 
 ## Overview
 
@@ -252,7 +270,52 @@ fastPath: {
 
 ---
 
-## Phase 3: Image Analysis (Shelved)
+## Phase 3: Multi-Language Support (In Progress)
+
+### 3.1 Current State ✅
+- **Language/script detection** — Detects Latin, CJK, Cyrillic, Arabic, Hebrew, Thai, Devanagari, Greek
+- **Non-Latin routing** — Non-Latin scripts skip fast-path, go directly to API
+- **Basic coverage** — OpenAI's API handles many languages (with varying quality)
+
+### 3.2 Known Limitations
+- **OpenAI's multilingual gaps** — Chinese hate speech scored only 56% in testing
+- **No local slur detection** — Fast-path only works for Latin scripts
+- **Context patterns** — English-only regex for reclamation/educational detection
+
+### 3.3 Future Improvements (Roadmap)
+
+#### Short-term
+- [ ] Add Perspective API as fallback (better multilingual support)
+- [ ] Ensemble approach: max(OpenAI, Perspective) for non-English
+- [ ] Language-specific severity thresholds
+
+#### Medium-term
+- [ ] Multilingual slur database (HurtLex integration or custom)
+- [ ] CJK homophone normalization (傻逼 vs 煞笔 vs SB)
+- [ ] Language-specific context patterns
+
+#### Long-term
+- [ ] Fine-tuned multilingual classifier
+- [ ] Use LLM for context detection (not regex)
+- [ ] Per-language severity calibration based on QA data
+
+### 3.4 Supported Scripts
+
+| Script | Detection | Fast-Path | API | Notes |
+|--------|-----------|-----------|-----|-------|
+| Latin | ✅ | ✅ | ✅ | Full support |
+| CJK (Chinese/Japanese/Korean) | ✅ | ❌ Skip | ✅ | API-only, quality varies |
+| Cyrillic | ✅ | ❌ Skip | ✅ | API-only |
+| Arabic | ✅ | ❌ Skip | ✅ | API-only |
+| Hebrew | ✅ | ❌ Skip | ✅ | API-only |
+| Thai | ✅ | ❌ Skip | ✅ | API-only |
+| Devanagari | ✅ | ❌ Skip | ✅ | API-only |
+| Greek | ✅ | ❌ Skip | ✅ | API-only |
+| Mixed | ✅ | ❌ Skip | ✅ | API-only |
+
+---
+
+## Phase 8: Image Analysis (Shelved)
 
 ### 3.1 Multi-Category Image Classification
 Expand beyond "Porn" and "Hentai" to include:
@@ -275,7 +338,7 @@ Expand beyond "Porn" and "Hentai" to include:
 
 ---
 
-## Phase 4: Action Dispatcher (Shelved)
+## Phase 9: Action Dispatcher (Shelved)
 
 ### 4.1 Webhook Support
 ```typescript
@@ -368,10 +431,114 @@ interface ContentModeratorConfig {
 
 - [x] Should we support multiple LLM providers? **Yes, via provider abstraction**
 - [x] How to handle edge cases? **LLM Council + Human queue**
+- [x] Multi-language support? **Script detection + API routing (Phase 3)**
 - [ ] Rate limiting strategy for API calls?
 - [ ] Caching strategy for repeated content?
-- [ ] Multi-language support priority?
 - [ ] How to train custom judge model from human QA data?
+
+---
+
+## Phase 5.5: Context Support ✅ COMPLETE
+
+### Implementation
+
+```typescript
+// Without context - warns, escalates ambiguous terms
+mod.moderate("にがー");
+// → action: "escalate", warnings: ["No context provided..."]
+
+// With context - uses for disambiguation
+mod.moderate("にがー", {
+  context: ["コーヒー飲んだ", "めっちゃ濃かった"]
+});
+// → action: "allow" (council recognizes "bitter")
+```
+
+### Features
+- ✅ `ModerateOptions` type with `context`, `userId`, `platform`
+- ✅ Console warning on first call without context
+- ✅ `warnings` array in response
+- ✅ `contextProvided` boolean in response
+- ✅ Ambiguous terms without context → ESCALATE (not DENY)
+- ✅ Context passed to council for disambiguation
+
+### Behavior
+| Input | Context | Action |
+|-------|---------|--------|
+| Short ambiguous term | ❌ None | ESCALATE + warning |
+| Short ambiguous term | ✅ Provided | Normal processing |
+| Clear violation | ❌ None | DENY (still catches obvious) |
+
+---
+
+## Phase 6: Scale & Performance (TODO)
+
+### 6.1 Hold Action for Async Council
+Return `action: "hold"` when council is needed, with callback for final decision.
+
+```typescript
+const result = await mod.moderate(text);
+if (result.action === 'hold') {
+  // Show to sender only (app implements this)
+  result.onDecision((final) => {
+    // Council finished - app handles final action
+  });
+}
+```
+
+### 6.2 Caching
+- Cache exact text → result mapping
+- Configurable TTL
+- LRU eviction
+
+### 6.3 Blocklist Database
+- Add terms to instant-deny list
+- Pattern matching (regex support)
+- Import/export
+
+### 6.4 Learning from Decisions
+- Council denies → pattern added to fast-path
+- Human reviews → improves model over time
+- Feedback loop: `mod.learnFromDecision(text, 'deny')`
+
+### 6.5 Batch Processing (Shelved with Image Mod)
+- `moderateBatch(texts[], { concurrency })` for backlog scanning
+- Progress callbacks
+- Skip council option for speed
+
+---
+
+## Phase 7: Bias & False Positive Audit (TODO)
+
+Systematic testing for:
+- [ ] Linguistic false positives (e.g., `にがー` = "bitter" vs slur)
+- [ ] Cultural context gaps
+- [ ] Over-flagging of reclaimed terms
+- [ ] Under-flagging of coded language
+- [ ] Regional slang variations
+- [ ] Cross-language phonetic collisions
+
+See `EXPERIMENTS.md` for tracked cases.
+
+---
+
+## Technical Debt / Future Improvements
+
+### Context Detection
+Current approach uses regex patterns (crude):
+```typescript
+const EDUCATIONAL_PATTERNS = [
+  /\b(historically|etymology|linguistic)\b/i,
+  // ...
+];
+```
+
+**Better approaches to consider:**
+1. **LLM-based context detection** — Ask the LLM to classify intent (adds latency)
+2. **Embedding similarity** — Compare to examples of educational/reclamation use
+3. **Small fine-tuned classifier** — Fast, but needs labeled training data
+
+**Recommendation:** For cases where context matters, skip fast-path and let API/Council handle it. Reserve fast-path for unambiguous cases only.
 
 ---
 

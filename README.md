@@ -1,9 +1,9 @@
-# Content-Checker
+# council-mod
 
-A modern, tiered content moderation system with LLM council escalation for edge cases.
+Tiered LLM content moderation with council consensus for edge cases.
 
-**Original Author:** Jacob Habib ([@jahabeebs](https://github.com/jahabeebs)), OpenModerator  
-**Fork Enhancements:** Context-aware moderation, multi-provider support, LLM council, tiered fast-path optimization
+**Based on:** [content-checker](https://github.com/jahabeebs/content-checker) by Jacob Habib ([@jahabeebs](https://github.com/jahabeebs))  
+**Enhancements:** Context-aware moderation, multi-provider support, LLM council, tiered fast-path, multilingual support
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -40,10 +40,34 @@ Input → TIER 1: Local (~3ms)     → Obvious cases handled instantly
 
 ### 🏛️ LLM Council
 
-For edge cases where primary model confidence is 30-70%:
+For edge cases that need escalation:
 - Multiple models vote (Claude, Gemini, etc.)
 - Hybrid aggregation (unanimous = auto-decide, split = human review)
 - Audit trail for compliance
+
+### 🎯 Simple Decision Model
+
+Only three outcomes:
+
+| Action | When | Meaning |
+|--------|------|---------|
+| **ALLOW** | Severity < 30% AND confident | Content is acceptable |
+| **DENY** | Severity ≥ 70% AND confident | Content should be blocked |
+| **ESCALATE** | Middle severity OR not confident | Needs higher-tier review |
+
+Escalation chain: `Local → API → Council → Human`
+
+### 🌍 Multilingual Support
+
+Non-Latin scripts (CJK, Cyrillic, Arabic, etc.) automatically skip fast-path and go to API:
+
+```
+Latin text → Fast-path eligible (local detection works)
+Chinese 你好 → Skip fast-path → API (our patterns don't cover CJK)
+Russian Привет → Skip fast-path → API
+```
+
+Supported scripts: Latin, CJK, Cyrillic, Arabic, Hebrew, Thai, Devanagari, Greek
 
 ### 📊 Categories
 
@@ -66,13 +90,13 @@ For edge cases where primary model confidence is 30-70%:
 ## Installation
 
 ```bash
-npm install content-checker
+npm install council-mod
 ```
 
 ## Quick Start
 
 ```typescript
-import { Moderator } from 'content-checker';
+import { Moderator } from 'council-mod';
 
 const moderator = new Moderator({
   openaiApiKey: process.env.OPENAI_API_KEY,  // Optional, falls back to local
@@ -80,9 +104,10 @@ const moderator = new Moderator({
 
 const result = await moderator.moderate("Your text here");
 
-console.log(result.flagged);           // true/false
+console.log(result.action);            // 'allow' | 'deny' | 'escalate'
+console.log(result.flagged);           // true (if action === 'deny')
 console.log(result.severity);          // 0.0 - 1.0
-console.log(result.suggestedAction);   // 'allow' | 'warn' | 'review' | 'block'
+console.log(result.confidence);        // 0.0 - 1.0
 console.log(result.tierInfo.tier);     // 'local' | 'api' | 'council' | 'human'
 ```
 
@@ -131,9 +156,9 @@ const moderator = new Moderator({
   },
   
   // Thresholds
-  severityThreshold: 0.3,   // >= this = flagged
-  reviewThreshold: 0.7,     // >= this = review
-  blockThreshold: 0.9,      // >= this = block
+  allowThreshold: 0.3,        // Severity < 30% = ALLOW
+  denyThreshold: 0.7,         // Severity >= 70% = DENY
+  confidenceThreshold: 0.7,   // Confidence < 70% = ESCALATE
   
   // Behavior
   normalizeText: true,      // Apply obfuscation detection
@@ -160,12 +185,12 @@ Main moderation method.
 
 ```typescript
 interface ExtendedModerationResult {
-  flagged: boolean;                    // Should this be flagged?
+  action: FinalAction;                 // 'allow' | 'deny' | 'escalate'
+  flagged: boolean;                    // true if action === 'deny'
   severity: number;                    // 0.0 - 1.0
+  confidence: number;                  // Model confidence
   categories: CategoryScores;          // Per-category scores
   contextFactors: ContextFactors;      // Intent, target, reclamation, etc.
-  suggestedAction: SuggestedAction;    // 'allow' | 'warn' | 'review' | 'block'
-  confidence: number;                  // Model confidence
   flaggedSpans: FlaggedSpan[];         // Specific flagged terms
   normalized: string;                  // Text after normalization
   original: string;                    // Original input
@@ -296,6 +321,7 @@ src/
 ├── moderator.ts      # Main orchestrator with tiered fast-path
 ├── normalizer.ts     # Text normalization (homoglyphs, leetspeak)
 ├── context.ts        # Context evaluation (intent, reclamation)
+├── language.ts       # Script detection (Latin, CJK, Cyrillic, etc.)
 ├── council.ts        # LLM council with hybrid aggregation
 ├── providers/
 │   ├── openai.ts     # OpenAI Moderation API (free)
@@ -315,7 +341,7 @@ src/
 The original `Filter` class is still available for backwards compatibility:
 
 ```typescript
-import { Filter } from 'content-checker';
+import { Filter } from 'council-mod';
 
 const filter = new Filter();
 filter.isProfane("some text");  // boolean
@@ -331,4 +357,4 @@ Apache 2.0 - See [LICENSE](LICENSE)
 ## Credits
 
 - Original `content-checker` by [Jacob Habib](https://github.com/jahabeebs) / [OpenModerator](https://www.openmoderator.com)
-- Fork enhancements: Context-aware moderation, tiered architecture, LLM council
+- `council-mod` enhancements by [GTLocalize](https://github.com/gtlocalize)

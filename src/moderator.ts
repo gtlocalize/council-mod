@@ -11,6 +11,7 @@
 import { TextNormalizer, normalizer } from './normalizer';
 import { ContextEvaluator, contextEvaluator } from './context';
 import { Council, CouncilConfig, DEFAULT_COUNCIL_CONFIG } from './council';
+import { analyzeLanguage, LanguageAnalysis } from './language';
 import {
   createProvider,
   ProviderName,
@@ -27,12 +28,18 @@ import {
   DEFAULT_CONFIG,
   CategoryScores,
   ModerationCategory,
+  FinalAction,
   SuggestedAction,
   ContextFactors,
   FlaggedSpan,
   FastPathConfig,
   DEFAULT_FAST_PATH_CONFIG,
+  ModerateOptions,
+  ContextMessage,
 } from './types';
+
+// Track if we've shown the context warning (only show once per session)
+let hasShownContextWarning = false;
 
 // =============================================================================
 // EXTENDED CONFIG
@@ -65,6 +72,7 @@ export interface TierInfo {
   councilLatencyMs?: number;
   skippedApi: boolean;
   skippedCouncil: boolean;
+  language?: LanguageAnalysis;
 }
 
 // =============================================================================
@@ -123,9 +131,42 @@ export class Moderator {
   
   /**
    * Main moderation method with tiered fast-path
+   * 
+   * @param text - The text to moderate
+   * @param options - Optional context and metadata
    */
-  async moderate(text: string): Promise<ExtendedModerationResult> {
+  async moderate(text: string, options?: ModerateOptions): Promise<ExtendedModerationResult> {
     const startTime = performance.now();
+    const warnings: string[] = [];
+    
+    // =======================================================================
+    // CONTEXT HANDLING
+    // =======================================================================
+    
+    const contextProvided = !!(options?.context && options.context.length > 0);
+    const isShortText = text.trim().length <= 10;
+    const isAmbiguous = this.isAmbiguousTerm(text);
+    
+    // Warn developers about missing context (once per session)
+    if (!contextProvided && !hasShownContextWarning) {
+      console.warn(
+        '⚠️  council-mod: No context provided. For better accuracy with ambiguous terms, ' +
+        'pass previous messages: moderate(text, { context: [...] }). ' +
+        'See: https://github.com/gtlocalize/council-mod#context'
+      );
+      hasShownContextWarning = true;
+    }
+    
+    // Add warning to result if no context for ambiguous content
+    if (!contextProvided && (isShortText || isAmbiguous)) {
+      warnings.push(
+        'No context provided. Short or ambiguous terms may be misclassified. ' +
+        'Consider passing previous messages for better accuracy.'
+      );
+    }
+    
+    // Build full text with context for API calls
+    const textWithContext = this.buildTextWithContext(text, options?.context);
     
     // =======================================================================
     // TIER 1: LOCAL FAST-PATH (~3ms)
@@ -144,8 +185,21 @@ export class Moderator {
     const localResult = await this.localProvider.analyze(normalizedText) as LocalProviderResult;
     const localLatencyMs = performance.now() - localStart;
     
+    // Detect language/script for routing decisions
+    const languageInfo = analyzeLanguage(text);
+    
     // Check if we can fast-path (skip API)
-    const fastPathDecision = this.evaluateFastPath(localResult);
+    // BUT: If short/ambiguous without context, don't fast-path to DENY
+    let fastPathDecision = this.evaluateFastPath(localResult, languageInfo);
+    
+    // Override: ambiguous without context should ESCALATE, not DENY
+    if (!contextProvided && isAmbiguous && fastPathDecision.action === 'deny') {
+      fastPathDecision = {
+        canFastPath: false,
+        action: 'escalate',
+        reason: 'Ambiguous term without context, escalating for safety',
+      };
+    }
     
     let tierInfo: TierInfo = {
       tier: 'local',
@@ -153,6 +207,7 @@ export class Moderator {
       localLatencyMs,
       skippedApi: false,
       skippedCouncil: false,
+      language: languageInfo,
     };
     
     // If fast-path says we're confident, return early
@@ -180,7 +235,7 @@ export class Moderator {
         primaryResult: localResult,
         escalated: false,
         finalDecision: {
-          flagged: fastPathDecision.action === 'block',
+          flagged: fastPathDecision.action === 'deny',
           action: fastPathDecision.action,
           confidence: localResult.confidence,
           decisionSource: 'primary',
@@ -189,17 +244,19 @@ export class Moderator {
       });
       
       return {
-        flagged: fastPathDecision.action === 'block' || fastPathDecision.action === 'warn',
+        action: fastPathDecision.action,
+        flagged: fastPathDecision.action === 'deny',
         severity,
+        confidence: localResult.confidence,
         categories: localResult.categories,
         contextFactors,
-        suggestedAction: fastPathDecision.action,
-        confidence: localResult.confidence,
         flaggedSpans,
         normalized: normalizedText,
         original: text,
         processingTimeMs,
         tierInfo,
+        contextProvided,
+        warnings,
       };
     }
     
@@ -244,7 +301,8 @@ export class Moderator {
       tierInfo.reason = `API confidence ${(apiResult.confidence * 100).toFixed(0)}% in escalation range`;
       
       const councilStart = performance.now();
-      councilResult = await this.council.convene(normalizedText, apiResult);
+      // Pass context to council - Claude/Gemini/DeepSeek understand conversational context
+      councilResult = await this.council.convene(textWithContext, apiResult);
       tierInfo.councilLatencyMs = performance.now() - councilStart;
       
       if (councilResult.decision === 'human_review') {
@@ -281,17 +339,27 @@ export class Moderator {
     const harmReduction = this.contextEvaluator.calculateHarmReduction(contextFactors);
     const adjustedSeverity = Math.min(rawSeverity * harmReduction, 1.0);
     
-    const finalFlagged = councilResult 
-      ? (councilResult.decision === 'flagged' || (councilResult.decision === 'human_review' && adjustedSeverity > 0.5))
-      : adjustedSeverity >= this.config.severityThreshold;
-    
-    const suggestedAction = councilResult?.decision === 'human_review'
-      ? 'review' as SuggestedAction
-      : this.determineSuggestedAction(adjustedSeverity);
-    
     const confidence = councilResult 
       ? councilResult.averageConfidence 
       : apiResult.confidence;
+    
+    // Determine final action using the new 3-outcome model
+    let finalAction: FinalAction;
+    if (councilResult) {
+      // Council made a decision
+      if (councilResult.decision === 'human_review') {
+        finalAction = 'escalate';
+      } else if (councilResult.decision === 'flagged') {
+        finalAction = 'deny';
+      } else {
+        finalAction = 'allow';
+      }
+    } else {
+      // API-only decision - pass categories so high-severity individual categories trigger DENY
+      // Also pass language info - non-Latin scripts need stricter thresholds (API underreports)
+      const isNonLatin = tierInfo.language?.shouldSkipFastPath || false;
+      finalAction = this.determineAction(adjustedSeverity, confidence, baseCategories, isNonLatin);
+    }
     
     const flaggedSpans = this.identifyFlaggedSpans(
       text, 
@@ -309,42 +377,54 @@ export class Moderator {
       escalated: !!councilResult,
       councilResult,
       finalDecision: {
-        flagged: finalFlagged,
-        action: suggestedAction,
+        flagged: finalAction === 'deny',
+        action: finalAction,
         confidence,
         decisionSource,
       },
-      humanReview: councilResult?.decision === 'human_review' 
+      humanReview: finalAction === 'escalate' 
         ? { itemId: 'pending', status: 'queued' }
         : undefined,
       processingTimeMs,
     });
     
     return {
-      flagged: finalFlagged,
+      action: finalAction,
+      flagged: finalAction === 'deny',
       severity: adjustedSeverity,
+      confidence,
       categories: baseCategories,
       contextFactors,
-      suggestedAction,
-      confidence,
       flaggedSpans,
       normalized: normalizedText,
       original: text,
       processingTimeMs,
       tierInfo,
+      contextProvided,
+      warnings,
     };
   }
   
   /**
    * Evaluate if we can use fast-path (skip API)
    */
-  private evaluateFastPath(localResult: LocalProviderResult): {
+  private evaluateFastPath(localResult: LocalProviderResult, languageInfo: LanguageAnalysis): {
     canFastPath: boolean;
-    action: SuggestedAction;
+    action: FinalAction;
     reason: string;
   } {
     const fp = this.config.fastPath;
     const meta = localResult.localMeta;
+    
+    // NON-LATIN SCRIPTS: Always go to API
+    // Our local patterns only work for Latin text
+    if (languageInfo.shouldSkipFastPath) {
+      return {
+        canFastPath: false,
+        action: 'escalate',
+        reason: `Non-Latin script (${languageInfo.script}) detected, requires API analysis`,
+      };
+    }
     
     // Check for high-priority categories that always need API verification
     for (const cat of fp.alwaysCheckCategories) {
@@ -352,7 +432,7 @@ export class Moderator {
       if (score > 0.3) {
         return {
           canFastPath: false,
-          action: 'review',
+          action: 'escalate',
           reason: `High-priority category ${cat} detected (${(score * 100).toFixed(0)}%), needs API verification`,
         };
       }
@@ -362,21 +442,21 @@ export class Moderator {
     if (localResult.confidence < fp.minLocalConfidence) {
       return {
         canFastPath: false,
-        action: 'review',
+        action: 'escalate',
         reason: `Local confidence ${(localResult.confidence * 100).toFixed(0)}% below threshold ${(fp.minLocalConfidence * 100).toFixed(0)}%`,
       };
     }
     
-    // HIGH SEVERITY: Fast-path BLOCK
+    // HIGH SEVERITY + HIGH CONFIDENCE: Fast-path DENY
     if (meta.adjustedSeverity >= fp.localBlockThreshold) {
       return {
         canFastPath: true,
-        action: 'block',
+        action: 'deny',
         reason: `High local severity ${(meta.adjustedSeverity * 100).toFixed(0)}% >= ${(fp.localBlockThreshold * 100).toFixed(0)}% threshold`,
       };
     }
     
-    // LOW SEVERITY: Fast-path ALLOW
+    // LOW SEVERITY + HIGH CONFIDENCE: Fast-path ALLOW
     if (meta.adjustedSeverity <= fp.localAllowThreshold && meta.detectedTerms.length === 0) {
       return {
         canFastPath: true,
@@ -387,10 +467,10 @@ export class Moderator {
       };
     }
     
-    // MEDIUM SEVERITY: Need API
+    // MEDIUM SEVERITY: Need API (escalate)
     return {
       canFastPath: false,
-      action: 'review',
+      action: 'escalate',
       reason: `Local severity ${(meta.adjustedSeverity * 100).toFixed(0)}% in uncertain range, needs API`,
     };
   }
@@ -408,6 +488,52 @@ export class Moderator {
       isSelfReferential: false,
       sentiment: 'neutral',
     };
+  }
+  
+  /**
+   * Check if a term is ambiguous (could be innocent or harmful depending on context)
+   * These are terms that NEED context to moderate correctly
+   */
+  private isAmbiguousTerm(text: string): boolean {
+    const trimmed = text.trim().toLowerCase();
+    
+    // Very short text is inherently ambiguous
+    if (trimmed.length <= 5) return true;
+    
+    // Japanese ambiguous terms (phonetic overlaps)
+    // にがー = could be "bitter" (苦い) or n-word
+    const japaneseAmbiguous = ['にがー', 'ニガー', 'にが'];
+    if (japaneseAmbiguous.some(term => trimmed.includes(term))) return true;
+    
+    // Single words are often ambiguous
+    if (!trimmed.includes(' ') && trimmed.length <= 10) return true;
+    
+    return false;
+  }
+  
+  /**
+   * Build text with context for API calls
+   * Formats context messages before the main text
+   */
+  private buildTextWithContext(
+    text: string, 
+    context?: string[] | ContextMessage[]
+  ): string {
+    if (!context || context.length === 0) {
+      return text;
+    }
+    
+    // Convert to strings if rich objects
+    const contextStrings = context.map(c => 
+      typeof c === 'string' ? c : c.text
+    );
+    
+    // Format: context messages, then separator, then main text
+    const contextBlock = contextStrings
+      .map((msg, i) => `[${i + 1}] ${msg}`)
+      .join('\n');
+    
+    return `Previous messages:\n${contextBlock}\n\n---\nMessage to moderate:\n${text}`;
   }
   
   /**
@@ -458,12 +584,73 @@ export class Moderator {
   }
   
   /**
-   * Determine suggested action based on severity
+   * Determine final action based on severity, confidence, and category scores
+   * 
+   * Logic:
+   * - ANY high-priority category >= threshold → DENY (regardless of average)
+   * - For non-Latin: use LOWER threshold (APIs underreport non-English hate speech)
+   * - Severity >= denyThreshold AND confident → DENY
+   * - Severity < allowThreshold AND confident → ALLOW
+   * - Not confident OR severity in middle → ESCALATE
    */
+  private determineAction(
+    severity: number, 
+    confidence: number, 
+    categories?: CategoryScores,
+    isNonLatin: boolean = false
+  ): FinalAction {
+    const isConfident = confidence >= this.config.confidenceThreshold;
+    
+    // HIGH-PRIORITY CATEGORY CHECK
+    // If ANY of these categories crosses the threshold, it's DENY
+    // Don't let averaging hide obvious hate speech
+    if (categories) {
+      const highPriorityCategories: ModerationCategory[] = [
+        'hate_speech', 
+        'harassment', 
+        'violence', 
+        'threats',
+        'child_safety',
+        'self_harm',
+      ];
+      
+      // For non-Latin scripts, use a LOWER threshold
+      // OpenAI's API significantly underreports hate speech in Chinese, Arabic, etc.
+      // A 50% hate_speech score in Chinese is probably 80%+ in reality
+      const effectiveThreshold = isNonLatin 
+        ? this.config.denyThreshold * 0.6  // 70% * 0.6 = 42%
+        : this.config.denyThreshold;
+      
+      for (const cat of highPriorityCategories) {
+        const score = categories[cat] || 0;
+        if (score >= effectiveThreshold) {
+          return 'deny';
+        }
+      }
+    }
+    
+    if (!isConfident) {
+      // Not confident enough → escalate for more review
+      return 'escalate';
+    }
+    
+    if (severity < this.config.allowThreshold) {
+      return 'allow';
+    }
+    
+    if (severity >= this.config.denyThreshold) {
+      return 'deny';
+    }
+    
+    // Severity in the middle (allowThreshold to denyThreshold) → escalate
+    return 'escalate';
+  }
+  
+  /** @deprecated Use determineAction instead */
   private determineSuggestedAction(severity: number): SuggestedAction {
-    if (severity >= this.config.blockThreshold) return 'block';
-    if (severity >= this.config.reviewThreshold) return 'review';
-    if (severity >= this.config.severityThreshold) return 'warn';
+    if (severity >= 0.9) return 'block';
+    if (severity >= 0.7) return 'review';
+    if (severity >= 0.3) return 'warn';
     return 'allow';
   }
   

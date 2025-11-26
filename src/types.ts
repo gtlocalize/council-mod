@@ -56,19 +56,79 @@ export interface FlaggedSpan {
 // MODERATION RESULT
 // =============================================================================
 
+/**
+ * Final decision outcomes:
+ * - allow: Content is acceptable
+ * - deny: Content should be blocked/removed
+ * - escalate: Not confident enough, needs higher-tier review
+ */
+export type FinalAction = 'allow' | 'deny' | 'escalate';
+
+/** @deprecated Use FinalAction instead */
 export type SuggestedAction = 'allow' | 'warn' | 'review' | 'block';
 
 export interface ModerationResult {
+  /** Final action: allow, deny, or escalate */
+  action: FinalAction;
+  
+  /** Whether content was flagged as potentially harmful */
   flagged: boolean;
-  severity: number;                    // 0.0 - 1.0 overall severity
-  categories: CategoryScores;          // Per-category confidence scores
-  contextFactors: ContextFactors;      // Intent, target, reclamation, etc.
-  suggestedAction: SuggestedAction;
-  confidence: number;                  // Model confidence in assessment
-  flaggedSpans: FlaggedSpan[];         // Specific flagged portions
-  normalized: string;                  // Full text after normalization
-  original: string;                    // Original input
-  processingTimeMs: number;            // For performance tracking
+  
+  /** Overall severity score 0.0 - 1.0 */
+  severity: number;
+  
+  /** Model confidence in this decision 0.0 - 1.0 */
+  confidence: number;
+  
+  /** Per-category confidence scores */
+  categories: CategoryScores;
+  
+  /** Context analysis (intent, target, reclamation, etc.) */
+  contextFactors: ContextFactors;
+  
+  /** Specific flagged portions of text */
+  flaggedSpans: FlaggedSpan[];
+  
+  /** Text after normalization */
+  normalized: string;
+  
+  /** Original input text */
+  original: string;
+  
+  /** Processing latency in milliseconds */
+  processingTimeMs: number;
+  
+  /** Whether context was provided for this moderation */
+  contextProvided: boolean;
+  
+  /** Warnings about the moderation (e.g., "No context provided") */
+  warnings: string[];
+  
+  /** @deprecated Use 'action' instead */
+  suggestedAction?: SuggestedAction;
+}
+
+// =============================================================================
+// CONTEXT OPTIONS
+// =============================================================================
+
+/** Context message for richer analysis */
+export interface ContextMessage {
+  text: string;
+  userId?: string;
+  timestamp?: Date;
+}
+
+/** Options for moderate() call */
+export interface ModerateOptions {
+  /** Previous messages for context (array of strings or rich objects) */
+  context?: string[] | ContextMessage[];
+  
+  /** User ID of the person who sent the message being moderated */
+  userId?: string;
+  
+  /** Platform identifier (youtube, discord, twitch, etc.) */
+  platform?: string;
 }
 
 // =============================================================================
@@ -87,10 +147,22 @@ export interface ModeratorConfig {
   normalizeText: boolean;              // Apply homoglyph/leetspeak normalization
   analyzeContext: boolean;             // Run context evaluation
   
-  // Thresholds
-  severityThreshold: number;           // Below this = allow (default 0.3)
-  reviewThreshold: number;             // Above this = review (default 0.7)
-  blockThreshold: number;              // Above this = block (default 0.9)
+  // Thresholds for decision making
+  /** Severity below this = ALLOW (default 0.3) */
+  allowThreshold: number;
+  
+  /** Severity above this = DENY (default 0.7) */
+  denyThreshold: number;
+  
+  /** Confidence below this = ESCALATE (default 0.7) */
+  confidenceThreshold: number;
+  
+  /** @deprecated Use allowThreshold */
+  severityThreshold?: number;
+  /** @deprecated Use denyThreshold */
+  reviewThreshold?: number;
+  /** @deprecated */
+  blockThreshold?: number;
   
   // Categories to check (empty = all)
   enabledCategories: ModerationCategory[];
@@ -136,10 +208,10 @@ export const DEFAULT_CONFIG: ModeratorConfig = {
   provider: 'openai',
   normalizeText: true,
   analyzeContext: true,
-  severityThreshold: 0.3,
-  reviewThreshold: 0.7,
-  blockThreshold: 0.9,
-  enabledCategories: [],  // Empty = all categories
+  allowThreshold: 0.3,      // Severity < 30% = ALLOW
+  denyThreshold: 0.7,       // Severity > 70% = DENY
+  confidenceThreshold: 0.7, // Confidence < 70% = ESCALATE
+  enabledCategories: [],    // Empty = all categories
   fastPath: DEFAULT_FAST_PATH_CONFIG,
 };
 

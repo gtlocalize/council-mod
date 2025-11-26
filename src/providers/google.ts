@@ -161,7 +161,8 @@ export class GeminiProvider implements ModerationProvider {
   
   constructor(config: ProviderConfig & { model?: string } = {}) {
     this.apiKey = config.apiKey || process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
-    this.model = config.model || 'gemini-1.5-flash';
+    // Use gemini-2.0-flash-exp (newer) or gemini-pro (stable fallback)
+    this.model = config.model || 'gemini-2.0-flash-exp';
   }
   
   isAvailable(): boolean {
