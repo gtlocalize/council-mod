@@ -8,10 +8,18 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
-    "test": "mocha",
+    "test": "mocha --require tsx test/**/*.test.ts",
+    "test:golden": "mocha --require tsx test/golden-set.test.ts",
+    "test:library": "tsx scripts/test-library.ts",
     "prettier": "prettier --write .",
     "cli": "tsx src/cli.ts",
-    "analyze": "tsx src/cli.ts"
+    "analyze": "tsx src/cli.ts",
+    "generate:tests": "tsx scripts/generate-test-cases.ts",
+    "audit": "tsx scripts/audit-cli.ts",
+    "audit:llm": "tsx scripts/llm-audit.ts",
+    "agreement": "tsx scripts/calculate-agreement.ts",
+    "generate:regression": "tsx scripts/generate-tests.ts",
+    "dashboard": "tsx scripts/dashboard.ts"
   },
   "contributors": [
     "Jacob Habib <jacob@utilityfueled.com> (https://github.com/jahabeebs)",
