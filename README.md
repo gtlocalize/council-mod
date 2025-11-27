@@ -111,6 +111,75 @@ console.log(result.confidence);        // 0.0 - 1.0
 console.log(result.tierInfo.tier);     // 'local' | 'api' | 'council' | 'human'
 ```
 
+## Usage Examples
+
+### Basic Moderation
+
+```typescript
+import { Moderator } from 'council-mod';
+
+const mod = new Moderator({
+  openaiApiKey: process.env.OPENAI_API_KEY,
+});
+
+// Simple check
+const result = await mod.moderate("This is fine");
+console.log(result.action);  // 'allow'
+
+// Handles obfuscation
+const result2 = await mod.moderate("f4gg0t");
+console.log(result2.flagged);  // true
+console.log(result2.normalized);  // 'faggot'
+
+// Understands context
+const result3 = await mod.moderate(
+  "The word 'faggot' has been historically used as a slur"
+);
+console.log(result3.action);  // 'allow' (educational context)
+```
+
+### With Context
+
+```typescript
+// Ambiguous short text
+const result = await mod.moderate("にがー");  // Could be "bitter" or slur
+console.log(result.action);  // 'escalate' (needs context)
+
+// With conversation context
+const result2 = await mod.moderate("にがー", {
+  context: ["コーヒー飲んだ", "めっちゃ濃かった"]
+});
+console.log(result2.action);  // 'allow' (clearly means "bitter coffee")
+```
+
+### Fast Local Check
+
+```typescript
+// Skip API, local-only (~3ms)
+const quick = await mod.quickCheck("hello world");
+console.log(quick.flagged);  // false
+console.log(quick.latencyMs);  // ~3
+```
+
+### Council Escalation
+
+```typescript
+const mod = new Moderator({
+  openaiApiKey: process.env.OPENAI_API_KEY,
+  council: {
+    enabled: true,
+    members: ['anthropic', 'gemini'],
+  },
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY,
+  googleApiKey: process.env.GOOGLE_API_KEY,
+});
+
+// Ambiguous case triggers council
+const result = await mod.moderate("borderline content");
+console.log(result.tierInfo.tier);  // 'council'
+console.log(result.action);  // Multiple models voted
+```
+
 ## CLI Testing
 
 ```bash
@@ -123,6 +192,99 @@ npx tsx src/cli.ts "Your text here"
 # Interactive mode
 npx tsx src/cli.ts --interactive
 ```
+
+---
+
+## Development
+
+### Setup
+
+```bash
+# Clone and install
+git clone <repo-url>
+cd content-checker/content-checker
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your API keys
+```
+
+### Environment Variables
+
+Create a `.env` file:
+
+```bash
+# Required for API moderation
+OPENAI_API_KEY=sk-...
+
+# Optional: For council voting
+ANTHROPIC_API_KEY=sk-ant-...
+GOOGLE_API_KEY=...
+
+# Optional: Alternative provider
+PERSPECTIVE_API_KEY=...
+```
+
+### Build
+
+```bash
+npm run build      # Build library
+npm run test       # Run unit tests
+```
+
+### QA Testing
+
+Generate test cases and run audits:
+
+```bash
+# 1. Generate test cases (uses Claude Opus 4.5)
+npm run generate:tests
+
+# 2. Run LLM audits
+npm run audit:llm      # Gemini 3 Pro
+npm run audit:claude   # Claude Sonnet 4.5
+
+# 3. Human audit (interactive CLI)
+npm run audit
+
+# 4. Calculate agreement metrics
+npm run agreement
+
+# 5. View dashboard
+npm run dashboard
+```
+
+### QA Audit CLI
+
+Interactive terminal interface for human auditing:
+
+```
+CONTENT MODERATION AUDIT CLI
+Progress: 45/550 (8.2%)
+Current:  #46
+
+TEXT:
+┌──────────────────────────────────────────────────────┐
+│ This is the content to moderate...                  │
+└──────────────────────────────────────────────────────┘
+
+CONTEXT (previous messages):
+  [1] Previous message if any
+  [2] More context
+
+[A] Allow    [D] Deny     [E] Escalate
+[S] Skip     [B] Back     [Q] Quit & Save
+
+Your decision: _
+```
+
+**Features:**
+- Auto-saves progress after each decision
+- Resume from where you left off
+- Randomized case order (prevents bias)
+- Blind audit (no category hints)
+- Statistics: `npm run audit -- --stats`
 
 ---
 

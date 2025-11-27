@@ -45,7 +45,7 @@ export interface TestCaseDataset {
 // =============================================================================
 
 export type AuditAction = 'allow' | 'deny' | 'escalate';
-export type AuditorType = 'human' | 'claude-opus-4.5' | 'gemini-3-pro';
+export type AuditorType = 'human' | 'claude-opus-4.5' | 'claude-sonnet-4.5' | 'gemini-3-pro';
 
 export interface Audit {
   caseId: string;
@@ -173,7 +173,7 @@ export const DEFAULT_GENERATION_CONFIG: GenerationConfig = {
     'self_harm',
     'drugs_illegal',
     'profanity',
-    'child_safety',
+    // 'child_safety', // Excluded - too sensitive for testing without specialized oversight
     'personal_info',
     'spam_scam',
   ],

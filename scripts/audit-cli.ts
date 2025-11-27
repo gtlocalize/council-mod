@@ -55,12 +55,41 @@ function color(text: string, c: keyof typeof colors): string {
 // DATA LOADING
 // =============================================================================
 
+/**
+ * Seeded shuffle for deterministic randomization.
+ * Same seed = same order (so resuming works correctly).
+ */
+function seededShuffle<T>(array: T[], seed: number): T[] {
+  const shuffled = [...array];
+  let currentSeed = seed;
+  
+  // Simple LCG (Linear Congruential Generator)
+  const random = () => {
+    currentSeed = (currentSeed * 1664525 + 1013904223) % 2**32;
+    return currentSeed / 2**32;
+  };
+  
+  // Fisher-Yates shuffle with seeded random
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  
+  return shuffled;
+}
+
 function loadCases(): TestCaseDataset | null {
   if (!fs.existsSync(CASES_PATH)) {
     console.error(color('\n❌ No test cases found. Run `npm run generate:tests` first.\n', 'red'));
     return null;
   }
-  return JSON.parse(fs.readFileSync(CASES_PATH, 'utf-8'));
+  const dataset = JSON.parse(fs.readFileSync(CASES_PATH, 'utf-8'));
+  
+  // Shuffle cases to prevent order bias in human auditing
+  // Use a fixed seed so the order is deterministic and resume works
+  dataset.cases = seededShuffle(dataset.cases, 42);
+  
+  return dataset;
 }
 
 function loadAudits(): AuditDataset {
@@ -112,14 +141,13 @@ function displayCase(testCase: TestCase): void {
   console.log(color('─'.repeat(70), 'dim'));
   console.log();
   
-  // Metadata
-  console.log(`  ${color('ID:', 'dim')} ${testCase.id}`);
-  console.log(`  ${color('Category:', 'dim')} ${color(testCase.category, 'magenta')}`);
-  console.log(`  ${color('Type:', 'dim')} ${color(testCase.type, 'cyan')}`);
-  console.log(`  ${color('Language:', 'dim')} ${testCase.language === 'en' ? 'English' : 'Japanese'}`);
-  console.log();
+  // REMOVED: ID (contains category: "hate_speech-positive-en-...")
+  // REMOVED: Language (obvious from reading the text)
+  // REMOVED: Category (biases toward expected answer)
+  // REMOVED: Type (biases toward positive/negative/edge)
+  // REMOVED: Generation reasoning (literally tells the answer!)
   
-  // Text content
+  // Text content - ONLY thing the auditor sees
   console.log(color('  TEXT:', 'bright'));
   console.log(color('  ┌' + '─'.repeat(66) + '┐', 'dim'));
   
@@ -141,13 +169,6 @@ function displayCase(testCase: TestCase): void {
     for (let i = 0; i < testCase.context.length; i++) {
       console.log(color(`    [${i + 1}] `, 'dim') + testCase.context[i]);
     }
-  }
-  
-  // Generation reasoning
-  if (testCase.metadata.reasoning) {
-    console.log();
-    console.log(color('  GENERATION REASONING:', 'dim'));
-    console.log(color('    ' + testCase.metadata.reasoning, 'dim'));
   }
   
   console.log();

@@ -132,7 +132,7 @@ async function callClaudeOpus(prompt: string): Promise<string> {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: 'claude-opus-4-5-20250514',
+      model: 'claude-opus-4-5-20251101',
       max_tokens: 4096,
       messages: [
         {

@@ -1,5 +1,10 @@
 # council-mod Development Plan
 
+## Important Notes
+
+**child_safety Category Exclusion:**
+The `child_safety` category has been **excluded from QA testing** due to the extreme sensitivity of generating test content that could resemble CSAM-related material. This category remains in the library's detection capabilities, but will not have automated test coverage. Any testing of this category should be done by specialized organizations with proper ethical oversight and legal clearances.
+
 ## Decision Model
 
 **Three final outcomes only:**
@@ -506,6 +511,247 @@ if (result.action === 'hold') {
 - Progress callbacks
 - Skip council option for speed
 
+### 6.6 Audit CLI Enhancement (TODO)
+
+**Current state:** Basic linear audit - loads all cases, audits sequentially, saves progress.
+
+**Needed:** Multi-functional audit management system.
+
+#### Audit Sets
+Create named subsets of cases for targeted auditing:
+
+```typescript
+// Create audit sets
+npm run audit -- --create-set "sample-50" --random 50
+npm run audit -- --create-set "japanese-only" --filter language=ja
+npm run audit -- --create-set "hate-speech-edge" --filter category=hate_speech,type=edge
+npm run audit -- --create-set "disagreements" --where "gemini!=claude"
+
+// Audit a specific set
+npm run audit -- --set "sample-50"
+
+// List available sets
+npm run audit -- --list-sets
+```
+
+#### Multi-functional Operations
+
+**Set Management:**
+- Create sets with filters (category, type, language, random sampling)
+- Load/save named sets
+- Compare sets (overlap analysis)
+
+**Audit Operations:**
+- Audit specific set (not all 550 cases)
+- Re-audit cases (override existing audits)
+- Batch audit with multiple auditors
+- Resume from interruption (already works)
+
+**Review Operations:**
+- View specific case by ID
+- Compare audits for same case (human vs LLM)
+- Filter cases by disagreement
+- Export disagreements to CSV
+
+**Statistics:**
+- Progress by auditor
+- Agreement rates
+- Time estimates
+- Audit quality metrics
+
+#### Implementation Ideas
+
+```typescript
+interface AuditSet {
+  name: string;
+  description?: string;
+  caseIds: string[];
+  filters?: {
+    categories?: ModerationCategory[];
+    types?: TestCaseType[];
+    languages?: TestLanguage[];
+  };
+  createdAt: string;
+  createdBy: 'human' | string;
+}
+```
+
+**UI Approach: Interactive menus, not CLI flags**
+
+Current pattern (good):
+```
+[A] Allow    [D] Deny     [E] Escalate
+[S] Skip     [B] Back     [Q] Quit & Save
+```
+
+Future pattern (similar):
+```
+Main Menu:
+  [1] Start Audit
+  [2] Create Audit Set
+  [3] Compare Auditors
+  [4] View Statistics
+  [5] Export Data
+  [Q] Quit
+
+Create Set Menu:
+  [1] Random Sample (enter N)
+  [2] Filter by Category
+  [3] Filter by Language
+  [4] Find Disagreements
+  [B] Back to Main Menu
+```
+
+**Navigation:**
+- Arrow keys / numbers for menu selection
+- [B] Back to previous menu
+- [Q] Quit (with confirmation)
+- [?] Help for current screen
+- Clear visual hierarchy with boxes and colors
+
+**NOT this** (flags are developer-y, not user-friendly):
+```bash
+# ❌ Too many flags, hard to remember
+audit --create-set "sample" --filter category=hate_speech --random 50
+```
+
+**Instead this** (guided workflow):
+```
+Welcome to Audit CLI
+[1] Start Audit
+[2] Manage Sets
+> 2
+
+Audit Sets
+[1] Create New Set
+[2] View Existing Sets
+[3] Delete Set
+> 1
+
+Create Set: How many cases?
+[1] All cases (550)
+[2] Random sample (enter number)
+[3] Filtered subset
+> 2
+
+Enter number: 50
+
+Create Set: Filters?
+[1] All categories
+[2] Specific category (select)
+[3] Specific type (select)
+> 1
+
+Set created: "random-50" (50 cases)
+Press Enter to continue...
+```
+
+#### Use Cases
+
+**Sample audits:** "Audit 50 random cases to check quality before running all 550"
+**Targeted review:** "Re-audit all cases where Gemini and Claude disagreed"
+**Language-specific:** "Audit only Japanese cases with a Japanese speaker"
+**Category deep-dive:** "Focus audit on hate_speech edge cases"
+**Disagreement resolution:** "Human review of all 3-way disagreements"
+
+#### Benefits
+- Faster iteration (audit subsets, not all 550)
+- Targeted QA (focus on problem areas)
+- Better workflow (review disagreements, re-audit)
+- Flexibility (create custom audit scenarios)
+
+---
+
+### 6.7 Category Severity & Multi-Violation Tracking (TODO)
+
+**Status:** Deferred until after baseline QA round. Current QA focuses on core decisions (Allow/Deny/Escalate) to establish calibration before adding category granularity.
+
+**Problem:** "Cross" type cases violate multiple categories, but we only track one. When denying, we should specify WHICH category was the primary reason.
+
+**Use cases:**
+- Hate speech + threats → Deny for "threats" (more severe)
+- Harassment + sexual content → Deny for "sexual_harassment"
+- Multiple violations → Auditor picks ONE primary category (forced choice)
+
+**Category Overlap Issue:**
+Many cases span multiple categories with fuzzy boundaries:
+- "I'm gonna cut your head off" = Violence? Threats? Both?
+- Racial slur + physical threat = Hate speech? Violence?
+- Sexual harassment + doxxing = Which is primary?
+
+**Solution:** Clear category definitions + configurable severity ranking
+
+**Implementation:**
+
+```typescript
+interface ModerationResult {
+  action: 'allow' | 'deny' | 'escalate';
+  // NEW: Primary violation (if denied/escalated)
+  primaryCategory?: ModerationCategory;
+  // NEW: All detected violations with severities
+  violations: {
+    category: ModerationCategory;
+    severity: number;
+    confidence: number;
+  }[];
+  // Existing fields...
+}
+
+// Configurable severity ranking (default provided)
+interface CategoryConfig {
+  severityRanking: ModerationCategory[];  // Highest to lowest
+  // Example default:
+  // ['child_safety', 'threats', 'violence', 'hate_speech', 
+  //  'self_harm', 'sexual_harassment', 'harassment', 
+  //  'drugs_illegality', 'doxxing', 'spam_scam', 'profanity']
+}
+```
+
+**QA Changes:**
+
+Human audit CLI - Two-step deny process:
+```
+Step 1: [D] Deny
+
+Step 2: Primary reason? (pick ONE)
+  → [1] Hate Speech
+  → [2] Harassment  
+  → [3] Sexual Harassment
+  → [4] Violence
+  → [5] Threats
+  → [6] Drugs/Illegality
+  → [7] Self-Harm
+  → [8] Child Safety
+  → [9] Spam/Scam
+  → [10] Profanity
+  → [11] Personal Info/Doxxing
+```
+
+**Audit Data Structure:**
+```typescript
+interface Audit {
+  caseId: string;
+  auditor: 'human' | 'gemini-3-pro' | string;
+  action: AuditAction;
+  primaryCategory?: ModerationCategory;  // NEW - ONE category per deny
+  confidence?: number;
+  reasoning?: string;
+  timestamp: string;
+}
+```
+
+**Prerequisites:**
+1. **Define category boundaries** - Clear definitions for each category
+2. **Establish severity ranking** - Default order (configurable)
+3. **Create decision tree** - When content fits multiple categories, which takes priority?
+
+**Benefits:**
+- More granular QA data
+- Better agreement metrics (did human and LLM deny for same reason?)
+- Improved transparency (why was this denied?)
+- Analytics on which categories are hardest to detect
+- Category-specific performance tracking
+
 ---
 
 ## Phase 7: Bias & False Positive Audit (TODO)
@@ -523,6 +769,63 @@ See `EXPERIMENTS.md` for tracked cases.
 ---
 
 ## Technical Debt / Future Improvements
+
+### Category Definitions & Boundaries
+
+**Problem:** Categories have fuzzy boundaries and no formal definitions.
+
+**Examples of overlap:**
+- "I'm gonna cut your head off" — Violence? Threats? Both?
+- Racial slur + "I'll kill you" — Hate speech? Threats? Violence?
+- "You're ugly and stupid, no one will ever love you" — Harassment? Bullying? Emotional abuse?
+- Unsolicited sexual advance — Sexual harassment? Harassment?
+- "Send me your address so I can come find you" — Threats? Doxxing attempt?
+
+**Current categories (no formal definitions):**
+```typescript
+const MODERATION_CATEGORIES = [
+  'hate_speech',          // Attacks based on protected characteristics?
+  'harassment',           // Repeated unwanted contact? Any hostility?
+  'sexual_harassment',    // Unwanted sexual advances/comments?
+  'violence',             // Graphic descriptions? Physical harm?
+  'threats',              // Intent to harm? Conditional? Direct?
+  'self_harm',            // Suicide ideation? Self-injury? Eating disorders?
+  'drugs_illegal',        // Drug sales? Drug use discussion? Which drugs?
+  'profanity',            // Any swear words? Context-dependent?
+  'personal_info',        // PII? Doxxing? Phone numbers?
+  'child_safety',         // CSAM indicators? Grooming? What age threshold?
+  'spam_scam',            // Unsolicited ads? Phishing? MLM?
+];
+```
+
+**Need to define:**
+1. **Clear boundaries** for each category
+2. **Precedence rules** when multiple categories apply
+3. **Examples** of edge cases and how to categorize them
+4. **Decision tree** for overlapping content
+
+**Default severity ranking (for multi-category cases):**
+```
+1. child_safety      (highest priority)
+2. threats
+3. violence
+4. self_harm
+5. hate_speech
+6. sexual_harassment
+7. harassment
+8. drugs_illegal
+9. personal_info
+10. spam_scam
+11. profanity        (lowest priority)
+```
+
+**TODO:**
+- [ ] Write formal definitions for each category
+- [ ] Create decision matrix for overlaps
+- [ ] Document edge cases with examples
+- [ ] Get human auditor feedback on ambiguous cases
+
+---
 
 ### Context Detection
 Current approach uses regex patterns (crude):
