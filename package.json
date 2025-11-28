@@ -15,6 +15,7 @@
     "cli": "tsx src/cli.ts",
     "analyze": "tsx src/cli.ts",
     "generate:tests": "tsx scripts/generate-test-cases.ts",
+    "generate:context-supplement": "tsx scripts/generate-context-supplement.ts",
     "audit": "tsx scripts/audit-cli.ts",
     "audit:llm": "tsx scripts/llm-audit.ts",
     "audit:claude": "tsx scripts/claude-audit.ts",

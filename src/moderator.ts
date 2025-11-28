@@ -708,7 +708,26 @@ export class Moderator {
   }
   
   /**
-   * Get human review queue
+   * Get items queued for human review
+   * 
+   * Returns cases that were escalated to human review due to:
+   * - Council split votes (no majority)
+   * - Low confidence majority
+   * - High severity threshold
+   * - User appeals
+   * 
+   * @returns Array of items pending human review
+   * 
+   * @example
+   * ```typescript
+   * const queue = moderator.getHumanReviewQueue();
+   * console.log(`${queue.length} items need review`);
+   * 
+   * for (const item of queue) {
+   *   console.log(item.text);
+   *   console.log(item.reason); // 'council_split' | 'low_confidence' | ...
+   * }
+   * ```
    */
   getHumanReviewQueue(): HumanReviewItem[] {
     return this.council.getHumanReviewQueue();

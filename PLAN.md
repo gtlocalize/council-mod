@@ -275,6 +275,41 @@ fastPath: {
 
 ---
 
+## Phase 2.9: Test Case Generation Improvements (TODO)
+
+### Context Bias Fix
+
+**Current issue:** All context cases are "looks bad → context excuses it"
+
+**Needed distribution for next generation:**
+```
+Context cases breakdown:
+  60% - Context exonerates (current pattern)
+  25% - Context condemns (NEW)
+  10% - Context neutral/irrelevant (NEW)  
+  5%  - Bad regardless of context (NEW)
+```
+
+**Generation prompts to add:**
+
+```typescript
+// Context that makes it WORSE
+"Generate cases where the message seems borderline, but context reveals 
+it's part of harassment, stalking, or escalating threats."
+
+// Context that's IRRELEVANT
+"Generate cases where the message is clearly bad, and context exists 
+but doesn't excuse it (e.g., self-harm message with casual context)."
+
+// Bad REGARDLESS
+"Generate cases with clear violations where no amount of context 
+could excuse it (explicit threats, severe slurs directed at someone)."
+```
+
+**See Phase 7 for detailed examples and rationale.**
+
+---
+
 ## Phase 3: Multi-Language Support (In Progress)
 
 ### 3.1 Current State ✅
@@ -473,6 +508,175 @@ mod.moderate("にがー", {
 | Short ambiguous term | ❌ None | ESCALATE + warning |
 | Short ambiguous term | ✅ Provided | Normal processing |
 | Clear violation | ❌ None | DENY (still catches obvious) |
+
+---
+
+## Phase 5.8: Moderation Philosophy Modes (TODO)
+
+**Problem:** Different platforms have different moderation philosophies:
+- **Interpersonal safety:** Chat apps, Discord (flag directed harm only)
+- **Platform content:** YouTube, TikTok (flag disturbing content period)
+
+**Key Distinction:**
+
+| Statement | Interpersonal Mode | Platform Mode | Why Different |
+|-----------|-------------------|---------------|---------------|
+| "I want to see people tortured" | ALLOW | DENY/ESCALATE | Personal expression vs content standards |
+| "You should be tortured" | DENY | DENY | Directed harm - both flag |
+| "Here's how to torture someone" | DENY | DENY | Actionable instruction - both flag |
+
+**Implementation:**
+
+```typescript
+interface ModerationMode {
+  mode: 'interpersonal-safety' | 'platform-content' | 'custom';
+  
+  // Granular controls
+  allowPersonalExpression: boolean;  // "I want X" vs "Do X"
+  requireDirectTarget: boolean;      // Must target someone to flag
+  brandSafetyMode: boolean;          // Flag disturbing content regardless
+  
+  // Per-category overrides
+  categoryModes?: {
+    violence: { requireTarget: boolean };
+    hate_speech: { allowDiscussion: boolean };
+  };
+}
+
+// Presets
+const INTERPERSONAL_SAFETY: ModerationMode = {
+  mode: 'interpersonal-safety',
+  allowPersonalExpression: true,
+  requireDirectTarget: true,
+  brandSafetyMode: false,
+};
+
+const PLATFORM_CONTENT: ModerationMode = {
+  mode: 'platform-content',
+  allowPersonalExpression: false,  // Flag disturbing content
+  requireDirectTarget: false,       // Flag even if not directed
+  brandSafetyMode: true,
+};
+```
+
+**Impact on Categories:**
+
+| Category | Mode Impact |
+|----------|-------------|
+| threats | None - always flag directed threats |
+| violence | HIGH - personal expression vs glorification |
+| hate_speech | MEDIUM - "I hate X" vs discussing hatred |
+| harassment | None - by definition directed |
+| sexual_harassment | None - by definition directed |
+| self_harm | LOW - "I feel suicidal" vs encouraging |
+
+**See CATEGORY_DEFINITIONS.md** for detailed mode-specific examples.
+
+---
+
+## Phase 5.9: Custom Guidelines & Category Mapping (TODO)
+
+**Problem:** Different platforms have different moderation policies. Our 11 categories are a sensible default, but users need to map their custom guidelines to our system.
+
+**Example Use Cases:**
+- Gaming platform: "toxic behavior" maps to harassment + hate_speech
+- News site: Different standards for comments vs articles
+- Kids platform: Much stricter thresholds, custom categories
+- Professional network: "unprofessional conduct" category
+
+**Proposed API:**
+
+```typescript
+interface CustomCategory {
+  name: string;  // User's category name
+  description: string;
+  mapsTo: ModerationCategory[];  // Which of our 11 categories this represents
+  threshold: number;  // Custom deny threshold for this category
+  examples: {
+    allow: string[];
+    deny: string[];
+    escalate: string[];
+  };
+}
+
+interface CustomGuidelines {
+  categories: CustomCategory[];
+  platformContext: string;  // "gaming", "professional", "kids", etc.
+  culturalContext?: string;  // Region-specific norms
+}
+
+// Usage
+const moderator = new Moderator({
+  openaiApiKey: process.env.OPENAI_API_KEY,
+  customGuidelines: {
+    categories: [
+      {
+        name: "toxic_behavior",
+        description: "Gaming toxicity including trash talk, griefing encouragement",
+        mapsTo: ['harassment', 'hate_speech', 'threats'],
+        threshold: 0.6,  // Stricter than default 0.7
+        examples: {
+          deny: ["go kill yourself noob", "uninstall trash"],
+          escalate: ["you suck at this game"],
+          allow: ["gg wp", "that was a bad play"],
+        },
+      },
+      {
+        name: "cheating_discussion", 
+        description: "Discussion of game exploits or cheating",
+        mapsTo: ['spam_scam'],  // Closest fit
+        threshold: 0.5,
+        examples: {
+          deny: ["DM me for aimbot", "here's how to dupe items"],
+          allow: ["the devs should fix this exploit"],
+        },
+      },
+    ],
+    platformContext: "gaming",
+  },
+});
+
+// System maps user's custom categories to our detection categories
+// Returns results in both formats
+const result = await moderator.moderate("go kill yourself noob");
+console.log(result.categories);  // Standard: { threats: 0.9, harassment: 0.8 }
+console.log(result.customCategories);  // Custom: { toxic_behavior: 0.85 }
+```
+
+**Implementation:**
+
+1. **Custom category mapping layer**
+   - Maps user categories to our 11 standard categories
+   - Aggregates scores from multiple mapped categories
+   - Applies custom thresholds
+
+2. **LLM prompt enhancement**
+   - Include custom guidelines in moderation prompt
+   - "This platform defines 'toxic behavior' as..."
+   - Use examples to guide LLM
+
+3. **Dual result format**
+   - Standard categories (for our system)
+   - Custom categories (for user's system)
+   - Both in the response
+
+4. **Guidelines validation**
+   - Ensure custom categories map to at least one standard category
+   - Warn if examples are ambiguous
+   - Suggest closest standard category matches
+
+**Benefits:**
+- Users keep their terminology ("toxic", "NSFW", "unprofessional")
+- We provide consistent detection backend
+- Custom thresholds per category
+- Platform-specific tuning
+
+**Challenges:**
+- Mapping quality varies with description quality
+- LLM prompt length increases
+- Category conflicts (custom category spans multiple standard ones)
+
+**Future:** Train on custom guidelines over time, fine-tune per-platform models.
 
 ---
 
@@ -764,13 +968,87 @@ Systematic testing for:
 - [ ] Regional slang variations
 - [ ] Cross-language phonetic collisions
 
+### **Known Test Bias: Context Always Excuses** ⚠️
+
+**Current problem:** All test cases with `context` are designed to show "looks bad alone → context makes it innocent."
+
+**Example:**
+```
+Text: "にがー"
+Context: ["コーヒー飲んだ", "めっちゃ濃かった"]
+Result: ALLOW (context shows it means "bitter")
+```
+
+**Missing scenarios:**
+
+| Scenario | Example | Expected | Current Coverage |
+|----------|---------|----------|------------------|
+| **Context excuses** | "にがー" + coffee context | ALLOW | ✅ Have this |
+| **Context condemns** | "You're trash" + harassment history | DENY | ❌ Missing |
+| **Context neutral** | "You suck" + unrelated context | DENY | ❌ Missing |
+| **Bad regardless** | Explicit threat + any context | DENY | ❌ Missing |
+
+**Real examples needed:**
+
+1. **Context makes it worse:**
+   ```
+   Text: "You better watch out"
+   Context: ["I know where you live", "I've seen your family"]
+   → Should be DENY (escalating threats)
+   ```
+
+2. **Context is irrelevant:**
+   ```
+   Text: "Kill yourself"
+   Context: ["How was your day?", "Weather is nice"]
+   → Should be DENY (context doesn't excuse self-harm)
+   ```
+
+3. **Bad with clarifying context:**
+   ```
+   Text: "You fucking idiot"
+   Context: ["Stop messaging me", "This is the 5th time today"]
+   → Should be DENY (harassment, context confirms pattern)
+   ```
+
+4. **Reclamation attempt but still attacking others:**
+   ```
+   Text: "As a gay man, those f*ggots are ruining our community"
+   Context: ["I'm tired of the activists"]
+   → Should be DENY (in-group doesn't excuse attack)
+   ```
+
+**Why this matters:**
+
+Current bias trains auditors (human and LLM) to think:
+- **Has context = probably innocent** ❌
+- **No context = uncertain** ❌
+
+Reality should be:
+- **Context can excuse, condemn, or be irrelevant** ✅
+
+**Action items for next test generation:**
+- [ ] Generate "context makes it worse" cases
+- [ ] Generate "context is neutral" cases  
+- [ ] Generate "bad regardless of context" cases
+- [ ] Ensure ~40% of context cases still result in DENY/ESCALATE
+- [ ] Balance: 60% context→ALLOW, 40% context→DENY/ESCALATE
+
+**Impact on current audit:**
+- Current round is still valid (measures baseline agreement)
+- But results may show artificially high ALLOW rate for context cases
+- Note this limitation when analyzing agreement metrics
+- Fix in next test generation round
+
 See `EXPERIMENTS.md` for tracked cases.
 
 ---
 
 ## Technical Debt / Future Improvements
 
-### Category Definitions & Boundaries
+### Category Definitions & Boundaries ✅ COMPLETE
+
+**Status:** Formal definitions documented in [`CATEGORY_DEFINITIONS.md`](./CATEGORY_DEFINITIONS.md)
 
 **Problem:** Categories have fuzzy boundaries and no formal definitions.
 
@@ -819,11 +1097,15 @@ const MODERATION_CATEGORIES = [
 11. profanity        (lowest priority)
 ```
 
-**TODO:**
-- [ ] Write formal definitions for each category
-- [ ] Create decision matrix for overlaps
-- [ ] Document edge cases with examples
-- [ ] Get human auditor feedback on ambiguous cases
+**COMPLETED:**
+- [x] Write formal definitions for each category
+- [x] Create decision matrix for overlaps
+- [x] Document edge cases with examples
+- [x] Establish severity ranking (child_safety → profanity)
+- [x] Decision trees for multi-category content
+- [x] Configuration recommendations by platform type
+
+**See:** [`CATEGORY_DEFINITIONS.md`](./CATEGORY_DEFINITIONS.md) for complete reference
 
 ---
 

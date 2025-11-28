@@ -476,6 +476,12 @@ The system understands that context matters:
 
 ---
 
+## Documentation
+
+- **[PLAN.md](./PLAN.md)** - Development roadmap and architecture decisions
+- **[CATEGORY_DEFINITIONS.md](./CATEGORY_DEFINITIONS.md)** - Formal definitions for all 11 moderation categories
+- **[EXPERIMENTS.md](./EXPERIMENTS.md)** - Test results and edge cases
+
 ## Files
 
 ```
@@ -508,6 +514,434 @@ import { Filter } from 'council-mod';
 const filter = new Filter();
 filter.isProfane("some text");  // boolean
 filter.clean("some text");      // censored string
+```
+
+---
+
+---
+
+## Production Deployment
+
+### Error Handling
+
+Always wrap moderation calls in try-catch:
+
+```typescript
+import { Moderator } from 'council-mod';
+
+const moderator = new Moderator({
+  openaiApiKey: process.env.OPENAI_API_KEY,
+  // Fallback to local if API unavailable
+  provider: 'openai',
+});
+
+async function moderateContent(text: string) {
+  try {
+    const result = await moderator.moderate(text);
+    return result;
+  } catch (error) {
+    console.error('Moderation error:', error);
+    
+    // Fallback: Use local-only check
+    try {
+      const localResult = await moderator.quickCheck(text);
+      return {
+        action: localResult.flagged ? 'deny' : 'allow',
+        flagged: localResult.flagged,
+        severity: localResult.severity,
+        confidence: 0.5,  // Lower confidence for fallback
+        tierInfo: { tier: 'local', reason: 'API unavailable' },
+      };
+    } catch (fallbackError) {
+      // Ultimate fallback: allow but log for review
+      console.error('Local fallback failed:', fallbackError);
+      return {
+        action: 'escalate',
+        flagged: false,
+        severity: 0,
+        confidence: 0,
+        tierInfo: { tier: 'human', reason: 'system error' },
+      };
+    }
+  }
+}
+```
+
+### Rate Limiting
+
+Handle API rate limits gracefully:
+
+```typescript
+class RateLimitedModerator {
+  private moderator: Moderator;
+  private queue: Array<{ text: string; resolve: Function }> = [];
+  private processing = false;
+  private requestsPerMinute = 50;  // Adjust based on your tier
+  
+  constructor(config) {
+    this.moderator = new Moderator(config);
+  }
+  
+  async moderate(text: string): Promise<ExtendedModerationResult> {
+    return new Promise((resolve) => {
+      this.queue.push({ text, resolve });
+      this.processQueue();
+    });
+  }
+  
+  private async processQueue() {
+    if (this.processing || this.queue.length === 0) return;
+    
+    this.processing = true;
+    const delay = 60000 / this.requestsPerMinute; // ms between requests
+    
+    while (this.queue.length > 0) {
+      const item = this.queue.shift()!;
+      const result = await this.moderator.moderate(item.text);
+      item.resolve(result);
+      
+      if (this.queue.length > 0) {
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+    
+    this.processing = false;
+  }
+}
+```
+
+### Integration Patterns
+
+#### Express Middleware
+
+```typescript
+import { Moderator } from 'council-mod';
+import express from 'express';
+
+const moderator = new Moderator({
+  openaiApiKey: process.env.OPENAI_API_KEY,
+  denyThreshold: 0.7,
+});
+
+// Middleware to moderate request content
+const moderateContent = (field: string) => {
+  return async (req, res, next) => {
+    const text = req.body[field];
+    
+    if (!text) return next();
+    
+    try {
+      const result = await moderator.moderate(text, {
+        userId: req.user?.id,
+        platform: 'web',
+      });
+      
+      if (result.action === 'deny') {
+        return res.status(400).json({
+          error: 'Content violates community guidelines',
+          details: {
+            severity: result.severity,
+            categories: Object.keys(result.categories)
+              .filter(k => result.categories[k] > 0.5),
+          },
+        });
+      }
+      
+      if (result.action === 'escalate') {
+        // Log for human review but allow through
+        console.log('Escalated for review:', {
+          userId: req.user?.id,
+          text: result.flaggedSpans,
+        });
+      }
+      
+      // Attach moderation result to request
+      req.moderationResult = result;
+      next();
+    } catch (error) {
+      console.error('Moderation error:', error);
+      // Fail open or closed based on your needs
+      next();  // Fail open: allow on error
+      // res.status(503).json({ error: 'Moderation unavailable' });  // Fail closed
+    }
+  };
+};
+
+app.post('/api/comments', moderateContent('text'), (req, res) => {
+  // Comment is pre-moderated
+  // Save to database...
+  res.json({ success: true });
+});
+```
+
+#### Discord Bot
+
+```typescript
+import { Client, Message } from 'discord.js';
+import { Moderator } from 'council-mod';
+
+const moderator = new Moderator({
+  openaiApiKey: process.env.OPENAI_API_KEY,
+});
+
+const client = new Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
+
+client.on('messageCreate', async (message: Message) => {
+  if (message.author.bot) return;
+  
+  const result = await moderator.moderate(message.content, {
+    userId: message.author.id,
+    platform: 'discord',
+  });
+  
+  if (result.action === 'deny') {
+    await message.delete();
+    await message.author.send(
+      `Your message was removed for violating guidelines (severity: ${(result.severity * 100).toFixed(0)}%)`
+    );
+    
+    // Log to mod channel
+    const modChannel = message.guild?.channels.cache.find(
+      c => c.name === 'mod-log'
+    );
+    await modChannel?.send({
+      embeds: [{
+        title: 'Message Removed',
+        fields: [
+          { name: 'User', value: message.author.tag },
+          { name: 'Channel', value: message.channel.toString() },
+          { name: 'Content', value: message.content },
+          { name: 'Severity', value: `${(result.severity * 100).toFixed(0)}%` },
+          { name: 'Categories', value: Object.keys(result.categories).join(', ') },
+        ],
+      }],
+    });
+  }
+});
+```
+
+#### Batch Processing
+
+```typescript
+async function moderateBatch(texts: string[]): Promise<ExtendedModerationResult[]> {
+  const moderator = new Moderator({
+    openaiApiKey: process.env.OPENAI_API_KEY,
+  });
+  
+  const results: ExtendedModerationResult[] = [];
+  const batchSize = 10;  // Process in chunks
+  
+  for (let i = 0; i < texts.length; i += batchSize) {
+    const batch = texts.slice(i, i + batchSize);
+    
+    // Process batch in parallel
+    const batchResults = await Promise.all(
+      batch.map(text => moderator.moderate(text))
+    );
+    
+    results.push(...batchResults);
+    
+    // Progress update
+    console.log(`Processed ${Math.min(i + batchSize, texts.length)}/${texts.length}`);
+    
+    // Rate limiting pause between batches
+    if (i + batchSize < texts.length) {
+      await new Promise(r => setTimeout(r, 1000));
+    }
+  }
+  
+  return results;
+}
+
+// Usage: Scan existing content
+const comments = await db.comments.findMany({ moderated: false });
+const results = await moderateBatch(comments.map(c => c.text));
+
+for (let i = 0; i < results.length; i++) {
+  if (results[i].action === 'deny') {
+    await db.comments.update({
+      where: { id: comments[i].id },
+      data: { hidden: true, moderationReason: 'flagged' },
+    });
+  }
+}
+```
+
+### Configuration Best Practices
+
+```typescript
+// Development: More verbose, log everything
+const devModerator = new Moderator({
+  provider: 'local-only',  // Free, no API calls
+  denyThreshold: 0.8,  // More lenient
+  normalizeText: true,
+  analyzeContext: true,
+});
+
+// Production: Balanced settings
+const prodModerator = new Moderator({
+  provider: 'openai',
+  openaiApiKey: process.env.OPENAI_API_KEY,
+  denyThreshold: 0.7,
+  confidenceThreshold: 0.7,
+  fastPath: {
+    enabled: true,
+    localBlockThreshold: 0.85,
+    localAllowThreshold: 0.10,
+  },
+  council: {
+    enabled: true,
+    members: ['anthropic', 'gemini'],
+    escalateMin: 0.30,
+    escalateMax: 0.70,
+  },
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY,
+  googleApiKey: process.env.GOOGLE_API_KEY,
+});
+
+// Strict: For high-risk content (kids platform, etc.)
+const strictModerator = new Moderator({
+  provider: 'openai',
+  openaiApiKey: process.env.OPENAI_API_KEY,
+  denyThreshold: 0.5,  // Lower threshold = more blocks
+  confidenceThreshold: 0.8,  // Higher confidence required
+  fastPath: {
+    enabled: true,
+    alwaysCheckCategories: [
+      'child_safety',
+      'self_harm',
+      'threats',
+      'violence',
+    ],
+  },
+});
+```
+
+### Monitoring & Metrics
+
+```typescript
+class MonitoredModerator extends Moderator {
+  private stats = {
+    total: 0,
+    allowed: 0,
+    denied: 0,
+    escalated: 0,
+    averageLatency: 0,
+    tierUsage: {
+      local: 0,
+      api: 0,
+      council: 0,
+    },
+  };
+  
+  async moderate(text: string, options?) {
+    const start = Date.now();
+    const result = await super.moderate(text, options);
+    const latency = Date.now() - start;
+    
+    // Update stats
+    this.stats.total++;
+    this.stats[result.action]++;
+    this.stats.tierUsage[result.tierInfo.tier]++;
+    
+    // Rolling average
+    this.stats.averageLatency = 
+      (this.stats.averageLatency * (this.stats.total - 1) + latency) / 
+      this.stats.total;
+    
+    // Log high-severity cases
+    if (result.severity > 0.9) {
+      console.warn('High severity content:', {
+        text: result.original,
+        severity: result.severity,
+        categories: result.categories,
+      });
+    }
+    
+    return result;
+  }
+  
+  getStats() {
+    return {
+      ...this.stats,
+      fastPathEfficiency: 
+        (this.stats.tierUsage.local / this.stats.total) * 100,
+    };
+  }
+}
+
+// Periodic reporting
+setInterval(() => {
+  const stats = moderator.getStats();
+  console.log('Moderation Stats:', stats);
+  // Send to monitoring service (DataDog, CloudWatch, etc.)
+}, 60000);
+```
+
+---
+
+## Troubleshooting
+
+### "API key not working"
+
+```typescript
+// Test API connection
+import { Moderator } from 'council-mod';
+
+const moderator = new Moderator({
+  openaiApiKey: process.env.OPENAI_API_KEY,
+});
+
+try {
+  const result = await moderator.moderate("test");
+  console.log('API working:', result.tierInfo.tier);
+} catch (error) {
+  console.error('API error:', error.message);
+  // Check: Is OPENAI_API_KEY set? Is it valid? Do you have credits?
+}
+```
+
+### "Slow performance"
+
+```typescript
+// Check which tier is being used
+const result = await moderator.moderate("text");
+console.log('Tier:', result.tierInfo.tier);
+console.log('Latency:', result.processingTimeMs);
+
+// If always hitting API/council:
+// - Enable fast-path
+// - Adjust thresholds
+// - Use quickCheck() for high-volume scenarios
+```
+
+### "Too many false positives"
+
+```typescript
+// Adjust thresholds
+const moderator = new Moderator({
+  openaiApiKey: process.env.OPENAI_API_KEY,
+  denyThreshold: 0.8,  // Increase (was 0.7)
+  confidenceThreshold: 0.6,  // Decrease (was 0.7)
+  // More content will escalate instead of deny
+});
+```
+
+### "Missing context awareness"
+
+```typescript
+// Always provide context when available
+const result = await moderator.moderate(newMessage, {
+  context: previousMessages.map(m => m.text),
+  userId: user.id,
+  platform: 'chat',
+});
+
+// Context helps disambiguate:
+// - Reclaimed language
+// - Quoted speech
+// - Educational discussion
+// - Cultural differences
 ```
 
 ---

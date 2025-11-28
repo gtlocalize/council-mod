@@ -288,13 +288,25 @@ async function runAuditSession(): Promise<void> {
     const testCase = dataset.cases[currentIndex];
     if (!testCase) break;
     
-    clearScreen();
-    displayHeader(currentIndex, dataset.cases.length, auditData);
-    displayCase(testCase);
-    
+    // Auto-skip already audited cases (unless going back)
     const existingAudit = auditData.audits.find(
       a => a.caseId === testCase.id && a.auditor === 'human'
     );
+    
+    // If already audited and we're moving forward, skip it
+    if (existingAudit && currentIndex >= 0) {
+      // Show briefly that we're skipping
+      clearScreen();
+      displayHeader(currentIndex, dataset.cases.length, auditData);
+      console.log(color('\n  ⏭️  Case already audited, skipping...\n', 'dim'));
+      currentIndex++;
+      await new Promise(resolve => setTimeout(resolve, 300));  // Brief pause
+      continue;
+    }
+    
+    clearScreen();
+    displayHeader(currentIndex, dataset.cases.length, auditData);
+    displayCase(testCase);
     
     const decision = await getAuditDecision(rl, testCase, existingAudit);
     
