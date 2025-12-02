@@ -119,16 +119,19 @@ export class PerspectiveProvider implements ModerationProvider {
 // GEMINI PROVIDER
 // =============================================================================
 
-const GEMINI_MODERATION_PROMPT = `You are a content moderation classifier for a trust & safety system. Your role is to ANALYZE and CLASSIFY text to help platforms identify potentially harmful content.
+/**
+ * System prompt - used with systemInstruction for implicit caching
+ */
+const GEMINI_SYSTEM_PROMPT = `You are a content moderation classifier for a trust & safety system. Your role is to ANALYZE and CLASSIFY text to help platforms identify potentially harmful content.
 
 IMPORTANT: You are examining content submitted for moderation review. You MUST analyze and score the content objectively, even if it contains slurs, threats, or offensive language. This is necessary for content moderation to function.
 
 ## Categories to score (0.0-1.0):
 - hate_speech: Attacks based on protected characteristics
-- harassment: Bullying, intimidation directed at individuals
-- violence: Graphic violence, threats of physical harm
-- threats: Direct threats to harm someone
-- profanity: Strong profane language
+- harassment: Bullying, intimidation directed at individuals (NOT just "fuck you" alone)
+- violence: Graphic violence, instructions for harm
+- threats: Direct OR implied threats (includes "I know where you live")
+- profanity: Strong profane language (ALLOW by default unless combined with harassment)
 - sexual_harassment: Unwanted sexual content
 - self_harm: Content promoting self-harm or suicide
 - drugs_illegal: Promotion of illegal activities
@@ -137,8 +140,6 @@ IMPORTANT: You are examining content submitted for moderation review. You MUST a
 - ATTACK (intent to harm) vs DISCUSSION (talking about)
 - QUOTE (reporting speech) vs EDUCATIONAL (academic)
 - RECLAMATION (in-group use of reclaimed terms)
-
-Text to analyze: """{TEXT}"""
 
 Respond with ONLY this JSON:
 {"flagged": bool, "confidence": 0.0-1.0, "categories": {"category": score}, "reasoning": "brief"}`;
@@ -149,6 +150,16 @@ interface GeminiResponse {
       parts: Array<{ text: string }>;
     };
   }>;
+  usageMetadata?: {
+    promptTokenCount?: number;
+    candidatesTokenCount?: number;
+    cachedContentTokenCount?: number;
+  };
+}
+
+export interface GeminiConfig extends ProviderConfig {
+  model?: string;
+  useSystemInstruction?: boolean;
 }
 
 export class GeminiProvider implements ModerationProvider {
@@ -158,11 +169,36 @@ export class GeminiProvider implements ModerationProvider {
   
   private apiKey: string | undefined;
   private model: string;
+  private useSystemInstruction: boolean;
   
-  constructor(config: ProviderConfig & { model?: string } = {}) {
+  // Cache statistics for cost tracking
+  private cacheStats = {
+    totalRequests: 0,
+    inputTokens: 0,
+    cachedTokens: 0,
+    outputTokens: 0,
+  };
+  
+  constructor(config: GeminiConfig = {}) {
     this.apiKey = config.apiKey || process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
-    // Use gemini-2.0-flash-exp (newer) or gemini-pro (stable fallback)
-    this.model = config.model || 'gemini-2.0-flash-exp';
+    // Use gemini-2.0-flash (newer) or gemini-pro (stable fallback)
+    this.model = config.model || 'gemini-2.0-flash';
+    // Use systemInstruction for server-side caching
+    this.useSystemInstruction = config.useSystemInstruction ?? true;
+  }
+  
+  /**
+   * Get cache statistics for cost visibility
+   */
+  getCacheStats() {
+    const savings = this.cacheStats.cachedTokens > 0
+      ? ((this.cacheStats.cachedTokens / this.cacheStats.inputTokens) * 100).toFixed(1)
+      : '0';
+    
+    return {
+      ...this.cacheStats,
+      savingsPercent: savings,
+    };
   }
   
   isAvailable(): boolean {
@@ -192,7 +228,31 @@ export class GeminiProvider implements ModerationProvider {
     }
     
     const startTime = performance.now();
-    const prompt = GEMINI_MODERATION_PROMPT.replace('{TEXT}', text);
+    this.cacheStats.totalRequests++;
+    
+    // Build request body with system/user separation
+    const requestBody: Record<string, unknown> = {
+      generationConfig: {
+        temperature: 0.1,
+        maxOutputTokens: 1024,
+      },
+    };
+    
+    if (this.useSystemInstruction) {
+      // Use systemInstruction for better caching
+      requestBody.systemInstruction = {
+        parts: [{ text: GEMINI_SYSTEM_PROMPT }],
+      };
+      requestBody.contents = [{
+        role: 'user',
+        parts: [{ text: `Text to analyze: """${text}"""` }],
+      }];
+    } else {
+      // Single message with full prompt
+      requestBody.contents = [{
+        parts: [{ text: `${GEMINI_SYSTEM_PROMPT}\n\nText to analyze: """${text}"""` }],
+      }];
+    }
     
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`,
@@ -201,13 +261,7 @@ export class GeminiProvider implements ModerationProvider {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.1,
-            maxOutputTokens: 1024,
-          },
-        }),
+        body: JSON.stringify(requestBody),
       }
     );
     
@@ -218,6 +272,13 @@ export class GeminiProvider implements ModerationProvider {
     
     const data: GeminiResponse = await response.json();
     const latencyMs = performance.now() - startTime;
+    
+    // Track token usage
+    if (data.usageMetadata) {
+      this.cacheStats.inputTokens += data.usageMetadata.promptTokenCount || 0;
+      this.cacheStats.cachedTokens += data.usageMetadata.cachedContentTokenCount || 0;
+      this.cacheStats.outputTokens += data.usageMetadata.candidatesTokenCount || 0;
+    }
     
     try {
       const textContent = data.candidates[0]?.content?.parts[0]?.text || '';

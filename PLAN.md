@@ -275,6 +275,58 @@ fastPath: {
 
 ---
 
+## Phase 2.8: QA Script Improvements ✅
+
+### Better Error Logging in LLM Audits
+
+**Current issue:** Can't distinguish between:
+- JSON parse errors (malformed response)
+- Content policy refusals (model refuses to answer)
+
+**Needed:**
+
+```typescript
+async function auditCase(testCase: TestCase): Promise<AuditResult | null> {
+  try {
+    const response = await callGemini3(prompt);
+    
+    // Log raw response for debugging
+    const jsonMatch = response.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error(`  ⚠️  Failed to parse JSON for ${testCase.id}`);
+      
+      // NEW: Log why
+      if (response.includes('I cannot') || response.includes('I apologize')) {
+        console.error(`     Reason: Content policy refusal`);
+        fs.appendFileSync('refusals.log', `${testCase.id}: ${response}\n`);
+      } else {
+        console.error(`     Reason: Malformed response`);
+        fs.appendFileSync('parse-errors.log', `${testCase.id}: ${response}\n`);
+      }
+      
+      return null;
+    }
+    // ...
+  }
+}
+```
+
+**Benefits:**
+- Track refusal rate by category (e.g., violence-ja refuses often)
+- Identify JSON formatting issues (fix prompt)
+- Separate logs for debugging
+- Better QA data quality metrics
+
+**Implementation:** ✅ Implemented in both `llm-audit.ts` and `claude-audit.ts`.
+
+**Log files:**
+- `test/data/gemini-refusals.log` - Gemini content policy refusals
+- `test/data/gemini-parse-errors.log` - Gemini malformed responses
+- `test/data/claude-refusals.log` - Claude content policy refusals
+- `test/data/claude-parse-errors.log` - Claude malformed responses
+
+---
+
 ## Phase 2.9: Test Case Generation Improvements (TODO)
 
 ### Context Bias Fix
@@ -307,6 +359,208 @@ could excuse it (explicit threats, severe slurs directed at someone)."
 ```
 
 **See Phase 7 for detailed examples and rationale.**
+
+### Context Speaker Attribution (TODO)
+
+**Current issue:** Context messages don't indicate who said them (same user vs. others in channel).
+
+**Clarification:** Context = **previous messages only** (chronologically before the message being moderated). The library is called at the moment a message is sent, so future messages aren't available.
+
+**Why this matters:**
+- **Same user:** "Why won't you respond?" → "Just checking in :)" = stalking pattern (deny)
+- **Different users:** UserA: "What's for lunch?" → UserB: "kys loser" = harassment, context irrelevant
+- **Group coordination:** UserA: "Let's doxx them" → UserB: "Here's their address" = multi-user attack
+
+**Real-world examples:**
+```typescript
+// Stalking (same user, escalating)
+// Timeline: [prev messages...] → "Just checking in" ← WE'RE MODERATING THIS
+{
+  text: "Just checking in again :)",
+  context: [  // PREVIOUS messages (chronologically before)
+    { speaker: 'same', text: "Why won't you respond?" },      // sent 5 min ago
+    { speaker: 'same', text: "I can see you're online" },      // sent 2 min ago
+    { speaker: 'same', text: "You can't ignore me forever" }   // sent 30 sec ago
+  ]
+}
+
+// Group coordination (different users)
+// Timeline: [prev messages...] → "Here's their address" ← WE'RE MODERATING THIS
+{
+  text: "Here's their home address: 123 Main St",
+  context: [  // PREVIOUS messages (what led to this)
+    { speaker: 'other', text: "Let's make their life hell" },  // UserA, 1 min ago
+    { speaker: 'other', text: "Who's got their info?" },       // UserA, 30 sec ago
+    { speaker: 'same', text: "I found it" }                    // This user, 5 sec ago
+  ]
+}
+
+// Irrelevant context (different user)
+// Timeline: [normal chat...] → "kys loser" ← WE'RE MODERATING THIS
+{
+  text: "kys you worthless piece of shit",
+  context: [  // PREVIOUS messages (irrelevant to the violation)
+    { speaker: 'other', text: "How was your day?" },
+    { speaker: 'other', text: "Did you see the game?" }
+  ]
+}
+```
+
+**Schema changes:**
+```typescript
+interface ContextMessage {
+  speaker: 'same' | 'other';  // Same user who sent `text`, or others
+  text: string;
+  // Optional: timestamp?: string;  // For temporal pattern detection
+}
+
+interface TestCase {
+  // ...
+  context?: ContextMessage[];  // Changed from string[]
+                               // Array is CHRONOLOGICAL (oldest → newest)
+                               // All messages are BEFORE the `text` being moderated
+  conversationType?: '1:1' | 'group' | 'public';  // Optional: conversation context
+}
+```
+
+**Migration:**
+- Existing cases: `context: ["msg1", "msg2"]` → assume `speaker: 'same'` (most current cases are single-user escalation)
+- New generation: Update prompts to specify speaker attribution AND clarify temporal order (previous messages only)
+- Moderation logic: Use speaker info for pattern detection (repeated messages from same user = stronger signal)
+
+**Generation prompt updates:**
+```typescript
+// MUST clarify in prompts:
+"Context messages are PREVIOUS messages (chronologically before the message 
+being moderated). Array order: oldest → newest. This is what a moderator 
+would see when making a real-time decision."
+```
+
+**Implementation priority:** After Phase 7 audit completes. Don't break existing test cases.
+
+---
+
+## Phase 2.10: Curated Ground Truth Dataset (TODO)
+
+### Purpose
+
+Create a small, high-quality **ground truth** dataset for:
+- Regression testing ("did this change break moderation?")
+- Accuracy reporting ("default config achieves X% accuracy")
+- Model comparison ("Gemini vs OpenAI accuracy")
+- Calibration anchor (clear cases that shouldn't change)
+
+### Why We Need This
+
+**Current state:** 600 test cases with model-generated labels. Good for agreement metrics, but labels aren't verified.
+
+**Problem:** Without GT, we can measure agreement but not accuracy. When auditors disagree, we can't say who's "right."
+
+**Solution:** Curate a subset with expert-verified labels that represent our default policy (Interpersonal Safety Mode).
+
+### Specification
+
+**Size:** 100-200 cases (small enough for expert verification, large enough for meaningful stats)
+
+**Composition:**
+```
+By verdict (for default Interpersonal Safety Mode):
+  50% - Clear DENY (unambiguous violations)
+  40% - Clear ALLOW (innocent content, edge cases that should pass)
+  10% - ESCALATE (genuinely ambiguous, reasonable people could disagree)
+
+By category (balanced):
+  ~15-20 cases per category (11 categories)
+  Focus on categories with most real-world volume: harassment, hate_speech, threats
+
+By language:
+  80% English
+  20% Japanese
+```
+
+**Curation process:**
+1. **Source:** Pull candidates from existing 600 cases + hand-written cases
+2. **Expert review:** Human auditor labels each case with reasoning
+3. **Consensus:** For ambiguous cases, get 2nd opinion and discuss
+4. **Documentation:** Each case has verified label + reasoning + edge case notes
+
+**Schema:**
+```typescript
+interface GroundTruthCase {
+  id: string;
+  text: string;
+  context?: string[];
+  
+  // Verified ground truth (not model-generated)
+  groundTruth: {
+    verdict: 'allow' | 'deny' | 'escalate';
+    category?: ModerationCategory;  // Primary category if deny
+    reasoning: string;              // Why this verdict
+    verifiedBy: string;             // Who verified
+    verifiedAt: string;             // When verified
+    confidence: 'certain' | 'high' | 'moderate';  // How clear-cut
+  };
+  
+  // Original generation metadata (for reference)
+  generationMetadata?: {
+    originalCategory: ModerationCategory;
+    originalType: TestCaseType;
+    generatedBy: string;
+  };
+}
+```
+
+**Output file:** `test/data/ground-truth.json`
+
+### Usage
+
+```bash
+# Regression test against GT
+npm run test:accuracy
+# Output: "Default config: 94% accuracy (188/200 GT cases)"
+
+# Model comparison
+npm run test:accuracy -- --provider=gemini
+npm run test:accuracy -- --provider=openai
+# Output: "Gemini: 91%, OpenAI: 93% on GT"
+
+# Category breakdown
+npm run test:accuracy -- --breakdown
+# Output: "hate_speech: 96%, threats: 92%, profanity: 88%..."
+```
+
+### API User GT (Documentation)
+
+We provide tooling for API users to test against **their own GT**:
+
+```typescript
+// User provides their GT file
+const results = await moderator.testAccuracy({
+  groundTruthPath: './my-platform-gt.json',
+  config: myPlatformConfig,
+});
+
+console.log(`Accuracy: ${results.accuracy}%`);
+console.log(`False positives: ${results.falsePositives}`);
+console.log(`False negatives: ${results.falseNegatives}`);
+```
+
+**Why API users need their own GT:**
+- Our default policy ≠ their policy
+- Industry-specific requirements (COPPA, healthcare, etc.)
+- Custom categories they've added
+- They own liability for their moderation decisions
+
+### Implementation Priority
+
+After Round 1 QA completes:
+1. [ ] Analyze disagreement cases to identify clear vs ambiguous
+2. [ ] Pull ~50 "certain deny" cases (all auditors agreed)
+3. [ ] Pull ~50 "certain allow" cases (all auditors agreed)
+4. [ ] Hand-write ~20 additional cases for coverage gaps
+5. [ ] Expert review all cases, document reasoning
+6. [ ] Create `ground-truth.json` schema and file
+7. [ ] Implement `npm run test:accuracy` script
 
 ---
 

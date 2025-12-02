@@ -1,0 +1,338 @@
+[2025-11-29T02:00:09.680Z] violence-cross-ja-1764166517510-1 (violence/cross)
+  Type: no_json
+  Response: ...
+
+[2025-11-29T02:00:10.287Z] threats-edge-ja-1764166640862-0 (threats/edge)
+  Error: Error: Gemini API error: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model_per_day, limit: 0",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_requests_per_model_per_day",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+  Response: N/A...
+
+[2025-11-29T02:00:10.872Z] self_harm-positive-en-1764166686362-7 (self_harm/positive)
+  Error: Error: Gemini API error: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model_per_day, limit: 0",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_requests_per_model_per_day",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+  Response: N/A...
+
+[2025-11-29T02:00:11.459Z] self_harm-edge-ja-1764166808181-2 (self_harm/edge)
+  Error: Error: Gemini API error: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model_per_day, limit: 0",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_requests_per_model_per_day",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+  Response: N/A...
+
+[2025-11-29T02:00:12.034Z] drugs_illegal-edge-en-1764166888876-2 (drugs_illegal/edge)
+  Error: Error: Gemini API error: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model_per_day, limit: 0",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_requests_per_model_per_day",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+  Response: N/A...
+
+[2025-11-29T07:23:35.941Z] violence-cross-ja-1764166517510-1 (violence/cross)
+  Type: no_json
+  Response: ...
+
+[2025-11-29T07:23:36.552Z] threats-edge-ja-1764166640862-0 (threats/edge)
+  Error: Error: Gemini API error: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model_per_day, limit: 0",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_requests_per_model_per_day",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+  Response: N/A...
+
+[2025-11-29T07:23:37.160Z] self_harm-positive-en-1764166686362-7 (self_harm/positive)
+  Error: Error: Gemini API error: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model_per_day, limit: 0",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_requests_per_model_per_day",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+  Response: N/A...
+
+[2025-11-29T07:23:37.761Z] self_harm-edge-ja-1764166808181-2 (self_harm/edge)
+  Error: Error: Gemini API error: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model_per_day, limit: 0",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_requests_per_model_per_day",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+  Response: N/A...
+
+[2025-11-29T10:36:30.496Z] violence-cross-ja-1764166517510-1 (violence/cross)
+  Type: no_json
+  Response: ...
+
+[2025-11-29T10:37:46.126Z] drugs_illegal-cross-ja-1764166997431-1 (drugs_illegal/cross)
+  Type: no_json
+  Response: ...
+
+[2025-11-29T10:38:11.387Z] profanity-edge-en-1764167050567-0 (profanity/edge)
+  Type: no_json
+  Response: ...
+
+[2025-11-29T10:38:38.884Z] profanity-obfuscated-en-1764167061970-2 (profanity/obfuscated)
+  Type: no_json
+  Response: ...
+
+[2025-11-29T10:39:21.361Z] personal_info-edge-ja-1764167439488-2 (personal_info/edge)
+  Type: no_json
+  Response: ...
+
+[2025-11-29T10:40:02.050Z] spam_scam-edge-en-1764167542589-2 (spam_scam/edge)
+  Type: no_json
+  Response: ...
+
+[2025-11-29T10:41:51.039Z] spam_scam-obfuscated-en-1764167568238-3 (spam_scam/obfuscated)
+  Type: no_json
+  Response: ...
+
+[2025-11-29T10:44:41.352Z] violence-cross-ja-1764166517510-1 (violence/cross)
+  Type: no_json
+  Response length: 0
+  Response: (EMPTY RESPONSE)
+
+[2025-11-29T10:44:42.632Z] drugs_illegal-cross-ja-1764166997431-1 (drugs_illegal/cross)
+  Type: no_json
+  Response length: 0
+  Response: (EMPTY RESPONSE)
+
+[2025-11-29T10:45:06.154Z] profanity-edge-en-1764167050567-0 (profanity/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T10:45:35.760Z] profanity-obfuscated-en-1764167061970-2 (profanity/obfuscated)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T10:45:58.507Z] personal_info-edge-ja-1764167439488-2 (personal_info/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T10:46:26.609Z] spam_scam-edge-en-1764167542589-2 (spam_scam/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T10:46:51.419Z] spam_scam-obfuscated-en-1764167568238-3 (spam_scam/obfuscated)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T10:49:01.619Z] spam_scam-negative-ja-1764167642694-3 (spam_scam/negative)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T10:52:57.256Z] harassment-context-condemning-en-1764235068238-2 (harassment/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T10:56:06.786Z] drugs_illegal-context-condemning-en-1764235123639-0 (drugs_illegal/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T10:59:33.836Z] drugs_illegal-context-condemning-ja-1764235213205-0 (drugs_illegal/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T11:02:32.576Z] threats-context-neutral-en-1764235263806-1 (threats/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T11:02:57.374Z] self_harm-context-neutral-en-1764235272734-0 (self_harm/edge)
+  Type: no_json
+  Response length: 49
+  Response: [GEMINI BLOCKED] Reason: STOP, Ratings: undefined
+
+[2025-11-29T11:03:21.718Z] self_harm-context-neutral-en-1764235272734-1 (self_harm/edge)
+  Type: no_json
+  Response length: 49
+  Response: [GEMINI BLOCKED] Reason: STOP, Ratings: undefined
+
+[2025-11-29T11:06:43.090Z] self_harm-context-neutral-ja-1764235352008-0 (self_harm/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T11:08:39.625Z] harassment-context-bad_regardless-en-1764235390259-0 (harassment/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+
+[2025-11-29T11:10:07.041Z] spam_scam-context-bad_regardless-en-1764235435665-0 (spam_scam/edge)
+  Type: no_json
+  Response length: 55
+  Response: [GEMINI BLOCKED] Reason: MAX_TOKENS, Ratings: undefined
+

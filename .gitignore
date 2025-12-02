@@ -6,3 +6,6 @@ docs
 *.local
 .env
 .idea
+
+# Private research notes
+RESEARCH_ROADMAP.md

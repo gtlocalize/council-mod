@@ -1,11 +1,46 @@
 # council-mod
 
-Tiered LLM content moderation with council consensus for edge cases.
+**User-first content moderation for communities that actually care about safety.**
+
+Tiered LLM content moderation with council consensus for edge cases. Built for platforms where user safety matters more than retention metrics.
 
 **Based on:** [content-checker](https://github.com/jahabeebs/content-checker) by Jacob Habib ([@jahabeebs](https://github.com/jahabeebs))  
 **Enhancements:** Context-aware moderation, multi-provider support, LLM council, tiered fast-path, multilingual support
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+---
+
+## 🎯 Built for User Safety
+
+**council-mod** is designed for communities that prioritize **user safety and well-being** over engagement metrics. We believe moderation should protect people, not just platforms.
+
+**Traditional approach:** "I know where you live" → harassment → warning  
+**Our approach:** "I know where you live" → threat → immediate action
+
+### Who This Is For
+
+**Ideal for:**
+- **LGBTQ+ communities and safe spaces** — Context-aware reclamation vs. attack detection
+- **Platforms for marginalized groups** — Recognizes dog whistles and coded language
+- **Community-run platforms** — Transparent, configurable, no black boxes
+- **Gaming communities** — Nuanced detection beyond simple slur filtering
+- **Mental health & support communities** — Sensitive to vulnerable populations
+- **Anyone building safer spaces** — Tools for communities that care
+
+**Also works for:**
+- Traditional platforms wanting better moderation
+- Enterprise applications with duty of care
+- Educational institutions
+- Healthcare and therapy platforms
+
+### The Philosophy
+
+**Implied threats are threats.** 
+
+"I know where you live. Nice house you've got there" is often MORE concerning than explicit threats because it demonstrates real surveillance and calculated behavior. From a user's perspective, these feel equally dangerous. Our classification reflects that lived experience.
+
+**We prioritize user safety over industry conventions** when they diverge. You can always remap our categories for compliance reporting while keeping the safety-first severity scoring.
 
 ---
 
@@ -290,6 +325,57 @@ Your decision: _
 
 ## Configuration
 
+### Council Provider Recommendations
+
+**Default council members:** `['anthropic', 'gemini']`
+
+Based on QA testing (600 test cases, human + LLM auditors, Gwet's AC1):
+
+| Provider | Agreement with Human | Pros | Cons | Cost (per 1K) |
+|----------|---------------------|------|------|---------------|
+| **Claude Sonnet 4.5** | High (TBD) | Fast, nuanced, good with context | Higher cost | ~$3.00 |
+| **Gemini 3 Pro** | Medium (TBD) | Lower cost, good multilingual | Quota limits (Tier 1: 250 RPD) | ~$1.25 |
+| **OpenAI GPT-4** | TBD | Widely tested, reliable | Higher cost | ~$2.50 |
+| **OpenAI GPT-4o-mini** | TBD | Very cheap, fast | Less nuanced | ~$0.15 |
+
+**Recommended configurations:**
+
+```typescript
+// High accuracy (expensive)
+council: {
+  members: ['anthropic', 'gemini'],  // Best agreement with human
+}
+
+// Balanced (recommended)
+council: {
+  members: ['anthropic', 'openai'],  // Good accuracy, no quota issues
+}
+
+// Budget (cheaper)
+council: {
+  members: ['gemini', 'openai-mini'],  // Lower cost, still decent
+}
+
+// High volume (fast)
+council: {
+  members: ['openai-mini', 'gemini'],  // Faster responses
+}
+```
+
+**Known issues:**
+- **Gemini Tier 1:** Only 250 requests/day (upgrade to Tier 2 for production)
+- **Claude:** Can be slower during peak times
+- **Category precision:** LLMs sometimes conflate `violence` with `threats` (see QA_ROUNDS.md)
+
+**Agreement patterns (from QA):**
+- High agreement on clear violations (hate speech, explicit threats)
+- More disagreement on edge cases (confessions, ideation, context-dependent)
+- LLMs tend to be more conservative than human auditors
+
+For detailed QA methodology and findings, see `QA_ROUNDS.md`.
+
+---
+
 ### Full Configuration
 
 ```typescript
@@ -336,6 +422,71 @@ ANTHROPIC_API_KEY=sk-ant-...    # Claude (council member)
 GOOGLE_API_KEY=...              # Gemini (council member)
 PERSPECTIVE_API_KEY=...         # Google Perspective API
 ```
+
+---
+
+## 💰 Cost Optimization
+
+### Prompt Caching
+
+council-mod uses prompt caching to reduce API costs by **85-90%** for high-volume use. The moderation guidelines (~850 tokens) are cached and reused across requests.
+
+**Without caching:**
+- 1,000 moderations × 950 tokens = 950K tokens ≈ $28
+
+**With caching (enabled by default):**
+- First call: 950 tokens
+- Remaining 999 calls: ~100 tokens each = 100K tokens ≈ $3
+- **Savings: ~$25 (89%)**
+
+### Provider Support
+
+| Provider | Caching Method | Savings | Notes |
+|----------|---------------|---------|-------|
+| **Claude** | Explicit `cache_control` | ~90% | Uses `anthropic-beta` header |
+| **Gemini** | `systemInstruction` | ~80% | Server-side caching |
+| **GPT-5.1** | Automatic | ~50% | Cached tokens at half price |
+| **OpenAI Moderation** | N/A | Free | No caching needed |
+
+### Configuration
+
+```typescript
+// Caching is enabled by default
+const moderator = new Moderator({
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY,
+  googleApiKey: process.env.GOOGLE_API_KEY,
+});
+
+// Disable caching if needed (not recommended)
+const provider = new AnthropicProvider({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+  enableCaching: false,  // Default: true
+});
+```
+
+### Cache Statistics
+
+```typescript
+// Get provider cache stats (for cost tracking)
+const anthropicProvider = new AnthropicProvider({ apiKey: '...' });
+// ... after some requests ...
+console.log(anthropicProvider.getCacheStats());
+// {
+//   totalRequests: 100,
+//   cacheHits: 99,
+//   cacheCreations: 1,
+//   inputTokens: 10000,
+//   cachedTokens: 84150,
+//   savingsPercent: '89.4'
+// }
+```
+
+### Best Practices
+
+1. **High volume:** Caching is most effective with sustained traffic (100+ req/hour)
+2. **Batch processing:** Process items in sequence, not parallel, for cache hits
+3. **Session grouping:** Group requests within 5-minute windows (cache TTL)
+4. **Local first:** Use `quickCheck()` for obvious cases to skip API entirely
 
 ---
 

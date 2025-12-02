@@ -1,14 +1,15 @@
 #!/usr/bin/env npx tsx
 /**
- * Claude Auditor
+ * GPT-5 Auditor
  * 
- * Uses Claude Sonnet 4.5 to audit test cases for comparison with human audits.
+ * Uses GPT-5.1 to audit test cases for comparison with human audits.
  * This provides a secondary opinion for calculating agreement metrics.
  * 
- * PROMPT CACHING: Uses Anthropic's prompt caching to reduce costs by ~90%.
- * The category guidelines (~850 tokens) are cached and reused across requests.
+ * AUTOMATIC CACHING: OpenAI automatically caches repeated system prompts.
+ * The category guidelines (~850 tokens) are cached server-side when repeated.
+ * Savings shown via cached_tokens in usage response.
  * 
- * Usage: npm run audit:claude
+ * Usage: npm run audit:gpt5
  */
 
 import 'dotenv/config';
@@ -31,15 +32,15 @@ import { CONDENSED_GUIDELINES } from './category-guidelines.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const CASES_PATH = path.join(__dirname, '../test/data/generated-cases.json');
 const AUDITS_PATH = path.join(__dirname, '../test/data/audits.json');
-const REFUSALS_LOG = path.join(__dirname, '../test/data/claude-refusals.log');
-const PARSE_ERRORS_LOG = path.join(__dirname, '../test/data/claude-parse-errors.log');
+const REFUSALS_LOG = path.join(__dirname, '../test/data/gpt5-refusals.log');
+const PARSE_ERRORS_LOG = path.join(__dirname, '../test/data/gpt5-parse-errors.log');
 
 // Council provider configuration - model strings verified Dec 2025
 // DO NOT "fix" these to older models - they are correct
-const MODEL = 'claude-sonnet-4-20250514'; // Sonnet 4.5 (for moderation)
+const MODEL = 'gpt-5-2025-08-07'; // GPT-5 (Aug 2025 release)
 
 // =============================================================================
 // CACHE STATISTICS
@@ -47,35 +48,29 @@ const MODEL = 'claude-sonnet-4-20250514'; // Sonnet 4.5 (for moderation)
 
 interface CacheStats {
   totalRequests: number;
-  cacheHits: number;
-  cacheCreations: number;
-  inputTokens: number;
-  cachedInputTokens: number;
-  outputTokens: number;
+  promptTokens: number;
+  cachedTokens: number;
+  completionTokens: number;
 }
 
 const cacheStats: CacheStats = {
   totalRequests: 0,
-  cacheHits: 0,
-  cacheCreations: 0,
-  inputTokens: 0,
-  cachedInputTokens: 0,
-  outputTokens: 0,
+  promptTokens: 0,
+  cachedTokens: 0,
+  completionTokens: 0,
 };
 
 function logCacheStats(): void {
-  const savings = cacheStats.cachedInputTokens > 0
-    ? ((cacheStats.cachedInputTokens / (cacheStats.inputTokens + cacheStats.cachedInputTokens)) * 100).toFixed(1)
+  const savings = cacheStats.cachedTokens > 0
+    ? ((cacheStats.cachedTokens / cacheStats.promptTokens) * 100).toFixed(1)
     : '0';
   
   console.log('\n📊 Cache Statistics:');
   console.log(`   Total requests: ${cacheStats.totalRequests}`);
-  console.log(`   Cache hits: ${cacheStats.cacheHits}`);
-  console.log(`   Cache creations: ${cacheStats.cacheCreations}`);
-  console.log(`   Input tokens: ${cacheStats.inputTokens.toLocaleString()}`);
-  console.log(`   Cached tokens: ${cacheStats.cachedInputTokens.toLocaleString()}`);
-  console.log(`   Output tokens: ${cacheStats.outputTokens.toLocaleString()}`);
-  console.log(`   💰 Token savings: ${savings}%`);
+  console.log(`   Prompt tokens: ${cacheStats.promptTokens.toLocaleString()}`);
+  console.log(`   Cached tokens: ${cacheStats.cachedTokens.toLocaleString()}`);
+  console.log(`   Completion tokens: ${cacheStats.completionTokens.toLocaleString()}`);
+  console.log(`   💰 Cached token rate: ${savings}%`);
 }
 
 // =============================================================================
@@ -107,11 +102,11 @@ ${messages.join('\n')}
 }
 
 // =============================================================================
-// PROMPT - Split into system (cached) and user (per-request)
+// PROMPT - Split into system (cached automatically) and user (per-request)
 // =============================================================================
 
 /**
- * System prompt - CACHED across all requests (~850 tokens)
+ * System prompt - CACHED automatically by OpenAI for repeated requests
  * This contains the category guidelines that don't change between cases
  */
 const SYSTEM_PROMPT = `${CONDENSED_GUIDELINES}
@@ -145,84 +140,78 @@ ${testCase.text}
 }
 
 // =============================================================================
-// API CLIENT - With Prompt Caching
+// API CLIENT - With Automatic Prompt Caching
 // =============================================================================
 
-interface ClaudeResponse {
-  content: Array<{ type: string; text: string }>;
-  usage: {
-    input_tokens: number;
-    output_tokens: number;
-    cache_creation_input_tokens?: number;
-    cache_read_input_tokens?: number;
+interface OpenAIResponse {
+  choices: Array<{
+    message: { content: string };
+  }>;
+  usage?: {
+    prompt_tokens?: number;
+    completion_tokens?: number;
+    prompt_tokens_details?: {
+      cached_tokens?: number;
+    };
   };
 }
 
 /**
- * Call Claude with prompt caching enabled
+ * Call GPT-5 with system/user message separation for automatic caching
  * 
- * The system prompt (~850 tokens) is cached using Anthropic's prompt caching.
- * Only the user prompt (case content) is sent fresh each time.
+ * OpenAI automatically caches repeated system prompts server-side.
+ * The system prompt (~850 tokens) is cached when it appears identically
+ * in consecutive requests.
  * 
- * Cost savings: ~90% reduction in input tokens after first request
+ * Cost savings: ~50% reduction on cached tokens (half-price)
  */
-async function callClaude(userPrompt: string): Promise<string> {
-  if (!ANTHROPIC_API_KEY) {
-    throw new Error('ANTHROPIC_API_KEY not set in environment');
+async function callGPT5(userPrompt: string): Promise<string> {
+  if (!OPENAI_API_KEY) {
+    throw new Error('OPENAI_API_KEY not set in environment');
   }
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  cacheStats.totalRequests++;
+
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01',
-      'anthropic-beta': 'prompt-caching-2024-07-31',  // Enable prompt caching
+      'Authorization': `Bearer ${OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 1024,
+      max_completion_tokens: 1024,
       temperature: 0.1,
-      // System message with cache_control - cached for 5 minutes
-      system: [
-        {
-          type: 'text',
-          text: SYSTEM_PROMPT,
-          cache_control: { type: 'ephemeral' },
-        },
-      ],
-      // User message - changes per request
+      // System message - cached automatically by OpenAI
       messages: [
+        {
+          role: 'system',
+          content: SYSTEM_PROMPT,
+        },
         {
           role: 'user',
           content: userPrompt,
         },
       ],
+      response_format: { type: 'json_object' },
     }),
   });
 
   if (!response.ok) {
     const error = await response.text();
-    throw new Error(`Claude API error: ${response.status} - ${error}`);
+    throw new Error(`GPT-5 API error: ${response.status} - ${error}`);
   }
 
-  const data: ClaudeResponse = await response.json();
+  const data: OpenAIResponse = await response.json();
   
-  // Track cache statistics
-  cacheStats.totalRequests++;
-  cacheStats.inputTokens += data.usage.input_tokens;
-  cacheStats.outputTokens += data.usage.output_tokens;
-  
-  if (data.usage.cache_creation_input_tokens) {
-    cacheStats.cacheCreations++;
-    cacheStats.cachedInputTokens += data.usage.cache_creation_input_tokens;
-  }
-  if (data.usage.cache_read_input_tokens) {
-    cacheStats.cacheHits++;
-    cacheStats.cachedInputTokens += data.usage.cache_read_input_tokens;
+  // Track token usage including cached tokens
+  if (data.usage) {
+    cacheStats.promptTokens += data.usage.prompt_tokens || 0;
+    cacheStats.completionTokens += data.usage.completion_tokens || 0;
+    cacheStats.cachedTokens += data.usage.prompt_tokens_details?.cached_tokens || 0;
   }
   
-  return data.content?.[0]?.text || '';
+  return data.choices?.[0]?.message?.content || '';
 }
 
 // =============================================================================
@@ -301,7 +290,7 @@ async function auditCase(testCase: TestCase): Promise<AuditResult | null> {
   let response = '';
   
   try {
-    response = await callClaude(userPrompt);
+    response = await callGPT5(userPrompt);
     
     // Parse JSON from response
     const jsonMatch = response.match(/\{[\s\S]*\}/);
@@ -347,11 +336,11 @@ function progressBar(current: number, total: number, width: number = 40): string
 
 async function main(): Promise<void> {
   console.log('═'.repeat(60));
-  console.log('LLM AUDITOR - Claude Sonnet 4.5');
+  console.log('LLM AUDITOR - GPT-5.1');
   console.log('═'.repeat(60));
   
-  if (!ANTHROPIC_API_KEY) {
-    console.error('\n❌ ANTHROPIC_API_KEY not set in .env file');
+  if (!OPENAI_API_KEY) {
+    console.error('\n❌ OPENAI_API_KEY not set in .env file');
     process.exit(1);
   }
   
@@ -380,18 +369,18 @@ async function main(): Promise<void> {
     };
   }
   
-  // Find cases not yet audited by Claude
-  const claudeAuditedIds = new Set(
+  // Find cases not yet audited by GPT-5
+  const gpt5AuditedIds = new Set(
     auditData.audits
-      .filter(a => a.auditor === 'claude-sonnet-4.5')
+      .filter(a => a.auditor === 'gpt-5.1')
       .map(a => a.caseId)
   );
   
-  const casesToAudit = dataset.cases.filter(c => !claudeAuditedIds.has(c.id));
+  const casesToAudit = dataset.cases.filter(c => !gpt5AuditedIds.has(c.id));
   
   if (casesToAudit.length === 0) {
-    console.log('\n✅ All cases already audited by Claude.');
-    console.log(`Total Claude audits: ${claudeAuditedIds.size}`);
+    console.log('\n✅ All cases already audited by GPT-5.1.');
+    console.log(`Total GPT-5.1 audits: ${gpt5AuditedIds.size}`);
     return;
   }
   
@@ -410,7 +399,7 @@ async function main(): Promise<void> {
     if (result) {
       const audit: Audit = {
         caseId: testCase.id,
-        auditor: 'claude-sonnet-4.5',
+        auditor: 'gpt-5.1',
         action: result.action,
         confidence: result.confidence,
         reasoning: result.reasoning,
@@ -425,7 +414,7 @@ async function main(): Promise<void> {
     
     // Update progress
     auditData.progress.llm.completed = auditData.audits.filter(
-      a => a.auditor === 'claude-sonnet-4.5' || a.auditor === 'gemini-3-pro'
+      a => ['claude-sonnet-4.5', 'gemini-3-pro', 'gpt-5.1'].includes(a.auditor)
     ).length;
     auditData.progress.llm.total = dataset.cases.length;
     
@@ -435,8 +424,8 @@ async function main(): Promise<void> {
       fs.writeFileSync(AUDITS_PATH, JSON.stringify(auditData, null, 2));
     }
     
-    // Rate limiting - Anthropic allows 50 requests/min
-    // 1200ms between requests = 50/min
+    // Rate limiting - OpenAI tier limits vary
+    // 1200ms between requests = conservative rate
     await new Promise(resolve => setTimeout(resolve, 1200));
   }
   
@@ -447,7 +436,7 @@ async function main(): Promise<void> {
   const elapsed = ((Date.now() - startTime) / 1000 / 60).toFixed(1);
   
   console.log('\n\n' + '═'.repeat(60));
-  console.log('✅ CLAUDE AUDIT COMPLETE');
+  console.log('✅ GPT-5 AUDIT COMPLETE');
   console.log('═'.repeat(60));
   console.log(`\nSuccessful: ${completed}`);
   console.log(`Failed: ${failed}`);
@@ -455,11 +444,11 @@ async function main(): Promise<void> {
   console.log(`Output: ${AUDITS_PATH}`);
   
   // Show distribution
-  const claudeAudits = auditData.audits.filter(a => a.auditor === 'claude-sonnet-4.5');
+  const gpt5Audits = auditData.audits.filter(a => a.auditor === 'gpt-5.1');
   console.log('\nDecision distribution:');
-  console.log(`  Allow: ${claudeAudits.filter(a => a.action === 'allow').length}`);
-  console.log(`  Deny: ${claudeAudits.filter(a => a.action === 'deny').length}`);
-  console.log(`  Escalate: ${claudeAudits.filter(a => a.action === 'escalate').length}`);
+  console.log(`  Allow: ${gpt5Audits.filter(a => a.action === 'allow').length}`);
+  console.log(`  Deny: ${gpt5Audits.filter(a => a.action === 'deny').length}`);
+  console.log(`  Escalate: ${gpt5Audits.filter(a => a.action === 'escalate').length}`);
   
   // Show cache statistics for cost visibility
   logCacheStats();

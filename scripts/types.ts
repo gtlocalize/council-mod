@@ -12,13 +12,28 @@ import { ModerationCategory } from '../src/types';
 export type TestCaseType = 'positive' | 'negative' | 'edge' | 'obfuscated' | 'cross';
 export type TestLanguage = 'en' | 'ja';
 
+/**
+ * Context message with speaker attribution
+ * All context messages are chronologically BEFORE the text being moderated
+ */
+export interface ContextMessage {
+  /** Who sent this message relative to the text being moderated */
+  speaker: 'same' | 'other';
+  /** The message content */
+  text: string;
+}
+
 export interface TestCase {
   id: string;
   text: string;
   language: TestLanguage;
   category: ModerationCategory;
   type: TestCaseType;
-  context?: string[];
+  /** 
+   * Previous messages providing context (oldest first)
+   * Supports both legacy string[] format and new ContextMessage[] format
+   */
+  context?: string[] | ContextMessage[];
   metadata: {
     generatedBy: 'claude-opus-4.5' | 'gemini-3-pro' | 'human';
     generatedAt: string;
@@ -45,7 +60,7 @@ export interface TestCaseDataset {
 // =============================================================================
 
 export type AuditAction = 'allow' | 'deny' | 'escalate';
-export type AuditorType = 'human' | 'claude-opus-4.5' | 'claude-sonnet-4.5' | 'gemini-3-pro';
+export type AuditorType = 'human' | 'claude-opus-4.5' | 'claude-sonnet-4.5' | 'gemini-3-pro' | 'gpt-5.1';
 
 export interface Audit {
   caseId: string;
@@ -53,6 +68,7 @@ export interface Audit {
   action: AuditAction;
   confidence?: number;
   reasoning?: string;
+  comment?: string;  // Human-added note for later review
   timestamp: string;
 }
 

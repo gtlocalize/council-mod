@@ -1,9 +1,39 @@
 # Content Moderation Category Definitions
 
-**Version:** 1.0.0  
-**Last Updated:** 2024-11-27
+**Version:** 1.1.0  
+**Last Updated:** 2024-12-01  
+**Philosophy:** User-First Safety
 
 This document provides formal definitions for each moderation category, including boundaries, edge cases, and precedence rules for overlapping content.
+
+---
+
+## ⚠️ User-First Safety Approach
+
+**This library prioritizes user safety and lived experience over rigid taxonomy standards.**
+
+### Our Approach
+
+We make classification decisions based on **how content affects users**, not just industry conventions:
+
+**Key differences:**
+- **Implied threats → threats** (not harassment) - Users experience these as equally dangerous
+- **"Fuck you" → profanity** (not harassment) - Aggressive but generic, allow by default
+- **Dog whistles → hate speech** - We recognize coded language and stereotyping
+- **Context-aware** - Reclamation by in-group vs. attacks are treated differently
+
+**Why:** We're built for communities serving vulnerable populations, LGBTQ+ spaces, and platforms where user trust and safety are paramount. This means sometimes departing from industry standards when those standards don't serve actual safety needs.
+
+### Designed For
+
+- Communities prioritizing member safety and well-being
+- Platforms serving marginalized or vulnerable populations
+- Spaces where users need to feel genuinely safe
+- Anyone wanting transparent, configurable, safety-first moderation
+
+### Compliance & Remapping
+
+If you need industry-standard taxonomy for compliance reporting, we provide subcategory metadata for remapping. You keep our safety-first severity scoring and can export in whatever format your compliance requires.
 
 ---
 
@@ -115,6 +145,21 @@ When content violates multiple categories, prioritize by this hierarchy (highest
 
 ⚠️ **Note:** Specific examples for this category are intentionally omitted from public documentation due to sensitivity. Refer to internal moderation guidelines and legal counsel for case-by-case evaluation.
 
+**Exception to "Confessions are Allowed" Rule:**
+
+Unlike other categories (violence, drugs, etc.), **child_safety confessions are ALWAYS DENY**:
+
+| Type | Example | Action | Why |
+|------|---------|--------|-----|
+| Confession (other categories) | "I got in a fight" | ALLOW | Past event, not actionable |
+| Confession (child_safety) | "I [child safety violation]" | **DENY** | Any discussion is harmful |
+
+**Rationale:** 
+- Legal obligations require reporting, not just moderation
+- Any discussion/confession can normalize or encourage the behavior
+- Distribution of CSAM info is itself harmful (not just the original act)
+- Platforms have zero-tolerance policies for this category
+
 **Severity Considerations:**
 - Explicit CSAM references: MAXIMUM (1.0)
 - Grooming attempts: HIGH (0.8-0.9)
@@ -134,13 +179,29 @@ When content violates multiple categories, prioritize by this hierarchy (highest
 - Identifiable target (person, group, location, or property)
 - Reasonable interpretation as genuine threat
 
-**Important:** Implied threats (e.g., "I know where you live") are treated as threats if context suggests danger.
+**Important - User-First Classification:**
+
+Implied threats are **threats** (not harassment), even though some industry standards classify them as harassment. From a user safety perspective:
+
+- "I will kill you" (explicit) = scary
+- "I know where you live. Nice house." (implied) = **equally or MORE scary**
+
+Both show intent and capability. Both get classified as threats. Both get immediate priority.
+
+**Why this matters:** Users experiencing implied threats need the same platform response as explicit threats. Surveillance + menacing context = credible danger.
+
+**Threats vs. Confessions:**
+- **Threat (future):** "I'm going to hurt you" → DENY (intent to harm)
+- **Confession (past):** "I hurt someone last year" → ALLOW (see violence category for full explanation)
+
+Future tense directed at someone = threat. Past tense statement = confession (allowed except child_safety).
 
 **Does NOT include:**
 - Hyperbolic expressions without credible intent
 - Political rhetoric about policies
 - Warnings about consequences (not threats)
 - Competitive threats in business context
+- Past tense confessions (not threats)
 
 **Edge Cases:**
 
@@ -220,6 +281,35 @@ When content violates multiple categories, prioritize by this hierarchy (highest
 | **Personal expression** | "I want to see violence" | ALLOW/ESCALATE | **Yes - mode dependent** |
 | **Abstract discussion** | "Violence is natural" | ALLOW | No - always allow |
 
+**Confessions vs. Threats vs. Distribution:**
+
+A critical distinction: **past tense confessions are generally ALLOWED** (not threats, not instructional, harm already occurred).
+
+| Type | Example | Action | Rationale |
+|------|---------|--------|-----------|
+| **Confession (past)** | "I got in a fight and hurt someone" | ALLOW | Past event, not threatening reader, not instructional |
+| **Confession (past)** | "I killed someone last year" | ALLOW | Same - confession ≠ threat |
+| **Confession (past)** | "I tortured animals as a kid" | ALLOW | Disturbing but not actionable via moderation |
+| **Threat (future)** | "I'm going to hurt you" | DENY (threats) | Credible threat to specific person |
+| **Incitement** | "You should hurt people" | DENY (violence) | Encouraging others to commit violence |
+| **Instruction** | "Here's how to make a bomb" | DENY (violence) | Actionable how-to for violence |
+| **Distribution** | "Here's a video of me beating someone" | DENY (violence) | Sharing graphic violent content |
+| **Ambiguous** | "I posted a video of X somewhere" | ESCALATE | Confession of upload, but not distributing here |
+
+**Exception: child_safety confessions are ALWAYS DENY** regardless of tense/format (see child_safety category).
+
+**Why confessions are allowed:**
+1. **Already occurred** - Cannot prevent past events via moderation
+2. **Not threatening** - Not endangering the person reading the message
+3. **Not instructional** - Not teaching others how to commit violence
+4. **Not distributing harm** - Just words about past events, not sharing graphic content
+5. **Free speech** - People discuss their past (war stories, criminal confessions, mistakes)
+
+**Distribution vs. Confession:**
+- "I hurt someone" → ALLOW (confession)
+- "Here's the video of me hurting someone" → DENY (distributing graphic content)
+- "I uploaded a video of X" → ESCALATE (ambiguous - did they share a link here?)
+
 **Severity Considerations:**
 - Graphic torture/mutilation descriptions: HIGH (0.8-0.9)
 - General violence glorification: MEDIUM (0.6-0.8)
@@ -252,17 +342,38 @@ When content violates multiple categories, prioritize by this hierarchy (highest
 - In-group reclamation (context-dependent)
 - Academic/educational discussion
 
+**Special Case - "nigga" (soft-a ending):**
+
+This term is **ALLOWED by default** in our moderation system for the following reasons:
+
+1. **Widespread Reclamation:** Extensively reclaimed and used casually in modern Black communities, especially in gaming/streaming spaces (Kai Cenat, IShowSpeed, etc.)
+
+2. **Community Self-Moderation:** These communities are highly effective at self-moderating actual abuse through social norms and reporting
+
+3. **Scalability:** Escalating every use would create disproportionately high escalation rates in Black-majority communities, overwhelming review queues
+
+4. **Privacy:** Verifying user identity/race to "grant permission" is invasive, discriminatory, and legally problematic
+
+5. **User-First Safety:** Actual users in these communities want the word allowed; restrictive policies harm the communities they claim to protect
+
+**Important Distinction:**
+- ✅ **ALLOW:** "nigga" / "niggas" (soft-a)
+- ❌ **DENY:** "n***er" (hard-r ending) - Different word with different history, rarely reclaimed
+
+**Philosophy:** Let community norms and user reporting handle abuse cases. Don't police identity or language within marginalized communities.
+
 **Edge Cases:**
 
 | Example | Classification | Why |
 |---------|----------------|-----|
+| "shut the fuck up nigga" | **ALLOW** | Profanity + "nigga" both allowed; community self-moderates |
+| "you fucking n***er" (hard-r) | **DENY** hate_speech | Hard-r variant, different word with different usage |
 | "I hate [group]" | hate_speech | Direct attack on protected group |
 | "I hate [group]'s policies" | NOT hate_speech | Attacking ideas, not people |
 | "As a [identity], we can reclaim [slur]" | ALLOW | In-group reclamation |
 | "Some [group] people are criminals" | ESCALATE | Generalization, but not absolute |
 | "All [group] are criminals" | hate_speech | Absolute generalization + dehumanization |
 | "The word [slur] has a complex history..." | ALLOW | Educational discussion |
-| "[Slur]" (directed at someone) | hate_speech | Slur used as attack |
 
 **Intersectionality:**
 When combined with threats/violence → use **threats/violence** (higher severity)
@@ -500,15 +611,57 @@ More strict interpretation - sexual comments in professional settings default to
 - Literary/artistic context
 - Quoted profanity (reporting)
 
-**⚠️ Important:** 
-- **Most platforms DISABLE this category** - profanity alone is rarely actionable
-- **Configuration:** Set `categories: ['hate_speech', 'harassment', ...]` (omit 'profanity')
-- **Only flag profanity when:**
-  - Directed as an attack → use `harassment` or `hate_speech` instead
-  - Used with threats → use `threats` instead
-  - In strictly family-friendly contexts (rare)
+**⚠️ Important - Default Policy:** 
+- **Default: ALLOW** - Track profanity but don't deny
+- **Configurable to DENY** - For family-friendly platforms, sponsored events, kids apps
+- **Profanity-only content** (no other violations) = ALLOW by default
+- **Profanity + other violations** → Use the other category (higher severity)
 
-**Default recommendation:** DISABLED for most use cases
+**When profanity is the ONLY violation:**
+- "This is fucking awesome" → ALLOW (default) or DENY (family-friendly mode)
+- "Holy shit!" → ALLOW (default) or DENY (family-friendly mode)
+
+**When profanity is combined with other violations:**
+- "Fuck you" → **profanity** (aggressive but generic, no personal attribute)
+- "Fuck you, you ugly idiot" → **harassment** (profanity + personal attack)
+- "Fuck you" (10th message) → **harassment** (profanity + pattern)
+- "That fucking [slur]" → **hate_speech** (profanity + slur)
+- "I'll fucking kill you" → **threats** (profanity + threat)
+
+**IMPORTANT: "Fuck you" distinction:**
+- "Fuck you" ALONE = profanity (ALLOW by default)
+- "Fuck you" + personal attributes = harassment (DENY)
+- "Fuck you" × repeated = harassment pattern (DENY)
+
+Aggressiveness ≠ harassment. Harassment requires sustained pattern OR attacking personal characteristics (intelligence, appearance, worth, etc.).
+
+**Configuration:**
+
+```typescript
+// Default (most platforms) - Allow profanity
+const moderator = new Moderator({
+  categories: {
+    profanity: 'allow',  // Track but don't deny
+  }
+});
+
+// Family-friendly - Deny profanity
+const moderator = new Moderator({
+  categories: {
+    profanity: 'deny',  // Block all profanity
+  }
+});
+
+// Disable entirely - Don't even track
+const moderator = new Moderator({
+  categories: [
+    'hate_speech', 'harassment', /* ... */
+    // profanity omitted - won't be detected
+  ],
+});
+```
+
+**Default recommendation:** **ALLOW** (track but don't deny) for peer-to-peer platforms. Configure to **DENY** for sponsored events, kids platforms, or corporate environments.
 
 **Edge Cases:**
 

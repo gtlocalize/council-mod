@@ -1,0 +1,2599 @@
+[2025-11-29T10:50:48.928Z] hate_speech-positive-en-1764165855887-0 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:50:50.152Z] hate_speech-positive-en-1764165855888-1 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:50:51.362Z] hate_speech-positive-en-1764165855888-2 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:50:52.574Z] hate_speech-positive-en-1764165855888-3 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:50:53.794Z] hate_speech-positive-en-1764165855888-4 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:50:55.016Z] hate_speech-positive-en-1764165855888-5 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:50:56.221Z] hate_speech-positive-en-1764165855888-6 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:50:57.426Z] hate_speech-positive-en-1764165855888-7 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:50:58.638Z] hate_speech-positive-en-1764165855888-8 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:50:59.847Z] hate_speech-positive-en-1764165855888-9 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:01.055Z] hate_speech-negative-en-1764165873202-0 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:02.263Z] hate_speech-negative-en-1764165873202-1 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:03.485Z] hate_speech-negative-en-1764165873202-2 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:04.692Z] hate_speech-negative-en-1764165873202-3 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:05.898Z] hate_speech-negative-en-1764165873202-4 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:07.118Z] hate_speech-negative-en-1764165873202-5 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:08.342Z] hate_speech-negative-en-1764165873202-6 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:09.552Z] hate_speech-negative-en-1764165873202-7 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:10.760Z] hate_speech-negative-en-1764165873202-8 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:11.971Z] hate_speech-negative-en-1764165873202-9 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:13.190Z] hate_speech-edge-en-1764165892734-0 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:14.412Z] hate_speech-edge-en-1764165892734-1 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:15.618Z] hate_speech-edge-en-1764165892734-2 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:16.828Z] hate_speech-edge-en-1764165892734-3 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:18.036Z] hate_speech-edge-en-1764165892734-4 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:19.255Z] hate_speech-edge-en-1764165892734-5 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:20.478Z] hate_speech-edge-en-1764165892734-6 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:21.685Z] hate_speech-edge-en-1764165892734-7 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:22.907Z] hate_speech-obfuscated-en-1764165905585-0 (hate_speech/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:24.129Z] hate_speech-obfuscated-en-1764165905585-1 (hate_speech/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:25.335Z] hate_speech-obfuscated-en-1764165905585-2 (hate_speech/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:26.543Z] hate_speech-obfuscated-en-1764165905585-3 (hate_speech/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:27.764Z] hate_speech-obfuscated-en-1764165905585-4 (hate_speech/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:28.970Z] hate_speech-obfuscated-en-1764165905585-5 (hate_speech/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:30.192Z] hate_speech-cross-en-1764165920065-0 (hate_speech/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:31.404Z] hate_speech-cross-en-1764165920065-1 (hate_speech/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:32.610Z] hate_speech-cross-en-1764165920065-2 (hate_speech/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:33.830Z] hate_speech-cross-en-1764165920065-3 (hate_speech/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:35.049Z] hate_speech-positive-ja-1764165937273-0 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:36.270Z] hate_speech-positive-ja-1764165937273-1 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:37.477Z] hate_speech-positive-ja-1764165937273-2 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:38.686Z] hate_speech-positive-ja-1764165937273-3 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:39.895Z] hate_speech-positive-ja-1764165937273-4 (hate_speech/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:41.101Z] hate_speech-negative-ja-1764165950567-0 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:42.324Z] hate_speech-negative-ja-1764165950567-1 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:43.531Z] hate_speech-negative-ja-1764165950567-2 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:44.750Z] hate_speech-negative-ja-1764165950567-3 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:45.970Z] hate_speech-negative-ja-1764165950567-4 (hate_speech/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:47.180Z] hate_speech-edge-ja-1764165971536-0 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:48.399Z] hate_speech-edge-ja-1764165971536-1 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:49.619Z] hate_speech-edge-ja-1764165971536-2 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:50.829Z] hate_speech-edge-ja-1764165971536-3 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:52.039Z] hate_speech-cross-ja-1764165992550-0 (hate_speech/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:53.249Z] hate_speech-cross-ja-1764165992551-1 (hate_speech/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:54.470Z] harassment-positive-en-1764166015406-0 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:55.689Z] harassment-positive-en-1764166015406-1 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:56.906Z] harassment-positive-en-1764166015406-2 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:58.113Z] harassment-positive-en-1764166015406-3 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:51:59.321Z] harassment-positive-en-1764166015406-4 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:00.530Z] harassment-positive-en-1764166015406-5 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:01.739Z] harassment-positive-en-1764166015406-6 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:02.961Z] harassment-positive-en-1764166015406-7 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:04.184Z] harassment-positive-en-1764166015406-8 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:05.405Z] harassment-positive-en-1764166015406-9 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:06.626Z] harassment-negative-en-1764166033909-0 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:07.845Z] harassment-negative-en-1764166033909-1 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:09.069Z] harassment-negative-en-1764166033909-2 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:10.289Z] harassment-negative-en-1764166033909-3 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:11.510Z] harassment-negative-en-1764166033909-4 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:12.731Z] harassment-negative-en-1764166033909-5 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:13.951Z] harassment-negative-en-1764166033909-6 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:15.172Z] harassment-negative-en-1764166033909-7 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:16.391Z] harassment-negative-en-1764166033909-8 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:17.611Z] harassment-negative-en-1764166033909-9 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:18.830Z] harassment-edge-en-1764166055627-0 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:20.047Z] harassment-edge-en-1764166055627-1 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:21.270Z] harassment-edge-en-1764166055627-2 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:22.491Z] harassment-edge-en-1764166055627-3 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:23.711Z] harassment-edge-en-1764166055627-4 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:24.931Z] harassment-edge-en-1764166055627-5 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:26.151Z] harassment-edge-en-1764166055627-6 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:27.358Z] harassment-edge-en-1764166055627-7 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:28.580Z] harassment-obfuscated-en-1764166072015-0 (harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:29.800Z] harassment-obfuscated-en-1764166072015-1 (harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:31.020Z] harassment-obfuscated-en-1764166072015-2 (harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:32.239Z] harassment-obfuscated-en-1764166072015-3 (harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:33.459Z] harassment-obfuscated-en-1764166072015-4 (harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:34.677Z] harassment-obfuscated-en-1764166072015-5 (harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:35.896Z] harassment-cross-en-1764166087719-0 (harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:37.115Z] harassment-cross-en-1764166087719-1 (harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:38.336Z] harassment-cross-en-1764166087719-2 (harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:39.554Z] harassment-cross-en-1764166087719-3 (harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:40.773Z] harassment-positive-ja-1764166109352-0 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:41.993Z] harassment-positive-ja-1764166109352-1 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:43.210Z] harassment-positive-ja-1764166109352-2 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:44.429Z] harassment-positive-ja-1764166109352-3 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:45.649Z] harassment-positive-ja-1764166109352-4 (harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:46.867Z] harassment-negative-ja-1764166125819-0 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:48.072Z] harassment-negative-ja-1764166125819-1 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:49.293Z] harassment-negative-ja-1764166125819-2 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:50.514Z] harassment-negative-ja-1764166125819-3 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:51.734Z] harassment-negative-ja-1764166125819-4 (harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:52.952Z] harassment-edge-ja-1764166141310-0 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:54.173Z] harassment-edge-ja-1764166141310-1 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:55.392Z] harassment-edge-ja-1764166141310-2 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:56.610Z] harassment-edge-ja-1764166141310-3 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:57.831Z] harassment-obfuscated-ja-1764166153821-0 (harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:52:59.050Z] harassment-obfuscated-ja-1764166153821-1 (harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:00.272Z] harassment-obfuscated-ja-1764166153821-2 (harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:01.491Z] harassment-cross-ja-1764166164502-0 (harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:02.711Z] harassment-cross-ja-1764166164502-1 (harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:03.932Z] sexual_harassment-positive-en-1764166186540-0 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:05.149Z] sexual_harassment-positive-en-1764166186540-1 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:06.368Z] sexual_harassment-positive-en-1764166186540-2 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:07.589Z] sexual_harassment-positive-en-1764166186540-3 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:08.812Z] sexual_harassment-positive-en-1764166186540-4 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:10.031Z] sexual_harassment-positive-en-1764166186540-5 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:11.252Z] sexual_harassment-positive-en-1764166186540-6 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:12.461Z] sexual_harassment-positive-en-1764166186540-7 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:13.680Z] sexual_harassment-positive-en-1764166186540-8 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:14.901Z] sexual_harassment-positive-en-1764166186540-9 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:16.125Z] sexual_harassment-negative-en-1764166206100-0 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:17.342Z] sexual_harassment-negative-en-1764166206100-1 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:18.562Z] sexual_harassment-negative-en-1764166206100-2 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:19.782Z] sexual_harassment-negative-en-1764166206100-3 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:21.001Z] sexual_harassment-negative-en-1764166206100-4 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:22.222Z] sexual_harassment-negative-en-1764166206100-5 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:23.444Z] sexual_harassment-negative-en-1764166206100-6 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:24.664Z] sexual_harassment-negative-en-1764166206100-7 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:25.875Z] sexual_harassment-negative-en-1764166206100-8 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:27.092Z] sexual_harassment-negative-en-1764166206100-9 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:28.314Z] sexual_harassment-edge-en-1764166224798-0 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:29.536Z] sexual_harassment-edge-en-1764166224798-1 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:30.754Z] sexual_harassment-edge-en-1764166224798-2 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:31.971Z] sexual_harassment-edge-en-1764166224798-3 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:33.177Z] sexual_harassment-edge-en-1764166224798-4 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:34.397Z] sexual_harassment-edge-en-1764166224798-5 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:35.617Z] sexual_harassment-edge-en-1764166224798-6 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:36.840Z] sexual_harassment-edge-en-1764166224798-7 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:38.061Z] sexual_harassment-obfuscated-en-1764166240903-0 (sexual_harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:39.279Z] sexual_harassment-obfuscated-en-1764166240903-1 (sexual_harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:40.486Z] sexual_harassment-obfuscated-en-1764166240903-2 (sexual_harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:41.705Z] sexual_harassment-obfuscated-en-1764166240903-3 (sexual_harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:42.926Z] sexual_harassment-obfuscated-en-1764166240903-4 (sexual_harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:44.148Z] sexual_harassment-obfuscated-en-1764166240903-5 (sexual_harassment/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:45.372Z] sexual_harassment-cross-en-1764166262686-0 (sexual_harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:46.592Z] sexual_harassment-cross-en-1764166262686-1 (sexual_harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:47.797Z] sexual_harassment-cross-en-1764166262686-2 (sexual_harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:49.007Z] sexual_harassment-cross-en-1764166262686-3 (sexual_harassment/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:50.225Z] sexual_harassment-positive-ja-1764166281465-0 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:51.448Z] sexual_harassment-positive-ja-1764166281465-1 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:52.660Z] sexual_harassment-positive-ja-1764166281465-2 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:53.880Z] sexual_harassment-positive-ja-1764166281465-3 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:55.103Z] sexual_harassment-positive-ja-1764166281465-4 (sexual_harassment/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:56.324Z] sexual_harassment-negative-ja-1764166295846-0 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:57.545Z] sexual_harassment-negative-ja-1764166295846-1 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:58.752Z] sexual_harassment-negative-ja-1764166295846-2 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:53:59.970Z] sexual_harassment-negative-ja-1764166295846-3 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:01.178Z] sexual_harassment-negative-ja-1764166295846-4 (sexual_harassment/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:02.397Z] sexual_harassment-edge-ja-1764166313031-0 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:03.618Z] sexual_harassment-edge-ja-1764166313031-1 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:04.835Z] sexual_harassment-edge-ja-1764166313031-2 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:06.052Z] sexual_harassment-edge-ja-1764166313031-3 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:07.272Z] violence-positive-en-1764166355516-0 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:08.491Z] violence-positive-en-1764166355516-1 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:09.713Z] violence-positive-en-1764166355516-2 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:10.940Z] violence-positive-en-1764166355516-3 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:12.159Z] violence-positive-en-1764166355516-4 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:13.376Z] violence-positive-en-1764166355516-5 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:14.598Z] violence-positive-en-1764166355516-6 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:15.818Z] violence-positive-en-1764166355516-7 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:17.025Z] violence-positive-en-1764166355516-8 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:18.243Z] violence-positive-en-1764166355516-9 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:19.466Z] violence-negative-en-1764166373499-0 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:20.683Z] violence-negative-en-1764166373499-1 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:21.903Z] violence-negative-en-1764166373499-2 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:23.124Z] violence-negative-en-1764166373499-3 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:24.344Z] violence-negative-en-1764166373499-4 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:25.566Z] violence-negative-en-1764166373499-5 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:26.788Z] violence-negative-en-1764166373499-6 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:28.010Z] violence-negative-en-1764166373499-7 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:29.230Z] violence-negative-en-1764166373499-8 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:30.450Z] violence-negative-en-1764166373499-9 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:31.670Z] violence-edge-en-1764166393372-0 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:32.889Z] violence-edge-en-1764166393372-1 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:34.097Z] violence-edge-en-1764166393372-2 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:35.318Z] violence-edge-en-1764166393372-3 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:36.526Z] violence-edge-en-1764166393372-4 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:37.744Z] violence-edge-en-1764166393372-5 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:38.950Z] violence-edge-en-1764166393372-6 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:40.174Z] violence-edge-en-1764166393372-7 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:41.394Z] violence-obfuscated-en-1764166408929-0 (violence/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:42.602Z] violence-obfuscated-en-1764166408929-1 (violence/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:43.823Z] violence-obfuscated-en-1764166408929-2 (violence/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:45.049Z] violence-obfuscated-en-1764166408929-3 (violence/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:46.268Z] violence-obfuscated-en-1764166408929-4 (violence/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:47.484Z] violence-obfuscated-en-1764166408929-5 (violence/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:48.703Z] violence-cross-en-1764166438725-0 (violence/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:49.925Z] violence-cross-en-1764166438725-1 (violence/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:51.142Z] violence-cross-en-1764166438725-2 (violence/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:52.360Z] violence-cross-en-1764166438725-3 (violence/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:53.583Z] violence-positive-ja-1764166456445-0 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:54.806Z] violence-positive-ja-1764166456445-1 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:56.029Z] violence-positive-ja-1764166456445-2 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:57.246Z] violence-positive-ja-1764166456445-3 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:58.452Z] violence-positive-ja-1764166456445-4 (violence/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:54:59.673Z] violence-negative-ja-1764166474122-0 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:00.894Z] violence-negative-ja-1764166474122-1 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:02.116Z] violence-negative-ja-1764166474122-2 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:03.339Z] violence-negative-ja-1764166474122-3 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:04.558Z] violence-negative-ja-1764166474122-4 (violence/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:05.776Z] violence-edge-ja-1764166492535-0 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:06.996Z] violence-edge-ja-1764166492535-1 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:08.204Z] violence-edge-ja-1764166492535-2 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:09.424Z] violence-edge-ja-1764166492535-3 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:10.646Z] violence-obfuscated-ja-1764166504879-0 (violence/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:11.868Z] violence-obfuscated-ja-1764166504879-1 (violence/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:13.074Z] violence-obfuscated-ja-1764166504879-2 (violence/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:14.293Z] violence-cross-ja-1764166517510-0 (violence/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:15.512Z] violence-cross-ja-1764166517510-1 (violence/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:16.731Z] threats-positive-en-1764166533817-0 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:17.948Z] threats-positive-en-1764166533817-1 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:19.168Z] threats-positive-en-1764166533817-2 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:20.386Z] threats-positive-en-1764166533817-3 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:21.606Z] threats-positive-en-1764166533817-4 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:22.812Z] threats-positive-en-1764166533817-5 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:24.019Z] threats-positive-en-1764166533817-6 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:25.239Z] threats-positive-en-1764166533817-7 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:26.446Z] threats-positive-en-1764166533817-8 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:27.667Z] threats-positive-en-1764166533817-9 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:28.885Z] threats-negative-en-1764166547614-0 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:30.108Z] threats-negative-en-1764166547614-1 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:31.328Z] threats-negative-en-1764166547614-2 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:32.545Z] threats-negative-en-1764166547614-3 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:33.752Z] threats-negative-en-1764166547614-4 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:34.979Z] threats-negative-en-1764166547614-5 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:36.196Z] threats-negative-en-1764166547614-6 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:37.407Z] threats-negative-en-1764166547614-7 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:38.627Z] threats-negative-en-1764166547614-8 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:39.848Z] threats-negative-en-1764166547614-9 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:41.067Z] threats-edge-en-1764166564748-0 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:42.274Z] threats-edge-en-1764166564748-1 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:43.493Z] threats-edge-en-1764166564748-2 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:44.710Z] threats-edge-en-1764166564748-3 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:45.930Z] threats-edge-en-1764166564748-4 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:47.147Z] threats-edge-en-1764166564748-5 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:48.367Z] threats-edge-en-1764166564748-6 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:49.587Z] threats-edge-en-1764166564748-7 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:50.805Z] threats-obfuscated-en-1764166578565-0 (threats/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:52.026Z] threats-obfuscated-en-1764166578565-1 (threats/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:53.250Z] threats-obfuscated-en-1764166578565-2 (threats/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:54.470Z] threats-obfuscated-en-1764166578565-3 (threats/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:55.692Z] threats-obfuscated-en-1764166578565-4 (threats/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:56.910Z] threats-obfuscated-en-1764166578565-5 (threats/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:58.132Z] threats-cross-en-1764166593092-0 (threats/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:55:59.339Z] threats-cross-en-1764166593092-1 (threats/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:00.561Z] threats-cross-en-1764166593092-2 (threats/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:01.779Z] threats-cross-en-1764166593092-3 (threats/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:02.998Z] threats-positive-ja-1764166607234-0 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:04.219Z] threats-positive-ja-1764166607234-1 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:05.439Z] threats-positive-ja-1764166607234-2 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:06.655Z] threats-positive-ja-1764166607234-3 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:07.862Z] threats-positive-ja-1764166607234-4 (threats/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:09.072Z] threats-negative-ja-1764166623750-0 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:10.289Z] threats-negative-ja-1764166623750-1 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:11.509Z] threats-negative-ja-1764166623750-2 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:12.729Z] threats-negative-ja-1764166623750-3 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:13.950Z] threats-negative-ja-1764166623750-4 (threats/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:15.157Z] threats-edge-ja-1764166640862-0 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:16.377Z] threats-edge-ja-1764166640862-1 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:17.598Z] threats-edge-ja-1764166640862-2 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:18.819Z] threats-edge-ja-1764166640862-3 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:20.039Z] threats-obfuscated-ja-1764166650366-0 (threats/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:21.258Z] threats-obfuscated-ja-1764166650366-1 (threats/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:22.480Z] threats-obfuscated-ja-1764166650366-2 (threats/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:23.701Z] threats-cross-ja-1764166661192-0 (threats/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:24.922Z] threats-cross-ja-1764166661193-1 (threats/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:26.131Z] self_harm-positive-en-1764166686362-0 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:27.348Z] self_harm-positive-en-1764166686362-1 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:28.559Z] self_harm-positive-en-1764166686362-2 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:29.778Z] self_harm-positive-en-1764166686362-3 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:31.000Z] self_harm-positive-en-1764166686362-4 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:32.219Z] self_harm-positive-en-1764166686362-5 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:33.440Z] self_harm-positive-en-1764166686362-6 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:34.660Z] self_harm-positive-en-1764166686362-7 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:35.881Z] self_harm-positive-en-1764166686362-8 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:37.102Z] self_harm-positive-en-1764166686362-9 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:38.323Z] self_harm-negative-en-1764166705186-0 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:39.543Z] self_harm-negative-en-1764166705186-1 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:40.766Z] self_harm-negative-en-1764166705186-2 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:41.982Z] self_harm-negative-en-1764166705186-3 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:43.203Z] self_harm-negative-en-1764166705186-4 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:44.423Z] self_harm-negative-en-1764166705186-5 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:45.642Z] self_harm-negative-en-1764166705186-6 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:46.849Z] self_harm-negative-en-1764166705186-7 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:48.070Z] self_harm-negative-en-1764166705186-8 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:49.288Z] self_harm-negative-en-1764166705186-9 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:50.506Z] self_harm-edge-en-1764166726963-0 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:51.724Z] self_harm-edge-en-1764166726963-1 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:52.944Z] self_harm-edge-en-1764166726963-2 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:54.153Z] self_harm-edge-en-1764166726963-3 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:55.372Z] self_harm-edge-en-1764166726963-4 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:56.578Z] self_harm-edge-en-1764166726963-5 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:57.795Z] self_harm-edge-en-1764166726963-6 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:56:59.016Z] self_harm-edge-en-1764166726963-7 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:00.235Z] self_harm-cross-en-1764166750167-0 (self_harm/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:01.457Z] self_harm-cross-en-1764166750167-1 (self_harm/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:02.675Z] self_harm-cross-en-1764166750167-2 (self_harm/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:03.897Z] self_harm-cross-en-1764166750167-3 (self_harm/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:05.118Z] self_harm-positive-ja-1764166767223-0 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:06.340Z] self_harm-positive-ja-1764166767223-1 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:07.563Z] self_harm-positive-ja-1764166767223-2 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:08.783Z] self_harm-positive-ja-1764166767223-3 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:10.000Z] self_harm-positive-ja-1764166767223-4 (self_harm/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:11.222Z] self_harm-negative-ja-1764166792684-0 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:12.442Z] self_harm-negative-ja-1764166792684-1 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:13.661Z] self_harm-negative-ja-1764166792684-2 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:14.882Z] self_harm-negative-ja-1764166792684-3 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:16.091Z] self_harm-negative-ja-1764166792684-4 (self_harm/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:17.297Z] self_harm-edge-ja-1764166808181-0 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:18.517Z] self_harm-edge-ja-1764166808181-1 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:19.738Z] self_harm-edge-ja-1764166808181-2 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:20.957Z] self_harm-edge-ja-1764166808181-3 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:22.177Z] self_harm-cross-ja-1764166828217-0 (self_harm/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:23.398Z] self_harm-cross-ja-1764166828217-1 (self_harm/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:24.610Z] drugs_illegal-positive-en-1764166852610-0 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:25.831Z] drugs_illegal-positive-en-1764166852610-1 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:27.051Z] drugs_illegal-positive-en-1764166852610-2 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:28.273Z] drugs_illegal-positive-en-1764166852610-3 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:29.494Z] drugs_illegal-positive-en-1764166852610-4 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:30.715Z] drugs_illegal-positive-en-1764166852610-5 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:31.934Z] drugs_illegal-positive-en-1764166852610-6 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:33.154Z] drugs_illegal-positive-en-1764166852610-7 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:34.376Z] drugs_illegal-positive-en-1764166852610-8 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:35.581Z] drugs_illegal-positive-en-1764166852610-9 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:36.788Z] drugs_illegal-negative-en-1764166868665-0 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:38.009Z] drugs_illegal-negative-en-1764166868665-1 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:39.230Z] drugs_illegal-negative-en-1764166868665-2 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:40.450Z] drugs_illegal-negative-en-1764166868665-3 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:41.669Z] drugs_illegal-negative-en-1764166868665-4 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:42.876Z] drugs_illegal-negative-en-1764166868665-5 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:44.097Z] drugs_illegal-negative-en-1764166868665-6 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:45.317Z] drugs_illegal-negative-en-1764166868665-7 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:46.526Z] drugs_illegal-negative-en-1764166868665-8 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:47.748Z] drugs_illegal-negative-en-1764166868665-9 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:48.967Z] drugs_illegal-edge-en-1764166888876-0 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:50.174Z] drugs_illegal-edge-en-1764166888876-1 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:51.394Z] drugs_illegal-edge-en-1764166888876-2 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:52.615Z] drugs_illegal-edge-en-1764166888876-3 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:53.822Z] drugs_illegal-edge-en-1764166888876-4 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:55.045Z] drugs_illegal-edge-en-1764166888876-5 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:56.266Z] drugs_illegal-edge-en-1764166888876-6 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:57.486Z] drugs_illegal-edge-en-1764166888876-7 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:58.708Z] drugs_illegal-obfuscated-en-1764166902648-0 (drugs_illegal/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:57:59.925Z] drugs_illegal-obfuscated-en-1764166902648-1 (drugs_illegal/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:01.144Z] drugs_illegal-obfuscated-en-1764166902648-2 (drugs_illegal/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:02.350Z] drugs_illegal-obfuscated-en-1764166902648-3 (drugs_illegal/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:03.570Z] drugs_illegal-obfuscated-en-1764166902648-4 (drugs_illegal/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:04.787Z] drugs_illegal-obfuscated-en-1764166902648-5 (drugs_illegal/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:06.008Z] drugs_illegal-cross-en-1764166917675-0 (drugs_illegal/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:07.229Z] drugs_illegal-cross-en-1764166917675-1 (drugs_illegal/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:08.448Z] drugs_illegal-cross-en-1764166917675-2 (drugs_illegal/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:09.665Z] drugs_illegal-cross-en-1764166917675-3 (drugs_illegal/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:10.884Z] drugs_illegal-positive-ja-1764166937431-0 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:12.093Z] drugs_illegal-positive-ja-1764166937431-1 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:13.314Z] drugs_illegal-positive-ja-1764166937431-2 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:14.533Z] drugs_illegal-positive-ja-1764166937431-3 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:15.753Z] drugs_illegal-positive-ja-1764166937431-4 (drugs_illegal/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:16.962Z] drugs_illegal-negative-ja-1764166953896-0 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:18.180Z] drugs_illegal-negative-ja-1764166953896-1 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:19.391Z] drugs_illegal-negative-ja-1764166953896-2 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:20.614Z] drugs_illegal-negative-ja-1764166953896-3 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:21.830Z] drugs_illegal-negative-ja-1764166953896-4 (drugs_illegal/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:23.049Z] drugs_illegal-edge-ja-1764166969984-0 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:24.270Z] drugs_illegal-edge-ja-1764166969984-1 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:25.488Z] drugs_illegal-edge-ja-1764166969984-2 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:26.707Z] drugs_illegal-edge-ja-1764166969984-3 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:27.927Z] drugs_illegal-obfuscated-ja-1764166983269-0 (drugs_illegal/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:29.134Z] drugs_illegal-obfuscated-ja-1764166983269-1 (drugs_illegal/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:30.342Z] drugs_illegal-obfuscated-ja-1764166983269-2 (drugs_illegal/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:31.562Z] drugs_illegal-cross-ja-1764166997431-0 (drugs_illegal/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:32.783Z] drugs_illegal-cross-ja-1764166997431-1 (drugs_illegal/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:34.002Z] profanity-positive-en-1764167016407-0 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:35.224Z] profanity-positive-en-1764167016407-1 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:36.431Z] profanity-positive-en-1764167016407-2 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:37.649Z] profanity-positive-en-1764167016407-3 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:38.869Z] profanity-positive-en-1764167016407-4 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:40.090Z] profanity-positive-en-1764167016407-5 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:41.309Z] profanity-positive-en-1764167016407-6 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:42.526Z] profanity-positive-en-1764167016407-7 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:43.745Z] profanity-positive-en-1764167016407-8 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:44.967Z] profanity-positive-en-1764167016407-9 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:46.192Z] profanity-negative-en-1764167030994-0 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:47.408Z] profanity-negative-en-1764167030994-1 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:48.630Z] profanity-negative-en-1764167030994-2 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:49.848Z] profanity-negative-en-1764167030994-3 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:51.069Z] profanity-negative-en-1764167030994-4 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:52.292Z] profanity-negative-en-1764167030994-5 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:53.514Z] profanity-negative-en-1764167030994-6 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:54.732Z] profanity-negative-en-1764167030994-7 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:55.953Z] profanity-negative-en-1764167030994-8 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:57.175Z] profanity-negative-en-1764167030994-9 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:58.395Z] profanity-edge-en-1764167050567-0 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:58:59.616Z] profanity-edge-en-1764167050567-1 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:00.835Z] profanity-edge-en-1764167050567-2 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:02.055Z] profanity-edge-en-1764167050567-3 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:03.274Z] profanity-edge-en-1764167050567-4 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:04.492Z] profanity-edge-en-1764167050567-5 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:05.712Z] profanity-edge-en-1764167050567-6 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:06.921Z] profanity-edge-en-1764167050567-7 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:08.140Z] profanity-obfuscated-en-1764167061970-0 (profanity/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:09.348Z] profanity-obfuscated-en-1764167061970-1 (profanity/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:10.567Z] profanity-obfuscated-en-1764167061970-2 (profanity/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:11.788Z] profanity-obfuscated-en-1764167061970-3 (profanity/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:12.994Z] profanity-obfuscated-en-1764167061970-4 (profanity/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:14.216Z] profanity-obfuscated-en-1764167061970-5 (profanity/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:15.434Z] profanity-cross-en-1764167074442-0 (profanity/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:16.641Z] profanity-cross-en-1764167074442-1 (profanity/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:17.861Z] profanity-cross-en-1764167074442-2 (profanity/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:19.069Z] profanity-cross-en-1764167074442-3 (profanity/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:20.288Z] profanity-positive-ja-1764167086931-0 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:21.508Z] profanity-positive-ja-1764167086931-1 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:22.729Z] profanity-positive-ja-1764167086931-2 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:23.947Z] profanity-positive-ja-1764167086931-3 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:25.169Z] profanity-positive-ja-1764167086931-4 (profanity/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:26.387Z] profanity-negative-ja-1764167101893-0 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:27.606Z] profanity-negative-ja-1764167101893-1 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:28.826Z] profanity-negative-ja-1764167101893-2 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:30.045Z] profanity-negative-ja-1764167101893-3 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:31.252Z] profanity-negative-ja-1764167101893-4 (profanity/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:32.473Z] profanity-edge-ja-1764167118435-0 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:33.694Z] profanity-edge-ja-1764167118435-1 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:34.909Z] profanity-edge-ja-1764167118435-2 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:36.131Z] profanity-edge-ja-1764167118435-3 (profanity/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:37.337Z] profanity-obfuscated-ja-1764167129153-0 (profanity/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:38.560Z] profanity-obfuscated-ja-1764167129153-1 (profanity/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:39.767Z] profanity-obfuscated-ja-1764167129153-2 (profanity/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:40.986Z] profanity-cross-ja-1764167140544-0 (profanity/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:42.205Z] profanity-cross-ja-1764167140544-1 (profanity/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:43.427Z] personal_info-positive-en-1764167306474-0 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:44.644Z] personal_info-positive-en-1764167306474-1 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:45.865Z] personal_info-positive-en-1764167306474-2 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:47.076Z] personal_info-positive-en-1764167306474-3 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:48.294Z] personal_info-positive-en-1764167306474-4 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:49.513Z] personal_info-positive-en-1764167306474-5 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:50.733Z] personal_info-positive-en-1764167306474-6 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:51.953Z] personal_info-positive-en-1764167306474-7 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:53.174Z] personal_info-positive-en-1764167306474-8 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:54.381Z] personal_info-positive-en-1764167306474-9 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:55.601Z] personal_info-negative-en-1764167325623-0 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:56.822Z] personal_info-negative-en-1764167325623-1 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:58.039Z] personal_info-negative-en-1764167325623-2 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T10:59:59.259Z] personal_info-negative-en-1764167325623-3 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:00.466Z] personal_info-negative-en-1764167325623-4 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:01.686Z] personal_info-negative-en-1764167325623-5 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:02.904Z] personal_info-negative-en-1764167325623-6 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:04.124Z] personal_info-negative-en-1764167325623-7 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:05.332Z] personal_info-negative-en-1764167325623-8 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:06.542Z] personal_info-negative-en-1764167325623-9 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:07.763Z] personal_info-edge-en-1764167346901-0 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:08.984Z] personal_info-edge-en-1764167346901-1 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:10.204Z] personal_info-edge-en-1764167346901-2 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:11.424Z] personal_info-edge-en-1764167346901-3 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:12.631Z] personal_info-edge-en-1764167346901-4 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:13.851Z] personal_info-edge-en-1764167346901-5 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:15.071Z] personal_info-edge-en-1764167346901-6 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:16.297Z] personal_info-edge-en-1764167346901-7 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:17.515Z] personal_info-obfuscated-en-1764167367659-0 (personal_info/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:18.732Z] personal_info-obfuscated-en-1764167367659-1 (personal_info/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:19.952Z] personal_info-obfuscated-en-1764167367659-2 (personal_info/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:21.159Z] personal_info-obfuscated-en-1764167367659-3 (personal_info/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:22.380Z] personal_info-obfuscated-en-1764167367659-4 (personal_info/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:23.600Z] personal_info-obfuscated-en-1764167367659-5 (personal_info/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:24.821Z] personal_info-cross-en-1764167384479-0 (personal_info/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:26.030Z] personal_info-cross-en-1764167384479-1 (personal_info/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:27.250Z] personal_info-cross-en-1764167384479-2 (personal_info/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:28.470Z] personal_info-cross-en-1764167384479-3 (personal_info/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:29.689Z] personal_info-positive-ja-1764167403347-0 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:30.909Z] personal_info-positive-ja-1764167403347-1 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:32.130Z] personal_info-positive-ja-1764167403347-2 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:33.348Z] personal_info-positive-ja-1764167403347-3 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:34.568Z] personal_info-positive-ja-1764167403347-4 (personal_info/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:35.789Z] personal_info-negative-ja-1764167422096-0 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:37.009Z] personal_info-negative-ja-1764167422096-1 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:38.232Z] personal_info-negative-ja-1764167422096-2 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:39.446Z] personal_info-negative-ja-1764167422096-3 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:40.666Z] personal_info-negative-ja-1764167422096-4 (personal_info/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:41.873Z] personal_info-edge-ja-1764167439488-0 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:43.092Z] personal_info-edge-ja-1764167439488-1 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:44.313Z] personal_info-edge-ja-1764167439488-2 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:45.531Z] personal_info-edge-ja-1764167439488-3 (personal_info/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:46.741Z] personal_info-cross-ja-1764167463231-0 (personal_info/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:47.957Z] personal_info-cross-ja-1764167463231-1 (personal_info/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:49.175Z] spam_scam-positive-en-1764167495472-0 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:50.396Z] spam_scam-positive-en-1764167495472-1 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:51.617Z] spam_scam-positive-en-1764167495472-2 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:52.834Z] spam_scam-positive-en-1764167495472-3 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:54.055Z] spam_scam-positive-en-1764167495472-4 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:55.266Z] spam_scam-positive-en-1764167495472-5 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:56.481Z] spam_scam-positive-en-1764167495472-6 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:57.700Z] spam_scam-positive-en-1764167495472-7 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:00:58.906Z] spam_scam-positive-en-1764167495472-8 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:00.127Z] spam_scam-positive-en-1764167495472-9 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:01.347Z] spam_scam-negative-en-1764167516916-0 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:02.567Z] spam_scam-negative-en-1764167516916-1 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:03.779Z] spam_scam-negative-en-1764167516916-2 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:04.994Z] spam_scam-negative-en-1764167516916-3 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:06.215Z] spam_scam-negative-en-1764167516916-4 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:07.436Z] spam_scam-negative-en-1764167516916-5 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:08.659Z] spam_scam-negative-en-1764167516916-6 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:09.880Z] spam_scam-negative-en-1764167516916-7 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:11.104Z] spam_scam-negative-en-1764167516916-8 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:12.324Z] spam_scam-negative-en-1764167516916-9 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:13.544Z] spam_scam-edge-en-1764167542589-0 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:14.766Z] spam_scam-edge-en-1764167542589-1 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:15.985Z] spam_scam-edge-en-1764167542589-2 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:17.204Z] spam_scam-edge-en-1764167542589-3 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:18.424Z] spam_scam-edge-en-1764167542589-4 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:19.630Z] spam_scam-edge-en-1764167542589-5 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:20.850Z] spam_scam-edge-en-1764167542589-6 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:22.066Z] spam_scam-edge-en-1764167542589-7 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:23.288Z] spam_scam-obfuscated-en-1764167568238-0 (spam_scam/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:24.508Z] spam_scam-obfuscated-en-1764167568238-1 (spam_scam/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:25.727Z] spam_scam-obfuscated-en-1764167568238-2 (spam_scam/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:26.935Z] spam_scam-obfuscated-en-1764167568238-3 (spam_scam/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:28.153Z] spam_scam-obfuscated-en-1764167568238-4 (spam_scam/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:29.373Z] spam_scam-obfuscated-en-1764167568238-5 (spam_scam/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:30.596Z] spam_scam-cross-en-1764167594819-0 (spam_scam/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:31.816Z] spam_scam-cross-en-1764167594819-1 (spam_scam/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:33.037Z] spam_scam-cross-en-1764167594819-2 (spam_scam/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:34.256Z] spam_scam-cross-en-1764167594819-3 (spam_scam/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:35.477Z] spam_scam-positive-ja-1764167619299-0 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:36.693Z] spam_scam-positive-ja-1764167619299-1 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:37.915Z] spam_scam-positive-ja-1764167619299-2 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:39.139Z] spam_scam-positive-ja-1764167619299-3 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:40.355Z] spam_scam-positive-ja-1764167619299-4 (spam_scam/positive)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:41.573Z] spam_scam-negative-ja-1764167642693-0 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:42.796Z] spam_scam-negative-ja-1764167642694-1 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:44.018Z] spam_scam-negative-ja-1764167642694-2 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:45.237Z] spam_scam-negative-ja-1764167642694-3 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:46.455Z] spam_scam-negative-ja-1764167642694-4 (spam_scam/negative)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:47.674Z] spam_scam-edge-ja-1764167662400-0 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:48.893Z] spam_scam-edge-ja-1764167662400-1 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:50.114Z] spam_scam-edge-ja-1764167662400-2 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:51.339Z] spam_scam-edge-ja-1764167662400-3 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:52.555Z] spam_scam-obfuscated-ja-1764167680018-0 (spam_scam/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:53.762Z] spam_scam-obfuscated-ja-1764167680018-1 (spam_scam/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:54.979Z] spam_scam-obfuscated-ja-1764167680018-2 (spam_scam/obfuscated)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:56.197Z] spam_scam-cross-ja-1764167693860-0 (spam_scam/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:57.419Z] spam_scam-cross-ja-1764167693860-1 (spam_scam/cross)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:58.625Z] hate_speech-context-condemning-en-1764235058204-0 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:01:59.845Z] hate_speech-context-condemning-en-1764235058205-1 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:01.065Z] hate_speech-context-condemning-en-1764235058205-2 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:02.288Z] harassment-context-condemning-en-1764235068237-0 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:03.508Z] harassment-context-condemning-en-1764235068237-1 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:04.729Z] harassment-context-condemning-en-1764235068238-2 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:05.938Z] sexual_harassment-context-condemning-en-1764235080247-0 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:07.157Z] sexual_harassment-context-condemning-en-1764235080247-1 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:08.376Z] sexual_harassment-context-condemning-en-1764235080247-2 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:09.593Z] violence-context-condemning-en-1764235090508-0 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:10.811Z] violence-context-condemning-en-1764235090508-1 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:12.028Z] violence-context-condemning-en-1764235090508-2 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:13.236Z] threats-context-condemning-en-1764235100267-0 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:14.457Z] threats-context-condemning-en-1764235100267-1 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:15.665Z] threats-context-condemning-en-1764235100267-2 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:16.884Z] self_harm-context-condemning-en-1764235111898-0 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:18.092Z] self_harm-context-condemning-en-1764235111898-1 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:19.311Z] self_harm-context-condemning-en-1764235111898-2 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:20.532Z] drugs_illegal-context-condemning-en-1764235123639-0 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:21.753Z] drugs_illegal-context-condemning-en-1764235123639-1 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:22.973Z] drugs_illegal-context-condemning-en-1764235123639-2 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:24.192Z] spam_scam-context-condemning-en-1764235136778-0 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:25.413Z] spam_scam-context-condemning-en-1764235136778-1 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:26.631Z] spam_scam-context-condemning-en-1764235136778-2 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:27.854Z] hate_speech-context-condemning-ja-1764235149361-0 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:29.062Z] hate_speech-context-condemning-ja-1764235149361-1 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:30.281Z] harassment-context-condemning-ja-1764235160157-0 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:31.498Z] harassment-context-condemning-ja-1764235160157-1 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:32.719Z] sexual_harassment-context-condemning-ja-1764235174364-0 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:33.940Z] sexual_harassment-context-condemning-ja-1764235174364-1 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:35.160Z] violence-context-condemning-ja-1764235186424-0 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:36.379Z] violence-context-condemning-ja-1764235186424-1 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:37.600Z] threats-context-condemning-ja-1764235199464-0 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:38.820Z] threats-context-condemning-ja-1764235199464-1 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:40.041Z] drugs_illegal-context-condemning-ja-1764235213205-0 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:41.260Z] drugs_illegal-context-condemning-ja-1764235213205-1 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:42.480Z] spam_scam-context-condemning-ja-1764235224640-0 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:43.698Z] spam_scam-context-condemning-ja-1764235224640-1 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:44.905Z] hate_speech-context-neutral-en-1764235231891-0 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:46.124Z] hate_speech-context-neutral-en-1764235231891-1 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:47.343Z] harassment-context-neutral-en-1764235241362-0 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:48.563Z] harassment-context-neutral-en-1764235241362-1 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:49.784Z] sexual_harassment-context-neutral-en-1764235249958-0 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:51.005Z] sexual_harassment-context-neutral-en-1764235249958-1 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:52.225Z] violence-context-neutral-en-1764235257042-0 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:53.443Z] violence-context-neutral-en-1764235257042-1 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:54.662Z] threats-context-neutral-en-1764235263806-0 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:55.880Z] threats-context-neutral-en-1764235263806-1 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:57.099Z] self_harm-context-neutral-en-1764235272734-0 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:58.318Z] self_harm-context-neutral-en-1764235272734-1 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:02:59.539Z] drugs_illegal-context-neutral-en-1764235281009-0 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:00.757Z] drugs_illegal-context-neutral-en-1764235281009-1 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:01.964Z] spam_scam-context-neutral-en-1764235293824-0 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:03.172Z] spam_scam-context-neutral-en-1764235293824-1 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:04.393Z] hate_speech-context-neutral-ja-1764235304629-0 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:05.612Z] hate_speech-context-neutral-ja-1764235304629-1 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:06.833Z] harassment-context-neutral-ja-1764235313959-0 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:08.054Z] harassment-context-neutral-ja-1764235313959-1 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:09.274Z] sexual_harassment-context-neutral-ja-1764235324160-0 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:10.493Z] sexual_harassment-context-neutral-ja-1764235324160-1 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:11.714Z] violence-context-neutral-ja-1764235333543-0 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:12.932Z] violence-context-neutral-ja-1764235333543-1 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:14.156Z] threats-context-neutral-ja-1764235343113-0 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:15.373Z] threats-context-neutral-ja-1764235343113-1 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:16.591Z] self_harm-context-neutral-ja-1764235352008-0 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:17.811Z] self_harm-context-neutral-ja-1764235352008-1 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:19.032Z] drugs_illegal-context-neutral-ja-1764235362736-0 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:20.253Z] drugs_illegal-context-neutral-ja-1764235362736-1 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:21.474Z] spam_scam-context-neutral-ja-1764235376452-0 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:22.697Z] spam_scam-context-neutral-ja-1764235376452-1 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:23.916Z] hate_speech-context-bad_regardless-en-1764235383081-0 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:25.123Z] harassment-context-bad_regardless-en-1764235390259-0 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:26.345Z] sexual_harassment-context-bad_regardless-en-1764235396561-0 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:27.565Z] violence-context-bad_regardless-en-1764235403651-0 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:28.787Z] threats-context-bad_regardless-en-1764235410572-0 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:30.011Z] self_harm-context-bad_regardless-en-1764235419967-0 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:31.227Z] drugs_illegal-context-bad_regardless-en-1764235427280-0 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:32.445Z] spam_scam-context-bad_regardless-en-1764235435665-0 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:33.653Z] hate_speech-context-bad_regardless-ja-1764235445535-0 (hate_speech/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:34.873Z] harassment-context-bad_regardless-ja-1764235454044-0 (harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:36.095Z] sexual_harassment-context-bad_regardless-ja-1764235461887-0 (sexual_harassment/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:37.318Z] violence-context-bad_regardless-ja-1764235470508-0 (violence/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:38.536Z] threats-context-bad_regardless-ja-1764235478808-0 (threats/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:39.756Z] self_harm-context-bad_regardless-ja-1764235487742-0 (self_harm/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:40.980Z] drugs_illegal-context-bad_regardless-ja-1764235496632-0 (drugs_illegal/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:03:42.201Z] spam_scam-context-bad_regardless-ja-1764235507109-0 (spam_scam/edge)
+  Error: ReferenceError: callGPT5 is not defined
+  Response: N/A...
+
+[2025-11-29T11:09:41.921Z] hate_speech-positive-en-1764165855887-0 (hate_speech/positive)
+  Error: Error: GPT-5 API error: 400 - {
+  "error": {
+    "message": "Unsupported value: 'temperature' does not support 0.1 with this model. Only the default (1) value is supported.",
+    "type": "invalid_request_error",
+    "param": "temperature",
+    "code": "unsupported_value"
+  }
+}
+  Response: N/A...
+
+[2025-11-29T11:09:44.171Z] hate_speech-positive-en-1764165855888-1 (hate_speech/positive)
+  Error: Error: GPT-5 API error: 400 - {
+  "error": {
+    "message": "Unsupported value: 'temperature' does not support 0.1 with this model. Only the default (1) value is supported.",
+    "type": "invalid_request_error",
+    "param": "temperature",
+    "code": "unsupported_value"
+  }
+}
+  Response: N/A...
+
+[2025-11-29T11:09:45.578Z] hate_speech-positive-en-1764165855888-2 (hate_speech/positive)
+  Error: Error: GPT-5 API error: 400 - {
+  "error": {
+    "message": "Unsupported value: 'temperature' does not support 0.1 with this model. Only the default (1) value is supported.",
+    "type": "invalid_request_error",
+    "param": "temperature",
+    "code": "unsupported_value"
+  }
+}
+  Response: N/A...
+
+[2025-11-29T11:09:47.049Z] hate_speech-positive-en-1764165855888-3 (hate_speech/positive)
+  Error: Error: GPT-5 API error: 400 - {
+  "error": {
+    "message": "Unsupported value: 'temperature' does not support 0.1 with this model. Only the default (1) value is supported.",
+    "type": "invalid_request_error",
+    "param": "temperature",
+    "code": "unsupported_value"
+  }
+}
+  Response: N/A...
+
+[2025-11-29T11:41:10.465Z] spam_scam-obfuscated-ja-1764167680018-1 (spam_scam/obfuscated)
+  Error: Error: GPT-5 API error: 500 - {
+  "error": {
+    "message": "The server had an error while processing your request. Sorry about that!",
+    "type": "server_error",
+    "param": null,
+    "code": null
+  }
+}
+  Response: N/A...
+

@@ -5,26 +5,30 @@
  * - Constitutional AI, tends toward caution
  * - Good at understanding context and nuance
  * - Paid per token
+ * 
+ * PROMPT CACHING: Uses Anthropic's prompt caching to reduce costs by ~90%
+ * when enabled. The system prompt is cached and reused across requests.
  */
 
 import { ModerationProvider, ProviderResult, ProviderConfig, ProviderInfo } from './types';
 import { CategoryScores, MODERATION_CATEGORIES } from '../types';
 
-const MODERATION_PROMPT = `You are a content moderation classifier for a trust & safety system. Your role is to ANALYZE and CLASSIFY text to help platforms identify potentially harmful content.
+/**
+ * System prompt - cached when caching is enabled (~500 tokens)
+ */
+const SYSTEM_PROMPT = `You are a content moderation classifier for a trust & safety system. Your role is to ANALYZE and CLASSIFY text to help platforms identify potentially harmful content.
 
 IMPORTANT: You are NOT the target of this content. You are a safety tool examining content that users have submitted to be checked. You MUST analyze the content objectively and provide classification scores, even if the content contains slurs, threats, or other harmful language. Refusing to analyze defeats the purpose of content moderation.
 
-The content below may contain offensive material. Your job is to classify it, not to refuse engagement.
-
 ## Categories to evaluate (score 0.0-1.0):
 - hate_speech: Attacks based on race, ethnicity, religion, gender, sexual orientation, disability
-- harassment: Bullying, threats, intimidation directed at individuals  
+- harassment: Bullying, intimidation directed at individuals (NOT just "fuck you" alone)
 - sexual_harassment: Unwanted sexual content or advances
-- violence: Graphic violence, gore, threats of physical harm
-- threats: Direct threats to harm someone
+- violence: Graphic violence, gore, instructions for harm
+- threats: Direct OR implied threats to harm someone (includes "I know where you live")
 - self_harm: Content promoting or glorifying self-harm or suicide
 - drugs_illegal: Promotion of illegal drugs or activities
-- profanity: Strong profane language
+- profanity: Strong profane language (ALLOW by default unless combined with harassment)
 - child_safety: Any content that could endanger minors
 - personal_info: Doxxing, sharing private information
 - spam_scam: Spam, scams, phishing attempts
@@ -36,26 +40,30 @@ The content below may contain offensive material. Your job is to classify it, no
 - Is this EDUCATIONAL (academic/documentary context)?
 - Is this RECLAMATION (in-group use of reclaimed terms)?
 
-Respond ONLY with this JSON (no other text):
+Respond ONLY with JSON (no other text):
 {
   "flagged": true/false,
   "confidence": 0.0-1.0,
-  "categories": {
-    "category_name": 0.0-1.0
-  },
+  "categories": { "category_name": 0.0-1.0 },
   "reasoning": "Brief explanation"
-}
-
-Text to analyze:
-"""
-{TEXT}
-"""`;
+}`;
 
 interface ClaudeResponse {
   content: Array<{
     type: string;
     text: string;
   }>;
+  usage?: {
+    input_tokens: number;
+    output_tokens: number;
+    cache_creation_input_tokens?: number;
+    cache_read_input_tokens?: number;
+  };
+}
+
+export interface AnthropicConfig extends ProviderConfig {
+  model?: string;
+  enableCaching?: boolean;
 }
 
 export class AnthropicProvider implements ModerationProvider {
@@ -67,12 +75,37 @@ export class AnthropicProvider implements ModerationProvider {
   private endpoint: string;
   private model: string;
   private timeout: number;
+  private enableCaching: boolean;
   
-  constructor(config: ProviderConfig & { model?: string } = {}) {
+  // Cache statistics for cost tracking
+  private cacheStats = {
+    totalRequests: 0,
+    cacheHits: 0,
+    cacheCreations: 0,
+    inputTokens: 0,
+    cachedTokens: 0,
+  };
+  
+  constructor(config: AnthropicConfig = {}) {
     this.apiKey = config.apiKey || process.env.ANTHROPIC_API_KEY;
     this.endpoint = config.endpoint || 'https://api.anthropic.com/v1/messages';
     this.model = config.model || 'claude-3-haiku-20240307'; // Fast + cheap
     this.timeout = config.timeout || 30000;
+    this.enableCaching = config.enableCaching ?? true; // Enable by default
+  }
+  
+  /**
+   * Get cache statistics for cost visibility
+   */
+  getCacheStats() {
+    const savings = this.cacheStats.cachedTokens > 0
+      ? ((this.cacheStats.cachedTokens / (this.cacheStats.inputTokens + this.cacheStats.cachedTokens)) * 100).toFixed(1)
+      : '0';
+    
+    return {
+      ...this.cacheStats,
+      savingsPercent: savings,
+    };
   }
   
   isAvailable(): boolean {
@@ -102,23 +135,48 @@ export class AnthropicProvider implements ModerationProvider {
     }
     
     const startTime = performance.now();
+    this.cacheStats.totalRequests++;
     
-    const prompt = MODERATION_PROMPT.replace('{TEXT}', text);
+    // Build headers - add caching beta header if enabled
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'x-api-key': this.apiKey,
+      'anthropic-version': '2023-06-01',
+    };
+    
+    if (this.enableCaching) {
+      headers['anthropic-beta'] = 'prompt-caching-2024-07-31';
+    }
+    
+    // Build request body with system/user message separation
+    const requestBody: Record<string, unknown> = {
+      model: this.model,
+      max_tokens: 1024,
+      messages: [
+        { 
+          role: 'user', 
+          content: `Text to analyze:\n"""\n${text}\n"""` 
+        }
+      ],
+    };
+    
+    // Add system prompt with caching if enabled
+    if (this.enableCaching) {
+      requestBody.system = [
+        {
+          type: 'text',
+          text: SYSTEM_PROMPT,
+          cache_control: { type: 'ephemeral' },
+        },
+      ];
+    } else {
+      requestBody.system = SYSTEM_PROMPT;
+    }
     
     const response = await fetch(this.endpoint, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': this.apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: this.model,
-        max_tokens: 1024,
-        messages: [
-          { role: 'user', content: prompt }
-        ],
-      }),
+      headers,
+      body: JSON.stringify(requestBody),
     });
     
     if (!response.ok) {
@@ -128,6 +186,19 @@ export class AnthropicProvider implements ModerationProvider {
     
     const data: ClaudeResponse = await response.json();
     const latencyMs = performance.now() - startTime;
+    
+    // Track cache statistics
+    if (data.usage) {
+      this.cacheStats.inputTokens += data.usage.input_tokens;
+      if (data.usage.cache_creation_input_tokens) {
+        this.cacheStats.cacheCreations++;
+        this.cacheStats.cachedTokens += data.usage.cache_creation_input_tokens;
+      }
+      if (data.usage.cache_read_input_tokens) {
+        this.cacheStats.cacheHits++;
+        this.cacheStats.cachedTokens += data.usage.cache_read_input_tokens;
+      }
+    }
     
     // Parse Claude's JSON response
     const textContent = data.content.find(c => c.type === 'text')?.text || '';
